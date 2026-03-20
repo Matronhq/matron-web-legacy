@@ -32,19 +32,19 @@ Please see LICENSE files in the repository root for full details.
         color: $primary-content;
         box-shadow: 0px 4px 24px rgb(0, 0, 0, 0.1);
         border: var(--cpd-border-width-1) solid var(--cpd-color-border-interactive-secondary);
-        border-radius: 12px;
+        border-radius: calc(var(--cpd-space-6x) - var(--cpd-border-width-1));
         overflow: hidden;
         display: grid;
-        grid-template-columns: 22px 1fr;
-        column-gap: 8px;
+        grid-template-columns: 20px 1fr;
+        column-gap: var(--cpd-space-2x);
         row-gap: 4px;
         align-items: center;
-        padding: var(--cpd-space-3x);
+        padding: calc(var(--cpd-space-5x) - var(--cpd-border-width-1));
 
         &.mx_Toast_hasIcon {
             svg {
-                width: 22px;
-                height: 22px;
+                width: 20px;
+                height: 20px;
                 grid-column: 1;
             }
 
@@ -52,20 +52,12 @@ Please see LICENSE files in the repository root for full details.
                 grid-column: 2;
             }
 
-            .mx_Toast_body {
-                grid-column: 2 / 4;
-            }
-
             .mx_Toast_closebutton {
                 grid-column: 3;
             }
         }
-        &:not(.mx_Toast_hasIcon) {
-            padding-left: 12px;
-
-            .mx_Toast_title {
-                grid-column: 1 / -1;
-            }
+        &:not(.mx_Toast_hasIcon) .mx_Toast_title {
+            grid-column: 1 / -1;
         }
 
         .mx_Toast_title,
@@ -96,7 +88,7 @@ Please see LICENSE files in the repository root for full details.
         .mx_Toast_buttons {
             display: flex;
             justify-content: flex-end;
-            column-gap: 5px;
+            column-gap: var(--cpd-space-2x);
 
             .mx_AccessibleButton {
                 min-width: 96px;
