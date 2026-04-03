@@ -18,7 +18,13 @@ import {
 import { Button, Form, Heading, InlineField, Label, ToggleInput, Tooltip } from "@vector-im/compound-web";
 import { logger } from "matrix-js-sdk/src/logger";
 import { type IRTCNotificationContent } from "matrix-js-sdk/src/matrixrtc";
-import { CheckIcon, CloseIcon, ExpandIcon, VideoCallSolidIcon, VoiceCallSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import {
+    CheckIcon,
+    CloseIcon,
+    ExpandIcon,
+    VideoCallSolidIcon,
+    VoiceCallSolidIcon,
+} from "@vector-im/compound-design-tokens/assets/web/icons";
 import { AvatarWithDetails } from "@element-hq/web-shared-components";
 
 import { _t } from "../languageHandler";
@@ -76,21 +82,23 @@ interface JoinCallButtonWithCallProps {
 }
 
 function JoinCallButtonWithCall({ onClick, disabledTooltip, isRinging }: JoinCallButtonWithCallProps): JSX.Element {
-    const button = <Button
-                className="mx_IncomingCallToast_actionButton"
-                onClick={onClick}
-                disabled={disabledTooltip != undefined}
-                kind="primary"
-                Icon={CheckIcon}
-                size="sm"
-            >
-                {_t("action|join")}
-            </Button>
+    const button = (
+        <Button
+            className="mx_IncomingCallToast_actionButton"
+            onClick={onClick}
+            disabled={disabledTooltip != undefined}
+            kind="primary"
+            Icon={CheckIcon}
+            size="sm"
+        >
+            {_t("action|join")}
+        </Button>
+    );
 
-    return disabledTooltip === undefined ? button : (
-        <Tooltip description={disabledTooltip ?? _t("voip|video_call")}>
-            {button}
-        </Tooltip>
+    return disabledTooltip === undefined ? (
+        button
+    ) : (
+        <Tooltip description={disabledTooltip ?? _t("voip|video_call")}>{button}</Tooltip>
     );
 }
 
@@ -237,24 +245,27 @@ export function IncomingCallToast({ notificationEvent, toastKey }: Props): JSX.E
     );
 
     const [videoToggle, setVideoToggle] = useState(true);
-    const videoToggleId = useId()
+    const videoToggleId = useId();
 
     const isVoice = notificationContent["m.call.intent"] === "audio";
 
-    const viewCall = useCallback((skipLobby: boolean) => {
-        // The toast will be automatically dismissed by the dispatcher callback above
-        defaultDispatcher.dispatch<ViewRoomPayload>({
-            action: Action.ViewRoom,
-            room_id: room?.roomId,
-            view_call: true,
-            skipLobby,
-            voiceOnly: isVoice || !videoToggle,
-            metricsTrigger: undefined,
-        });
-    }, [room, isVoice, videoToggle])
+    const viewCall = useCallback(
+        (skipLobby: boolean) => {
+            // The toast will be automatically dismissed by the dispatcher callback above
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: room?.roomId,
+                view_call: true,
+                skipLobby,
+                voiceOnly: isVoice || !videoToggle,
+                metricsTrigger: undefined,
+            });
+        },
+        [room, isVoice, videoToggle],
+    );
 
-    const onJoinClick = useCallback( () => viewCall(true), [viewCall], );
-    const onExpandClick = useCallback( () => viewCall(false), [viewCall], );
+    const onJoinClick = useCallback(() => viewCall(true), [viewCall]);
+    const onExpandClick = useCallback(() => viewCall(false), [viewCall]);
 
     // Dismiss on closing toast.
     const onCloseClick = useCallback(
@@ -282,14 +293,21 @@ export function IncomingCallToast({ notificationEvent, toastKey }: Props): JSX.E
             />
         );
 
-    const Icon = isVoice ? VoiceCallSolidIcon : VideoCallSolidIcon
-    const title = otherUserId === undefined ? _t('voip|group_call_started') : isVoice ? _t('voip|voice_call_incoming') : _t('voip|video_call_incoming')
+    const Icon = isVoice ? VoiceCallSolidIcon : VideoCallSolidIcon;
+    const title =
+        otherUserId === undefined
+            ? _t("voip|group_call_started")
+            : isVoice
+              ? _t("voip|voice_call_incoming")
+              : _t("voip|video_call_incoming");
 
     return (
         <div className="mx_IncomingCallToast_content">
             <div className="mx_IncomingCallToast_title">
                 <Icon width={20} height={20} />
-                <Heading as='h2' type='body' size='lg' weight='semibold'>{title}</Heading>
+                <Heading as="h2" type="body" size="lg" weight="semibold">
+                    {title}
+                </Heading>
                 <AccessibleButton
                     className="mx_IncomingCallToast_expandButton"
                     onClick={onExpandClick}
@@ -311,12 +329,18 @@ export function IncomingCallToast({ notificationEvent, toastKey }: Props): JSX.E
                         evt.stopPropagation();
                     }}
                 >
-                <InlineField
-                  name='videoToggle'
-                  control={<ToggleInput id={videoToggleId} checked={videoToggle} onChange={e => setVideoToggle(e.target.checked)} />}
-                >
-                  <Label htmlFor={videoToggleId}>{_t('voip|join_with_video')}</Label>
-                </InlineField>
+                    <InlineField
+                        name="videoToggle"
+                        control={
+                            <ToggleInput
+                                id={videoToggleId}
+                                checked={videoToggle}
+                                onChange={(e) => setVideoToggle(e.target.checked)}
+                            />
+                        }
+                    >
+                        <Label htmlFor={videoToggleId}>{_t("voip|join_with_video")}</Label>
+                    </InlineField>
                 </Form.Root>
             )}
             <div className="mx_IncomingCallToast_buttons">
