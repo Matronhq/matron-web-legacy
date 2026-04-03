@@ -294,6 +294,7 @@ export function IncomingCallToast({ notificationEvent, toastKey }: Props): JSX.E
         );
 
     const Icon = isVoice ? VoiceCallSolidIcon : VideoCallSolidIcon;
+    const iconLabel = isVoice ? _t("voip|voice_call") : _t("voip|video_call");
     const title =
         otherUserId === undefined
             ? _t("voip|group_call_started")
@@ -304,7 +305,7 @@ export function IncomingCallToast({ notificationEvent, toastKey }: Props): JSX.E
     return (
         <div className="mx_IncomingCallToast_content">
             <div className="mx_IncomingCallToast_title">
-                <Icon width={20} height={20} />
+                <Icon aria-label={iconLabel} width={20} height={20} />
                 <Heading as="h2" type="body" size="lg" weight="semibold">
                     {title}
                 </Heading>
