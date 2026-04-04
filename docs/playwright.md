@@ -1,10 +1,32 @@
-# Playwright in Element Web
+# Playwright in Matron Web
+
+## Contents
+
+- [Overview](#overview)
+- [Prerequisites](#prerequisites)
+- [Running the Tests](#running-the-tests)
+    - [Matron Web E2E Tests](#matron-web-e2e-tests)
+    - [Shared Components Tests](#shared-components-tests)
+    - [Projects](#projects)
+- [How the Tests Work](#how-the-tests-work)
+    - [Test Structure](#test-structure)
+    - [Homeserver Setup](#homeserver-setup)
+    - [Fixtures](#fixtures)
+- [Writing Tests](#writing-tests)
+    - [Getting a Homeserver](#getting-a-homeserver)
+    - [Logging In](#logging-in)
+    - [Joining a Room](#joining-a-room)
+    - [Using matrix-js-sdk](#using-matrix-js-sdk)
+    - [Best Practices](#best-practices)
+- [Visual Testing](#visual-testing)
+- [Test Tags](#test-tags)
+- [Supported Container Runtimes](#supported-container-runtimes)
 
 ## Overview
 
-Element Web contains two sets of Playwright tests:
+Matron Web contains two sets of Playwright tests:
 
-1. **Element Web E2E Tests** (`playwright/e2e/`) - Full end-to-end tests of the Element Web application with real homeserver instances
+1. **Matron Web E2E Tests** (`playwright/e2e/`) - Full end-to-end tests of the Matron Web application with real homeserver instances
 2. **Shared Components Tests** (`packages/shared-components/`) - Visual regression tests for the shared component library using Storybook
 
 Both test suites run automatically in CI on every pull request and on every merge to develop & master.
@@ -28,9 +50,9 @@ pnpm playwright install --with-deps
 
 See [Supported Container Runtimes](#supported-container-runtimes) for details on supported container runtimes (Docker, Podman, Colima).
 
-### 3. Element Web Server (for E2E tests)
+### 3. Matron Web Server (for E2E tests)
 
-Element Web E2E tests require an instance running on `http://localhost:8080` (configured in `playwright.config.ts`).
+Matron Web E2E tests require an instance running on `http://localhost:8080` (configured in `playwright.config.ts`).
 
 You can either:
 
@@ -39,9 +61,9 @@ You can either:
 
 ## Running the Tests
 
-### Element Web E2E Tests
+### Matron Web E2E Tests
 
-Our main Playwright tests run against a full Element Web instance with Synapse/Dendrite homeservers.
+Our main Playwright tests run against a full Matron Web instance with Synapse/Dendrite homeservers.
 
 **Run all E2E tests:**
 
@@ -95,7 +117,7 @@ Misc:
 
 ### Test Structure
 
-**Element Web tests** are located in the `playwright/` subdirectory:
+**Matron Web tests** are located in the `playwright/` subdirectory:
 
 - `playwright/e2e/` - E2E test files
 - `playwright/testcontainers/` - Testcontainers for Synapse/Dendrite instances

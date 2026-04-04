@@ -2,10 +2,10 @@
 
 If Labs is enabled in the [Element config](config.md), you can enable some of these features by going
 to `Settings->Labs`. This list is non-exhaustive and subject to change, chat in
-[#element-web:matrix.org](https://matrix.to/#/#element-web:matrix.org) for more information.
+[#matron-web:matrix.org](https://matrix.to/#/#matron-web:matrix.org) for more information.
 
 If a labs features gets more stable, it _may_ be promoted to a beta feature
-(see [Betas](https://github.com/element-hq/element-web/blob/develop/docs/betas.md)).
+(see [Betas](https://github.com/matronhq/matron-web/blob/develop/docs/betas.md)).
 
 **Be warned! Labs features are not finalised, they may be fragile, they may change, they may be
 dropped. Ask in the room if you are unclear about any details here.**
@@ -76,7 +76,7 @@ For some sample themes, check out [aaronraimist/element-themes](https://github.c
 
 Enables sharing your current location to the timeline, with live updates.
 
-## Video rooms (`feature_video_rooms`) [Beta]
+## Video rooms (`feature_video_rooms`)
 
 Enables support for creating video rooms, which are persistent video chats that users can jump in and out of.
 
@@ -94,10 +94,10 @@ If you're enabling this at the deployment level, you may also want to reference 
 
 ## Disable per-sender encryption for Element Call (`feature_disable_call_per_sender_encryption`)
 
-The default for embedded Element Call in Element Web is per-participant encryption.
+The default for embedded Element Call in Matron Web is per-participant encryption.
 This labs flag disables encryption for embedded Element Call in encrypted rooms.
 
-Under the hood this stops Element Web from adding the `perParticipantE2EE` flag for the Element Call widget url.
+Under the hood this stops Matron Web from adding the `perParticipantE2EE` flag for the Element Call widget url.
 
 This is useful while we experiment with encryption and to make calling compatible with platforms that don't use encryption yet.
 
@@ -134,10 +134,3 @@ Encrypt most of the state events in the room, including the room name and topic.
 WARNING: this means that users joining a room who do not have access to its history will not be able to see the name or
 topic of the room, or any other room state information. It also means the room name and topic are not available before
 joining a room.
-
-## New notifications settings (`feature_notification_settings2`) [Beta]
-
-Replaces the legacy notification settings with a new one to manage push rules.
-
-**Warning** This feature has options which are not backwards compatible, disabling
-it may have unintended consequences.

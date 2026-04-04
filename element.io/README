@@ -1,0 +1,5 @@
+This directory contains example config files for official Matron Web distributions.
+
+You probably do not want to build with this config unless you're building an
+official distribution, but these files may be useful if you want to
+inspect the configuration used.

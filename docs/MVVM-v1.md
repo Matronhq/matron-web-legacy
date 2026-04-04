@@ -1,4 +1,4 @@
-# MVVM v1
+# MVVM
 
 _Deprecated_, see [MVVM.md](./MVVM.md) for the current version.
 
@@ -10,11 +10,11 @@ General description of the pattern can be found [here](https://en.wikipedia.org/
 
 If you do MVVM right, your view should be dumb i.e it gets data from the view model and merely displays it.
 
-### Practical guidelines for MVVM in element-web
+### Practical guidelines for MVVM in matron-web
 
 #### Model
 
-This is anywhere your data or business logic comes from. If your view model is accessing something simple exposed from `matrix-js-sdk`, then the sdk is your model. If you're using something more high level in element-web to get your data/logic (eg: `MemberListStore`), then that becomes your model.
+This is anywhere your data or business logic comes from. If your view model is accessing something simple exposed from `matrix-js-sdk`, then the sdk is your model. If you're using something more high level in matron-web to get your data/logic (eg: `MemberListStore`), then that becomes your model.
 
 #### View Model
 
@@ -62,8 +62,8 @@ This is anywhere your data or business logic comes from. If your view model is a
 
 1. MVVM forces a separation of concern i.e we will no longer have large react components that have a lot of state and rendering code mixed together. This improves code readability and makes it easier to introduce changes.
 2. Introduces the possibility of code reuse. You can reuse an old view model with a new view or vice versa.
-3. Adding to the point above, in future you could import element-web view models to your project and supply your own views thus creating something similar to the [hydrogen sdk](https://github.com/element-hq/hydrogen-web/blob/master/doc/SDK.md).
+3. Adding to the point above, in future you could import matron-web view models to your project and supply your own views thus creating something similar to the [hydrogen sdk](https://github.com/matronhq/hydrogen-web/blob/master/doc/SDK.md).
 
 ### Example
 
-We started experimenting with MVVM in the redesigned memberlist, you can see the code [here](https://github.com/vector-im/element-web/blob/develop/src/components/views/rooms/MemberList/MemberListView.tsx).
+We started experimenting with MVVM in the redesigned memberlist, you can see the code [here](https://github.com/matronhq/matron-web/blob/develop/src/components/views/rooms/MemberList/MemberListView.tsx).

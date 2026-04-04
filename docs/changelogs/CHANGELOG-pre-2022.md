@@ -1,10 +1,10 @@
-Changes in [1.9.8](https://github.com/vector-im/element-web/releases/tag/v1.9.8) (2021-12-20)
+Changes in [1.9.8](https://github.com/matronhq/matron-web/releases/tag/v1.9.8) (2021-12-20)
 =============================================================================================
 
 ## ✨ Features
- * Include Vietnamese language ([\#20029](https://github.com/vector-im/element-web/pull/20029)).
- * Simple static location sharing ([\#19754](https://github.com/vector-im/element-web/pull/19754)).
- * Add support for the Indonesian language ([\#20032](https://github.com/vector-im/element-web/pull/20032)). Fixes #20030. Contributed by @Linerly.
+ * Include Vietnamese language ([\#20029](https://github.com/matronhq/matron-web/pull/20029)).
+ * Simple static location sharing ([\#19754](https://github.com/matronhq/matron-web/pull/19754)).
+ * Add support for the Indonesian language ([\#20032](https://github.com/matronhq/matron-web/pull/20032)). Fixes #20030. Contributed by @Linerly.
  * Always unhide widgets on layout change (pinning a widget) ([\#7299](https://github.com/matrix-org/matrix-react-sdk/pull/7299)).
  * Update status message in the member list and user info panel when it is changed ([\#7338](https://github.com/matrix-org/matrix-react-sdk/pull/7338)). Fixes #20127. Contributed by @SimonBrandner.
  * Iterate space panel toggle collapse interaction ([\#7335](https://github.com/matrix-org/matrix-react-sdk/pull/7335)). Fixes #20079.
@@ -27,7 +27,7 @@ Changes in [1.9.8](https://github.com/vector-im/element-web/releases/tag/v1.9.8)
  * Remove the `Screen sharing is here!` dialog ([\#7266](https://github.com/matrix-org/matrix-react-sdk/pull/7266)). Fixes #18824. Contributed by @SimonBrandner.
  * Make composer buttons react to settings without having to change room ([\#7264](https://github.com/matrix-org/matrix-react-sdk/pull/7264)). Fixes #20011.
  * Decorate view keyboard shortcuts link as a link ([\#7260](https://github.com/matrix-org/matrix-react-sdk/pull/7260)). Fixes #20007.
- * Improve ease of focusing on Room list Search ([\#7255](https://github.com/matrix-org/matrix-react-sdk/pull/7255)). Fixes matrix-org/element-web-rageshakes#7017.
+ * Improve ease of focusing on Room list Search ([\#7255](https://github.com/matrix-org/matrix-react-sdk/pull/7255)). Fixes matrix-org/matron-web-rageshakes#7017.
  * Autofocus device panel entry when renaming device ([\#7249](https://github.com/matrix-org/matrix-react-sdk/pull/7249)). Fixes #19984.
  * Update Space Panel scrollable region ([\#7245](https://github.com/matrix-org/matrix-react-sdk/pull/7245)). Fixes #19978.
  * Replace breadcrumbs with recently viewed menu ([\#7073](https://github.com/matrix-org/matrix-react-sdk/pull/7073)). Fixes #19528.
@@ -67,7 +67,7 @@ Changes in [1.9.8](https://github.com/vector-im/element-web/releases/tag/v1.9.8)
  * Update URL when room aliases are modified ([\#7289](https://github.com/matrix-org/matrix-react-sdk/pull/7289)). Fixes #1616 and #1925.
  * Render mini user menu for when space panel is disabled ([\#7258](https://github.com/matrix-org/matrix-react-sdk/pull/7258)). Fixes #19998.
  * When accepting DM from People metaspace don't switch to Home ([\#7272](https://github.com/matrix-org/matrix-react-sdk/pull/7272)). Fixes #19995.
- * Fix CallPreview `room is null` ([\#7265](https://github.com/matrix-org/matrix-react-sdk/pull/7265)). Fixes #19990, #19972, matrix-org/element-web-rageshakes#7004 matrix-org/element-web-rageshakes#6991 and matrix-org/element-web-rageshakes#6964.
+ * Fix CallPreview `room is null` ([\#7265](https://github.com/matrix-org/matrix-react-sdk/pull/7265)). Fixes #19990, #19972, matrix-org/matron-web-rageshakes#7004 matrix-org/matron-web-rageshakes#6991 and matrix-org/matron-web-rageshakes#6964.
  * Fixes more instances of double-translation ([\#7259](https://github.com/matrix-org/matrix-react-sdk/pull/7259)). Fixes #20010.
  * Fix video calls ([\#7256](https://github.com/matrix-org/matrix-react-sdk/pull/7256)). Fixes #20008. Contributed by @SimonBrandner.
  * Fix broken i18n in Forgot & Change password ([\#7252](https://github.com/matrix-org/matrix-react-sdk/pull/7252)). Fixes #19989.
@@ -75,17 +75,17 @@ Changes in [1.9.8](https://github.com/vector-im/element-web/releases/tag/v1.9.8)
  * Break long words in pinned messages to prevent overflow ([\#7251](https://github.com/matrix-org/matrix-react-sdk/pull/7251)). Fixes #19985.
  * Disallow sending empty feedbacks ([\#7240](https://github.com/matrix-org/matrix-react-sdk/pull/7240)).
  * Fix wrongly sized default sub-space icons in space panel ([\#7243](https://github.com/matrix-org/matrix-react-sdk/pull/7243)). Fixes #19973.
- * Hide clear cache and reload button if crash is before client init ([\#7242](https://github.com/matrix-org/matrix-react-sdk/pull/7242)). Fixes matrix-org/element-web-rageshakes#6996.
+ * Hide clear cache and reload button if crash is before client init ([\#7242](https://github.com/matrix-org/matrix-react-sdk/pull/7242)). Fixes matrix-org/matron-web-rageshakes#6996.
  * Fix automatic space switching wrongly going via Home for room aliases ([\#7247](https://github.com/matrix-org/matrix-react-sdk/pull/7247)). Fixes #19974.
  * Fix links being parsed as markdown links improperly ([\#7200](https://github.com/matrix-org/matrix-react-sdk/pull/7200)). Contributed by @Palid.
 
-Changes in [1.9.8-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.9.8-rc.1) (2021-12-14)
+Changes in [1.9.8-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.9.8-rc.1) (2021-12-14)
 =======================================================================================================
 
 ## ✨ Features
- * Include Vietnamese language ([\#20029](https://github.com/vector-im/element-web/pull/20029)).
- * Simple static location sharing ([\#19754](https://github.com/vector-im/element-web/pull/19754)).
- * Add support for the Indonesian language ([\#20032](https://github.com/vector-im/element-web/pull/20032)). Fixes #20030. Contributed by @Linerly.
+ * Include Vietnamese language ([\#20029](https://github.com/matronhq/matron-web/pull/20029)).
+ * Simple static location sharing ([\#19754](https://github.com/matronhq/matron-web/pull/19754)).
+ * Add support for the Indonesian language ([\#20032](https://github.com/matronhq/matron-web/pull/20032)). Fixes #20030. Contributed by @Linerly.
  * Always unhide widgets on layout change (pinning a widget) ([\#7299](https://github.com/matrix-org/matrix-react-sdk/pull/7299)).
  * Update status message in the member list and user info panel when it is changed ([\#7338](https://github.com/matrix-org/matrix-react-sdk/pull/7338)). Fixes #20127. Contributed by @SimonBrandner.
  * Iterate space panel toggle collapse interaction ([\#7335](https://github.com/matrix-org/matrix-react-sdk/pull/7335)). Fixes #20079.
@@ -108,7 +108,7 @@ Changes in [1.9.8-rc.1](https://github.com/vector-im/element-web/releases/tag/v1
  * Remove the `Screen sharing is here!` dialog ([\#7266](https://github.com/matrix-org/matrix-react-sdk/pull/7266)). Fixes #18824. Contributed by @SimonBrandner.
  * Make composer buttons react to settings without having to change room ([\#7264](https://github.com/matrix-org/matrix-react-sdk/pull/7264)). Fixes #20011.
  * Decorate view keyboard shortcuts link as a link ([\#7260](https://github.com/matrix-org/matrix-react-sdk/pull/7260)). Fixes #20007.
- * Improve ease of focusing on Room list Search ([\#7255](https://github.com/matrix-org/matrix-react-sdk/pull/7255)). Fixes matrix-org/element-web-rageshakes#7017.
+ * Improve ease of focusing on Room list Search ([\#7255](https://github.com/matrix-org/matrix-react-sdk/pull/7255)). Fixes matrix-org/matron-web-rageshakes#7017.
  * Autofocus device panel entry when renaming device ([\#7249](https://github.com/matrix-org/matrix-react-sdk/pull/7249)). Fixes #19984.
  * Update Space Panel scrollable region ([\#7245](https://github.com/matrix-org/matrix-react-sdk/pull/7245)). Fixes #19978.
  * Replace breadcrumbs with recently viewed menu ([\#7073](https://github.com/matrix-org/matrix-react-sdk/pull/7073)). Fixes #19528.
@@ -147,7 +147,7 @@ Changes in [1.9.8-rc.1](https://github.com/vector-im/element-web/releases/tag/v1
  * Update URL when room aliases are modified ([\#7289](https://github.com/matrix-org/matrix-react-sdk/pull/7289)). Fixes #1616 and #1925.
  * Render mini user menu for when space panel is disabled ([\#7258](https://github.com/matrix-org/matrix-react-sdk/pull/7258)). Fixes #19998.
  * When accepting DM from People metaspace don't switch to Home ([\#7272](https://github.com/matrix-org/matrix-react-sdk/pull/7272)). Fixes #19995.
- * Fix CallPreview `room is null` ([\#7265](https://github.com/matrix-org/matrix-react-sdk/pull/7265)). Fixes #19990, #19972, matrix-org/element-web-rageshakes#7004 matrix-org/element-web-rageshakes#6991 and matrix-org/element-web-rageshakes#6964.
+ * Fix CallPreview `room is null` ([\#7265](https://github.com/matrix-org/matrix-react-sdk/pull/7265)). Fixes #19990, #19972, matrix-org/matron-web-rageshakes#7004 matrix-org/matron-web-rageshakes#6991 and matrix-org/matron-web-rageshakes#6964.
  * Fixes more instances of double-translation ([\#7259](https://github.com/matrix-org/matrix-react-sdk/pull/7259)). Fixes #20010.
  * Fix video calls ([\#7256](https://github.com/matrix-org/matrix-react-sdk/pull/7256)). Fixes #20008. Contributed by @SimonBrandner.
  * Fix broken i18n in Forgot & Change password ([\#7252](https://github.com/matrix-org/matrix-react-sdk/pull/7252)). Fixes #19989.
@@ -155,17 +155,17 @@ Changes in [1.9.8-rc.1](https://github.com/vector-im/element-web/releases/tag/v1
  * Break long words in pinned messages to prevent overflow ([\#7251](https://github.com/matrix-org/matrix-react-sdk/pull/7251)). Fixes #19985.
  * Disallow sending empty feedbacks ([\#7240](https://github.com/matrix-org/matrix-react-sdk/pull/7240)).
  * Fix wrongly sized default sub-space icons in space panel ([\#7243](https://github.com/matrix-org/matrix-react-sdk/pull/7243)). Fixes #19973.
- * Hide clear cache and reload button if crash is before client init ([\#7242](https://github.com/matrix-org/matrix-react-sdk/pull/7242)). Fixes matrix-org/element-web-rageshakes#6996.
+ * Hide clear cache and reload button if crash is before client init ([\#7242](https://github.com/matrix-org/matrix-react-sdk/pull/7242)). Fixes matrix-org/matron-web-rageshakes#6996.
  * Fix automatic space switching wrongly going via Home for room aliases ([\#7247](https://github.com/matrix-org/matrix-react-sdk/pull/7247)). Fixes #19974.
  * Fix links being parsed as markdown links improperly ([\#7200](https://github.com/matrix-org/matrix-react-sdk/pull/7200)). Contributed by @Palid.
 
-Changes in [1.9.7](https://github.com/vector-im/element-web/releases/tag/v1.9.7) (2021-12-13)
+Changes in [1.9.7](https://github.com/matronhq/matron-web/releases/tag/v1.9.7) (2021-12-13)
 =============================================================================================
 
  * Security release with updated version of Olm to fix https://matrix.org/blog/2021/12/03/pre-disclosure-upcoming-security-release-of-libolm-and-matrix-js-sdk
  * Fix a crash on logout
 
-Changes in [1.9.6](https://github.com/vector-im/element-web/releases/tag/v1.9.6) (2021-12-06)
+Changes in [1.9.6](https://github.com/matronhq/matron-web/releases/tag/v1.9.6) (2021-12-06)
 =============================================================================================
 
 ## ✨ Features
@@ -208,12 +208,12 @@ Changes in [1.9.6](https://github.com/vector-im/element-web/releases/tag/v1.9.6)
  * Room Context Menu should respond to tag changes ([\#7154](https://github.com/matrix-org/matrix-react-sdk/pull/7154)). Fixes #19776.
  * Fix an edge case when trying to join an upgraded room ([\#7159](https://github.com/matrix-org/matrix-react-sdk/pull/7159)).
 
-Changes in [1.9.6-rc.2](https://github.com/vector-im/element-web/releases/tag/v1.9.6-rc.2) (2021-12-01)
+Changes in [1.9.6-rc.2](https://github.com/matronhq/matron-web/releases/tag/v1.9.6-rc.2) (2021-12-01)
 =======================================================================================================
 
  * Fixed release from correct branch
 
-Changes in [1.9.6-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.9.6-rc.1) (2021-11-30)
+Changes in [1.9.6-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.9.6-rc.1) (2021-11-30)
 =======================================================================================================
 
 ## ✨ Features
@@ -258,7 +258,7 @@ Changes in [1.9.6-rc.1](https://github.com/vector-im/element-web/releases/tag/v1
  * Room Context Menu should respond to tag changes ([\#7154](https://github.com/matrix-org/matrix-react-sdk/pull/7154)). Fixes #19776.
  * Fix an edge case when trying to join an upgraded room ([\#7159](https://github.com/matrix-org/matrix-react-sdk/pull/7159)).
 
-Changes in [1.9.5](https://github.com/vector-im/element-web/releases/tag/v1.9.5) (2021-11-22)
+Changes in [1.9.5](https://github.com/matronhq/matron-web/releases/tag/v1.9.5) (2021-11-22)
 =============================================================================================
 
 ## ✨ Features
@@ -281,8 +281,8 @@ Changes in [1.9.5](https://github.com/vector-im/element-web/releases/tag/v1.9.5)
  * Don't reload the page when user hits enter when entering ban reason ([\#7145](https://github.com/matrix-org/matrix-react-sdk/pull/7145)). Fixes #19763 and #19763.
  * Fix timeline text when sharing room layout ([\#7140](https://github.com/matrix-org/matrix-react-sdk/pull/7140)). Fixes #19622 and #19622.
  * Fix look of emoji verification ([\#7133](https://github.com/matrix-org/matrix-react-sdk/pull/7133)). Fixes #19740 and #19740. Contributed by @SimonBrandner.
- * Fixes element not remembering widget hidden state per room ([\#7136](https://github.com/matrix-org/matrix-react-sdk/pull/7136)). Fixes #16672, matrix-org/element-web-rageshakes#4407, #15718 #15768 and #16672.
- * Don't keep spinning if joining space child failed ([\#7129](https://github.com/matrix-org/matrix-react-sdk/pull/7129)). Fixes matrix-org/element-web-rageshakes#6813 and matrix-org/element-web-rageshakes#6813.
+ * Fixes element not remembering widget hidden state per room ([\#7136](https://github.com/matrix-org/matrix-react-sdk/pull/7136)). Fixes #16672, matrix-org/matron-web-rageshakes#4407, #15718 #15768 and #16672.
+ * Don't keep spinning if joining space child failed ([\#7129](https://github.com/matrix-org/matrix-react-sdk/pull/7129)). Fixes matrix-org/matron-web-rageshakes#6813 and matrix-org/matron-web-rageshakes#6813.
  * Guard around SpaceStore onAccountData handler prevEvent ([\#7123](https://github.com/matrix-org/matrix-react-sdk/pull/7123)). Fixes #19705 and #19705.
  * Fix missing spaces in threads copy ([\#7119](https://github.com/matrix-org/matrix-react-sdk/pull/7119)). Fixes #19702 and #19702.
  * Fix hover tile border ([\#7117](https://github.com/matrix-org/matrix-react-sdk/pull/7117)). Fixes #19698 and #19698. Contributed by @SimonBrandner.
@@ -294,7 +294,7 @@ Changes in [1.9.5](https://github.com/vector-im/element-web/releases/tag/v1.9.5)
  * Use device IDs for nameless devices in device list ([\#7081](https://github.com/matrix-org/matrix-react-sdk/pull/7081)). Fixes #19608 and #19608.
  * Don't re-sort rooms on no-op RoomUpdateCause.PossibleTagChange ([\#7053](https://github.com/matrix-org/matrix-react-sdk/pull/7053)). Contributed by @bradtgmurray.
 
-Changes in [1.9.5-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.9.5-rc.1) (2021-11-17)
+Changes in [1.9.5-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.9.5-rc.1) (2021-11-17)
 =======================================================================================================
 
 ## ✨ Features
@@ -317,8 +317,8 @@ Changes in [1.9.5-rc.1](https://github.com/vector-im/element-web/releases/tag/v1
  * Don't reload the page when user hits enter when entering ban reason ([\#7145](https://github.com/matrix-org/matrix-react-sdk/pull/7145)). Fixes #19763 and #19763.
  * Fix timeline text when sharing room layout ([\#7140](https://github.com/matrix-org/matrix-react-sdk/pull/7140)). Fixes #19622 and #19622.
  * Fix look of emoji verification ([\#7133](https://github.com/matrix-org/matrix-react-sdk/pull/7133)). Fixes #19740 and #19740. Contributed by @SimonBrandner.
- * Fixes element not remembering widget hidden state per room ([\#7136](https://github.com/matrix-org/matrix-react-sdk/pull/7136)). Fixes #16672, matrix-org/element-web-rageshakes#4407, #15718 #15768 and #16672.
- * Don't keep spinning if joining space child failed ([\#7129](https://github.com/matrix-org/matrix-react-sdk/pull/7129)). Fixes matrix-org/element-web-rageshakes#6813 and matrix-org/element-web-rageshakes#6813.
+ * Fixes element not remembering widget hidden state per room ([\#7136](https://github.com/matrix-org/matrix-react-sdk/pull/7136)). Fixes #16672, matrix-org/matron-web-rageshakes#4407, #15718 #15768 and #16672.
+ * Don't keep spinning if joining space child failed ([\#7129](https://github.com/matrix-org/matrix-react-sdk/pull/7129)). Fixes matrix-org/matron-web-rageshakes#6813 and matrix-org/matron-web-rageshakes#6813.
  * Guard around SpaceStore onAccountData handler prevEvent ([\#7123](https://github.com/matrix-org/matrix-react-sdk/pull/7123)). Fixes #19705 and #19705.
  * Fix missing spaces in threads copy ([\#7119](https://github.com/matrix-org/matrix-react-sdk/pull/7119)). Fixes #19702 and #19702.
  * Fix hover tile border ([\#7117](https://github.com/matrix-org/matrix-react-sdk/pull/7117)). Fixes #19698 and #19698. Contributed by @SimonBrandner.
@@ -330,7 +330,7 @@ Changes in [1.9.5-rc.1](https://github.com/vector-im/element-web/releases/tag/v1
  * Use device IDs for nameless devices in device list ([\#7081](https://github.com/matrix-org/matrix-react-sdk/pull/7081)). Fixes #19608 and #19608.
  * Don't re-sort rooms on no-op RoomUpdateCause.PossibleTagChange ([\#7053](https://github.com/matrix-org/matrix-react-sdk/pull/7053)). Contributed by @bradtgmurray.
 
-Changes in [1.9.4](https://github.com/vector-im/element-web/releases/tag/v1.9.4) (2021-11-08)
+Changes in [1.9.4](https://github.com/matronhq/matron-web/releases/tag/v1.9.4) (2021-11-08)
 =============================================================================================
 
 ## ✨ Features
@@ -387,7 +387,7 @@ Changes in [1.9.4](https://github.com/vector-im/element-web/releases/tag/v1.9.4)
  * Fix space panel name overflowing ([\#6995](https://github.com/matrix-org/matrix-react-sdk/pull/6995)). Fixes #19455 and #19455.
  * Fix conflicting CSS on syntax highlighted blocks ([\#6991](https://github.com/matrix-org/matrix-react-sdk/pull/6991)). Fixes #19445 and #19445.
 
-Changes in [1.9.3](https://github.com/vector-im/element-desktop/releases/tag/v1.9.3) (2021-10-25)
+Changes in [1.9.3](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.3) (2021-10-25)
 =================================================================================================
 
 ## ✨ Features
@@ -429,20 +429,20 @@ Changes in [1.9.3](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Fix spaces keyboard shortcuts not working for last space ([\#6909](https://github.com/matrix-org/matrix-react-sdk/pull/6909)). Fixes #19255 and #19255.
  * Use fallback avatar only for DMs with 2 people. ([\#6895](https://github.com/matrix-org/matrix-react-sdk/pull/6895)). Fixes #18747 and #18747. Contributed by [andybalaam](https://github.com/andybalaam).
 
-Changes in [1.9.3-rc.3](https://github.com/vector-im/element-desktop/releases/tag/v1.9.3-rc.3) (2021-10-25)
+Changes in [1.9.3-rc.3](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.3-rc.3) (2021-10-25)
 ===========================================================================================================
 
 ## 🐛 Bug Fixes
- * Remove highlightjs CSS ([\#19483](https://github.com/vector-im/element-web/pull/19483)). Fixes vector-im/element-web#19476
+ * Remove highlightjs CSS ([\#19483](https://github.com/matronhq/matron-web/pull/19483)). Fixes matronhq/matron-web#19476
 
 
-Changes in [1.9.3-rc.2](https://github.com/vector-im/element-desktop/releases/tag/v1.9.3-rc.2) (2021-10-20)
+Changes in [1.9.3-rc.2](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.3-rc.2) (2021-10-20)
 ===========================================================================================================
 
 ## 🐛 Bug Fixes
- * Fix conflicting CSS on syntax highlighted blocks ([\#6991](https://github.com/matrix-org/matrix-react-sdk/pull/6991)). Fixes vector-im/element-web#19445
+ * Fix conflicting CSS on syntax highlighted blocks ([\#6991](https://github.com/matrix-org/matrix-react-sdk/pull/6991)). Fixes matronhq/matron-web#19445
 
-Changes in [1.9.3-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.9.3-rc.1) (2021-10-19)
+Changes in [1.9.3-rc.1](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.3-rc.1) (2021-10-19)
 ===========================================================================================================
 
 ## ✨ Features
@@ -484,13 +484,13 @@ Changes in [1.9.3-rc.1](https://github.com/vector-im/element-desktop/releases/ta
  * Fix spaces keyboard shortcuts not working for last space ([\#6909](https://github.com/matrix-org/matrix-react-sdk/pull/6909)). Fixes #19255 and #19255.
  * Use fallback avatar only for DMs with 2 people. ([\#6895](https://github.com/matrix-org/matrix-react-sdk/pull/6895)). Fixes #18747 and #18747. Contributed by [andybalaam](https://github.com/andybalaam).
 
-Changes in [1.9.2](https://github.com/vector-im/element-desktop/releases/tag/v1.9.2) (2021-10-12)
+Changes in [1.9.2](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.2) (2021-10-12)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Upgrade to matrix-js-sdk#14.0.1
 
-Changes in [1.9.1](https://github.com/vector-im/element-desktop/releases/tag/v1.9.1) (2021-10-11)
+Changes in [1.9.1](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.1) (2021-10-11)
 =================================================================================================
 
 ## ✨ Features
@@ -518,12 +518,12 @@ Changes in [1.9.1](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Fix spacing for message composer buttons ([\#6852](https://github.com/matrix-org/matrix-react-sdk/pull/6852)). Fixes #18999 and #18999.
  * Always show root event of a thread in room's timeline ([\#6842](https://github.com/matrix-org/matrix-react-sdk/pull/6842)). Fixes #19016 and #19016.
 
-Changes in [1.9.1-rc.2](https://github.com/vector-im/element-desktop/releases/tag/v1.9.1-rc.2) (2021-10-08)
+Changes in [1.9.1-rc.2](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.1-rc.2) (2021-10-08)
 ===========================================================================================================
 
 ## 🐛 Bug Fixes
 
-Changes in [1.9.1-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.9.1-rc.1) (2021-10-04)
+Changes in [1.9.1-rc.1](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.1-rc.1) (2021-10-04)
 ===========================================================================================================
 
 ## ✨ Features
@@ -550,11 +550,11 @@ Changes in [1.9.1-rc.1](https://github.com/vector-im/element-desktop/releases/ta
  * Fix spacing for message composer buttons ([\#6852](https://github.com/matrix-org/matrix-react-sdk/pull/6852)). Fixes #18999 and #18999.
  * Always show root event of a thread in room's timeline ([\#6842](https://github.com/matrix-org/matrix-react-sdk/pull/6842)). Fixes #19016 and #19016.
 
-Changes in [1.9.0](https://github.com/vector-im/element-desktop/releases/tag/v1.9.0) (2021-09-27)
+Changes in [1.9.0](https://github.com/vector-im/matron-desktop/releases/tag/v1.9.0) (2021-09-27)
 =================================================================================================
 
 ## ✨ Features
- * Fix space keyboard shortcuts conflicting with native zoom shortcuts ([\#19037](https://github.com/vector-im/element-web/pull/19037)). Fixes #18481 and undefined/element-web#18481.
+ * Fix space keyboard shortcuts conflicting with native zoom shortcuts ([\#19037](https://github.com/matronhq/matron-web/pull/19037)). Fixes #18481 and undefined/matron-web#18481.
  * Say Joining space instead of Joining room where we know its a space ([\#6818](https://github.com/matrix-org/matrix-react-sdk/pull/6818)). Fixes #19064 and #19064.
  * Add warning that some spaces may not be relinked to the newly upgraded room ([\#6805](https://github.com/matrix-org/matrix-react-sdk/pull/6805)). Fixes #18858 and #18858.
  * Delabs Spaces, iterate some copy and move communities/space toggle to preferences ([\#6594](https://github.com/matrix-org/matrix-react-sdk/pull/6594)). Fixes #18088, #18524 #18088 and #18088.
@@ -580,7 +580,7 @@ Changes in [1.9.0](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Fix spacing for message composer buttons ([\#6854](https://github.com/matrix-org/matrix-react-sdk/pull/6854)).
  * Fix accessing field on oobData which may be undefined ([\#6830](https://github.com/matrix-org/matrix-react-sdk/pull/6830)). Fixes #19085 and #19085.
  * Fix reactions aria-label not being a string and thus being read as [Object object] ([\#6828](https://github.com/matrix-org/matrix-react-sdk/pull/6828)).
- * Fix missing null guard in space hierarchy pagination ([\#6821](https://github.com/matrix-org/matrix-react-sdk/pull/6821)). Fixes matrix-org/element-web-rageshakes#6299 and matrix-org/element-web-rageshakes#6299.
+ * Fix missing null guard in space hierarchy pagination ([\#6821](https://github.com/matrix-org/matrix-react-sdk/pull/6821)). Fixes matrix-org/matron-web-rageshakes#6299 and matrix-org/matron-web-rageshakes#6299.
  * Fix checks to show prompt to start new chats ([\#6812](https://github.com/matrix-org/matrix-react-sdk/pull/6812)).
  * Fix room list scroll jumps ([\#6777](https://github.com/matrix-org/matrix-react-sdk/pull/6777)). Fixes #17460 #18440 and #17460. Contributed by [robintown](https://github.com/robintown).
  * Fix various message bubble alignment issues ([\#6785](https://github.com/matrix-org/matrix-react-sdk/pull/6785)). Fixes #18293, #18294 #18305 and #18293. Contributed by [robintown](https://github.com/robintown).
@@ -599,17 +599,17 @@ Changes in [1.9.0](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Use cursor:pointer on space panel buttons ([\#6770](https://github.com/matrix-org/matrix-react-sdk/pull/6770)). Fixes #18951 and #18951.
  * Fix regressed tab view buttons in space update toast ([\#6761](https://github.com/matrix-org/matrix-react-sdk/pull/6761)). Fixes #18781 and #18781.
 
-Changes in [1.8.6-rc.2](https://github.com/vector-im/element-desktop/releases/tag/v1.8.6-rc.2) (2021-09-22)
+Changes in [1.8.6-rc.2](https://github.com/vector-im/matron-desktop/releases/tag/v1.8.6-rc.2) (2021-09-22)
 ===========================================================================================================
 
 ## 🐛 Bug Fixes
  * Fix spacing for message composer buttons ([\#6854](https://github.com/matrix-org/matrix-react-sdk/pull/6854)).
 
-Changes in [1.8.6-rc.1](https://github.com/vector-im/element-desktop/releases/tag/v1.8.6-rc.1) (2021-09-21)
+Changes in [1.8.6-rc.1](https://github.com/vector-im/matron-desktop/releases/tag/v1.8.6-rc.1) (2021-09-21)
 ===========================================================================================================
 
 ## ✨ Features
- * Fix space keyboard shortcuts conflicting with native zoom shortcuts ([\#19037](https://github.com/vector-im/element-web/pull/19037)). Fixes #18481 and undefined/element-web#18481.
+ * Fix space keyboard shortcuts conflicting with native zoom shortcuts ([\#19037](https://github.com/matronhq/matron-web/pull/19037)). Fixes #18481 and undefined/matron-web#18481.
  * Say Joining space instead of Joining room where we know its a space ([\#6818](https://github.com/matrix-org/matrix-react-sdk/pull/6818)). Fixes #19064 and #19064.
  * Add warning that some spaces may not be relinked to the newly upgraded room ([\#6805](https://github.com/matrix-org/matrix-react-sdk/pull/6805)). Fixes #18858 and #18858.
  * Delabs Spaces, iterate some copy and move communities/space toggle to preferences ([\#6594](https://github.com/matrix-org/matrix-react-sdk/pull/6594)). Fixes #18088, #18524 #18088 and #18088.
@@ -636,7 +636,7 @@ Changes in [1.8.6-rc.1](https://github.com/vector-im/element-desktop/releases/ta
  * Fix accessing field on oobData which may be undefined ([\#6830](https://github.com/matrix-org/matrix-react-sdk/pull/6830)). Fixes #19085 and #19085.
  * Fix pill deletion on Firefox 78 ([\#6832](https://github.com/matrix-org/matrix-react-sdk/pull/6832)). Fixes #19077 and #19077. Contributed by [SimonBrandner](https://github.com/SimonBrandner).
  * Fix reactions aria-label not being a string and thus being read as [Object object] ([\#6828](https://github.com/matrix-org/matrix-react-sdk/pull/6828)).
- * Fix missing null guard in space hierarchy pagination ([\#6821](https://github.com/matrix-org/matrix-react-sdk/pull/6821)). Fixes matrix-org/element-web-rageshakes#6299 and matrix-org/element-web-rageshakes#6299.
+ * Fix missing null guard in space hierarchy pagination ([\#6821](https://github.com/matrix-org/matrix-react-sdk/pull/6821)). Fixes matrix-org/matron-web-rageshakes#6299 and matrix-org/matron-web-rageshakes#6299.
  * Fix checks to show prompt to start new chats ([\#6812](https://github.com/matrix-org/matrix-react-sdk/pull/6812)).
  * Fix room list scroll jumps ([\#6777](https://github.com/matrix-org/matrix-react-sdk/pull/6777)). Fixes #17460 #18440 and #17460. Contributed by [robintown](https://github.com/robintown).
  * Fix various message bubble alignment issues ([\#6785](https://github.com/matrix-org/matrix-react-sdk/pull/6785)). Fixes #18293, #18294 #18305 and #18293. Contributed by [robintown](https://github.com/robintown).
@@ -655,7 +655,7 @@ Changes in [1.8.6-rc.1](https://github.com/vector-im/element-desktop/releases/ta
  * Use cursor:pointer on space panel buttons ([\#6770](https://github.com/matrix-org/matrix-react-sdk/pull/6770)). Fixes #18951 and #18951.
  * Fix regressed tab view buttons in space update toast ([\#6761](https://github.com/matrix-org/matrix-react-sdk/pull/6761)). Fixes #18781 and #18781.
 
-Changes in [1.8.5](https://github.com/vector-im/element-desktop/releases/tag/v1.8.5) (2021-09-14)
+Changes in [1.8.5](https://github.com/vector-im/matron-desktop/releases/tag/v1.8.5) (2021-09-14)
 =================================================================================================
 
 ## ✨ Features
@@ -714,18 +714,18 @@ Changes in [1.8.5](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Fix codeblock formatting with syntax highlighting on ([\#6681](https://github.com/matrix-org/matrix-react-sdk/pull/6681)). Fixes #18739 #18365 and #18739. Contributed by [SimonBrandner](https://github.com/SimonBrandner).
  * Add padding to the Add button in the notification settings ([\#6665](https://github.com/matrix-org/matrix-react-sdk/pull/6665)). Fixes #18706 and #18706. Contributed by [SimonBrandner](https://github.com/SimonBrandner).
 
-Changes in [1.8.4](https://github.com/vector-im/element-web/releases/tag/v1.8.4) (2021-09-13)
+Changes in [1.8.4](https://github.com/matronhq/matron-web/releases/tag/v1.8.4) (2021-09-13)
 =================================================================================================
 
 ## 🔒 SECURITY FIXES
  * Fix a security issue with message key sharing. See https://matrix.org/blog/2021/09/13/vulnerability-disclosure-key-sharing
    for details.
 
-Changes in [1.8.2](https://github.com/vector-im/element-desktop/releases/tag/v1.8.2) (2021-08-31)
+Changes in [1.8.2](https://github.com/vector-im/matron-desktop/releases/tag/v1.8.2) (2021-08-31)
 =================================================================================================
 
 ## ✨ Features
- * Documentation for sentry config ([\#18608](https://github.com/vector-im/element-web/pull/18608)). Contributed by [novocaine](https://github.com/novocaine).
+ * Documentation for sentry config ([\#18608](https://github.com/matronhq/matron-web/pull/18608)). Contributed by [novocaine](https://github.com/novocaine).
  * [Release]Increase general app performance by optimizing layers ([\#6672](https://github.com/matrix-org/matrix-react-sdk/pull/6672)). Fixes #18730 and #18730. Contributed by [Palid](https://github.com/Palid).
  * Add a warning on E2EE rooms if you try to make them public ([\#5698](https://github.com/matrix-org/matrix-react-sdk/pull/5698)). Contributed by [SimonBrandner](https://github.com/SimonBrandner).
  * Allow pagination of the space hierarchy and use new APIs ([\#6507](https://github.com/matrix-org/matrix-react-sdk/pull/6507)). Fixes #18089 and #18427.
@@ -766,13 +766,13 @@ Changes in [1.8.2](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Remove tiny scrollbar dot from code blocks ([\#6596](https://github.com/matrix-org/matrix-react-sdk/pull/6596)). Fixes #18474. Contributed by [SimonBrandner](https://github.com/SimonBrandner).
  * Improve handling of pills in the composer ([\#6353](https://github.com/matrix-org/matrix-react-sdk/pull/6353)). Fixes #10134 #10896 and #15037. Contributed by [SimonBrandner](https://github.com/SimonBrandner).
 
-Changes in [1.8.1](https://github.com/vector-im/element-desktop/releases/tag/v1.8.1) (2021-08-17)
+Changes in [1.8.1](https://github.com/vector-im/matron-desktop/releases/tag/v1.8.1) (2021-08-17)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Fix multiple VoIP regressions ([matrix-org/matrix-js-sdk#1860](https://github.com/matrix-org/matrix-js-sdk/pull/1860)).
 
-Changes in [1.8.0](https://github.com/vector-im/element-desktop/releases/tag/v1.8.0) (2021-08-16)
+Changes in [1.8.0](https://github.com/vector-im/matron-desktop/releases/tag/v1.8.0) (2021-08-16)
 =================================================================================================
 
 ## ✨ Features
@@ -796,7 +796,7 @@ Changes in [1.8.0](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Add support for screen sharing in 1:1 calls ([\#5992](https://github.com/matrix-org/matrix-react-sdk/pull/5992)). Contributed by [SimonBrandner](https://github.com/SimonBrandner).
 
 ## 🐛 Bug Fixes
- * Dismiss electron download toast when clicking Open ([\#18267](https://github.com/vector-im/element-web/pull/18267)). Fixes #18266.
+ * Dismiss electron download toast when clicking Open ([\#18267](https://github.com/matronhq/matron-web/pull/18267)). Fixes #18266.
  * [Release] Fix glare related regressions ([\#6622](https://github.com/matrix-org/matrix-react-sdk/pull/6622)). Contributed by [SimonBrandner](https://github.com/SimonBrandner).
  * [Release] Fix PiP of held calls ([\#6612](https://github.com/matrix-org/matrix-react-sdk/pull/6612)). Contributed by [SimonBrandner](https://github.com/SimonBrandner).
  * [Release] Fix toast colors ([\#6607](https://github.com/matrix-org/matrix-react-sdk/pull/6607)). Contributed by [SimonBrandner](https://github.com/SimonBrandner).
@@ -838,12 +838,12 @@ Changes in [1.8.0](https://github.com/vector-im/element-desktop/releases/tag/v1.
  * Fix grecaptcha regression ([\#6503](https://github.com/matrix-org/matrix-react-sdk/pull/6503)). Fixes #18284. Contributed by [Palid](https://github.com/Palid).
  * Fix compatibility with accounts where the security passphrase was created on a mobile device ([\#1819](https://github.com/matrix-org/matrix-js-sdk/pull/1819)).
 
-Changes in [1.7.34](https://github.com/vector-im/element-desktop/releases/tag/v1.7.34) (2021-08-02)
+Changes in [1.7.34](https://github.com/vector-im/matron-desktop/releases/tag/v1.7.34) (2021-08-02)
 ===================================================================================================
 
 ## 🔒 SECURITY FIXES
  * Sanitize untrusted variables from message previews before translation
-   Fixes vector-im/element-web#18314
+   Fixes matronhq/matron-web#18314
 
 ## ✨ Features
  * Fix editing of `<sub>` & `<sup`> & `<u>`
@@ -890,9 +890,9 @@ Changes in [1.7.34](https://github.com/vector-im/element-desktop/releases/tag/v1
 
 ## 🐛 Bug Fixes
  * Fix browser history getting stuck looping back to the same room
-   [\#18053](https://github.com/vector-im/element-web/pull/18053)
+   [\#18053](https://github.com/matronhq/matron-web/pull/18053)
  * Fix space shortcuts on layouts with non-English keys in the places of numbers
-   [\#17780](https://github.com/vector-im/element-web/pull/17780)
+   [\#17780](https://github.com/matronhq/matron-web/pull/17780)
    Fixes #17776
  * Fix CreateRoomDialog exploding when making public room outside of a space
    [\#6493](https://github.com/matrix-org/matrix-react-sdk/pull/6493)
@@ -964,135 +964,135 @@ Changes in [1.7.34](https://github.com/vector-im/element-desktop/releases/tag/v1
  * Cache feature_spaces\* flags to improve performance
    [\#6381](https://github.com/matrix-org/matrix-react-sdk/pull/6381)
 
-Changes in [1.7.33](https://github.com/vector-im/element-web/releases/tag/v1.7.33) (2021-07-19)
+Changes in [1.7.33](https://github.com/matronhq/matron-web/releases/tag/v1.7.33) (2021-07-19)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.33-rc.1...v1.7.33)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.33-rc.1...v1.7.33)
 
  * No changes from rc.1
 
-Changes in [1.7.33-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.33-rc.1) (2021-07-14)
+Changes in [1.7.33-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.33-rc.1) (2021-07-14)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.32...v1.7.33-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.32...v1.7.33-rc.1)
 
  * Translations update from Weblate
-   [\#17991](https://github.com/vector-im/element-web/pull/17991)
+   [\#17991](https://github.com/matronhq/matron-web/pull/17991)
  * Revert "Don't run nginx as root in docker"
-   [\#17990](https://github.com/vector-im/element-web/pull/17990)
+   [\#17990](https://github.com/matronhq/matron-web/pull/17990)
  * Don't run nginx as root in docker
-   [\#17927](https://github.com/vector-im/element-web/pull/17927)
+   [\#17927](https://github.com/matronhq/matron-web/pull/17927)
  * Add VS Code to gitignore
-   [\#17982](https://github.com/vector-im/element-web/pull/17982)
+   [\#17982](https://github.com/matronhq/matron-web/pull/17982)
  * Remove canvas native dependencies from Dockerfile
-   [\#17973](https://github.com/vector-im/element-web/pull/17973)
+   [\#17973](https://github.com/matronhq/matron-web/pull/17973)
  * Remove node-canvas devDependency
-   [\#17967](https://github.com/vector-im/element-web/pull/17967)
+   [\#17967](https://github.com/matronhq/matron-web/pull/17967)
  * Add `reskindex` to development steps
-   [\#17926](https://github.com/vector-im/element-web/pull/17926)
+   [\#17926](https://github.com/matronhq/matron-web/pull/17926)
  * Update Modernizr and stop it from polluting classes on the html tag
-   [\#17921](https://github.com/vector-im/element-web/pull/17921)
+   [\#17921](https://github.com/matronhq/matron-web/pull/17921)
  * Convert a few files to TS
-   [\#17895](https://github.com/vector-im/element-web/pull/17895)
+   [\#17895](https://github.com/matronhq/matron-web/pull/17895)
  * Do not generate a lockfile when running in CI
-   [\#17902](https://github.com/vector-im/element-web/pull/17902)
+   [\#17902](https://github.com/matronhq/matron-web/pull/17902)
  * Fix lockfile to match listed dependencies
-   [\#17888](https://github.com/vector-im/element-web/pull/17888)
+   [\#17888](https://github.com/matronhq/matron-web/pull/17888)
  * Remove PostCSS calc() processing
-   [\#17856](https://github.com/vector-im/element-web/pull/17856)
+   [\#17856](https://github.com/matronhq/matron-web/pull/17856)
  * Make issue template styling more consistent and improve PR template
-   [\#17691](https://github.com/vector-im/element-web/pull/17691)
+   [\#17691](https://github.com/matronhq/matron-web/pull/17691)
  * Update jsrsasign to ^10.2.0 (Includes fix for CVE-2021-30246)
-   [\#17170](https://github.com/vector-im/element-web/pull/17170)
+   [\#17170](https://github.com/matronhq/matron-web/pull/17170)
  * Migrate to `eslint-plugin-matrix-org`
-   [\#17847](https://github.com/vector-im/element-web/pull/17847)
+   [\#17847](https://github.com/matronhq/matron-web/pull/17847)
  * Remove spurious overflow: auto on #matrixchat element
-   [\#17647](https://github.com/vector-im/element-web/pull/17647)
+   [\#17647](https://github.com/matronhq/matron-web/pull/17647)
  * Enhance security by disallowing CSP object-src rule
-   [\#17818](https://github.com/vector-im/element-web/pull/17818)
+   [\#17818](https://github.com/matronhq/matron-web/pull/17818)
 
-Changes in [1.7.32](https://github.com/vector-im/element-web/releases/tag/v1.7.32) (2021-07-05)
+Changes in [1.7.32](https://github.com/matronhq/matron-web/releases/tag/v1.7.32) (2021-07-05)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.32-rc.1...v1.7.32)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.32-rc.1...v1.7.32)
 
  * No changes from rc.1
 
-Changes in [1.7.32-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.32-rc.1) (2021-06-29)
+Changes in [1.7.32-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.32-rc.1) (2021-06-29)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.31...v1.7.32-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.31...v1.7.32-rc.1)
 
  * Update to react-sdk v3.25.0-rc.1 and js-sdk v12.0.1-rc.1
  * Translations update from Weblate
-   [\#17832](https://github.com/vector-im/element-web/pull/17832)
+   [\#17832](https://github.com/matronhq/matron-web/pull/17832)
  * Fix canvas-filter-polyfill mock path
-   [\#17785](https://github.com/vector-im/element-web/pull/17785)
+   [\#17785](https://github.com/matronhq/matron-web/pull/17785)
  * Mock context-filter-polyfill for app-tests
-   [\#17774](https://github.com/vector-im/element-web/pull/17774)
+   [\#17774](https://github.com/matronhq/matron-web/pull/17774)
  * Add libera.chat to default room directory
-   [\#17772](https://github.com/vector-im/element-web/pull/17772)
+   [\#17772](https://github.com/matronhq/matron-web/pull/17772)
  * Improve typing of Event Index Manager / Seshat
-   [\#17704](https://github.com/vector-im/element-web/pull/17704)
+   [\#17704](https://github.com/matronhq/matron-web/pull/17704)
  * Bump dns-packet from 1.3.1 to 1.3.4
-   [\#17478](https://github.com/vector-im/element-web/pull/17478)
+   [\#17478](https://github.com/matronhq/matron-web/pull/17478)
  * Update matrix-widget-api to fix build issues
-   [\#17747](https://github.com/vector-im/element-web/pull/17747)
+   [\#17747](https://github.com/matronhq/matron-web/pull/17747)
  * Fix whitespace in Dockerfile
-   [\#17742](https://github.com/vector-im/element-web/pull/17742)
+   [\#17742](https://github.com/matronhq/matron-web/pull/17742)
  * Upgrade @types/react and @types/react-dom
-   [\#17723](https://github.com/vector-im/element-web/pull/17723)
+   [\#17723](https://github.com/matronhq/matron-web/pull/17723)
  * Spaces keyboard shortcuts first cut
-   [\#17457](https://github.com/vector-im/element-web/pull/17457)
+   [\#17457](https://github.com/matronhq/matron-web/pull/17457)
  * Labs: feature_report_to_moderators
-   [\#17694](https://github.com/vector-im/element-web/pull/17694)
+   [\#17694](https://github.com/matronhq/matron-web/pull/17694)
 
-Changes in [1.7.31](https://github.com/vector-im/element-web/releases/tag/v1.7.31) (2021-06-21)
+Changes in [1.7.31](https://github.com/matronhq/matron-web/releases/tag/v1.7.31) (2021-06-21)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.31-rc.1...v1.7.31)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.31-rc.1...v1.7.31)
 
  * Upgrade to React SDK 3.24.0 and JS SDK 12.0.0
 
-Changes in [1.7.31-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.31-rc.1) (2021-06-15)
+Changes in [1.7.31-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.31-rc.1) (2021-06-15)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.30...v1.7.31-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.30...v1.7.31-rc.1)
 
  * Upgrade to React SDK 3.24.0-rc.1 and JS SDK 12.0.0-rc.1
  * Translations update from Weblate
-   [\#17655](https://github.com/vector-im/element-web/pull/17655)
+   [\#17655](https://github.com/matronhq/matron-web/pull/17655)
  * Upgrade matrix-react-test-utils for React 17 peer deps
-   [\#17653](https://github.com/vector-im/element-web/pull/17653)
+   [\#17653](https://github.com/matronhq/matron-web/pull/17653)
  * Fix lint errors in Webpack config
-   [\#17626](https://github.com/vector-im/element-web/pull/17626)
+   [\#17626](https://github.com/matronhq/matron-web/pull/17626)
  * Preload only `woff2` fonts
-   [\#17614](https://github.com/vector-im/element-web/pull/17614)
+   [\#17614](https://github.com/matronhq/matron-web/pull/17614)
  * ⚛️ Upgrade to React@17
-   [\#17601](https://github.com/vector-im/element-web/pull/17601)
+   [\#17601](https://github.com/matronhq/matron-web/pull/17601)
 
-Changes in [1.7.30](https://github.com/vector-im/element-web/releases/tag/v1.7.30) (2021-06-07)
+Changes in [1.7.30](https://github.com/matronhq/matron-web/releases/tag/v1.7.30) (2021-06-07)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.30-rc.1...v1.7.30)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.30-rc.1...v1.7.30)
 
  * Upgrade to React SDK 3.23.0 and JS SDK 11.2.0
 
-Changes in [1.7.30-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.30-rc.1) (2021-06-01)
+Changes in [1.7.30-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.30-rc.1) (2021-06-01)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.29...v1.7.30-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.29...v1.7.30-rc.1)
 
  * Upgrade to React SDK 3.23.0-rc.1 and JS SDK 11.2.0-rc.1
  * Translations update from Weblate
-   [\#17526](https://github.com/vector-im/element-web/pull/17526)
+   [\#17526](https://github.com/matronhq/matron-web/pull/17526)
  * Add Modernizr test for Promise.allSettled given js-sdk and react-sdk depend
    on it
-   [\#17464](https://github.com/vector-im/element-web/pull/17464)
+   [\#17464](https://github.com/matronhq/matron-web/pull/17464)
  * Bump libolm dependency, and update package name.
-   [\#17433](https://github.com/vector-im/element-web/pull/17433)
+   [\#17433](https://github.com/matronhq/matron-web/pull/17433)
  * Remove logo spinner
-   [\#17423](https://github.com/vector-im/element-web/pull/17423)
+   [\#17423](https://github.com/matronhq/matron-web/pull/17423)
 
-Changes in [1.7.29](https://github.com/vector-im/element-web/releases/tag/v1.7.29) (2021-05-24)
+Changes in [1.7.29](https://github.com/matronhq/matron-web/releases/tag/v1.7.29) (2021-05-24)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.29-rc.1...v1.7.29)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.29-rc.1...v1.7.29)
 
 ## Security notice
 
-Element Web 1.7.29 fixes (by upgrading to olm 3.2.3) an issue in code used for
+Matron Web 1.7.29 fixes (by upgrading to olm 3.2.3) an issue in code used for
 decrypting server-side stored secrets. The issue could potentially allow a
 malicious homeserver to cause a stack buffer overflow in the affected function
 and to control that function's local variables.
@@ -1101,35 +1101,35 @@ and to control that function's local variables.
 
  * Upgrade to React SDK 3.22.0 and JS SDK 11.1.0
  * [Release] Bump libolm dependency, and update package name
-   [\#17456](https://github.com/vector-im/element-web/pull/17456)
+   [\#17456](https://github.com/matronhq/matron-web/pull/17456)
 
-Changes in [1.7.29-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.29-rc.1) (2021-05-19)
+Changes in [1.7.29-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.29-rc.1) (2021-05-19)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.28...v1.7.29-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.28...v1.7.29-rc.1)
 
  * Upgrade to React SDK 3.22.0-rc.1 and JS SDK 11.1.0-rc.1
  * Translations update from Weblate
-   [\#17384](https://github.com/vector-im/element-web/pull/17384)
+   [\#17384](https://github.com/matronhq/matron-web/pull/17384)
  * Prevent minification of `.html` files
-   [\#17349](https://github.com/vector-im/element-web/pull/17349)
+   [\#17349](https://github.com/matronhq/matron-web/pull/17349)
  * Update matrix-widget-api/react-sdk dependency reference
-   [\#17346](https://github.com/vector-im/element-web/pull/17346)
+   [\#17346](https://github.com/matronhq/matron-web/pull/17346)
  * Add `yarn start:https`
-   [\#16989](https://github.com/vector-im/element-web/pull/16989)
+   [\#16989](https://github.com/matronhq/matron-web/pull/16989)
  * Translations update from Weblate
-   [\#17239](https://github.com/vector-im/element-web/pull/17239)
+   [\#17239](https://github.com/matronhq/matron-web/pull/17239)
  * Remove "in development" flag from voice messages labs documentation
-   [\#17204](https://github.com/vector-im/element-web/pull/17204)
+   [\#17204](https://github.com/matronhq/matron-web/pull/17204)
  * Add required webpack+jest config to load Safari support modules
-   [\#17193](https://github.com/vector-im/element-web/pull/17193)
+   [\#17193](https://github.com/matronhq/matron-web/pull/17193)
 
-Changes in [1.7.28](https://github.com/vector-im/element-web/releases/tag/v1.7.28) (2021-05-17)
+Changes in [1.7.28](https://github.com/matronhq/matron-web/releases/tag/v1.7.28) (2021-05-17)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.28-rc.1...v1.7.28)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.28-rc.1...v1.7.28)
 
 ## Security notice
 
-Element Web 1.7.28 fixes (by upgrading to matrix-react-sdk 3.21.0) a low
+Matron Web 1.7.28 fixes (by upgrading to matrix-react-sdk 3.21.0) a low
 severity issue (GHSA-8796-gc9j-63rv) related to file upload. When uploading a
 file, the local file preview can lead to execution of scripts embedded in the
 uploaded file, but only after several user interactions to open the preview in
@@ -1142,177 +1142,177 @@ this via Matrix's Security Disclosure Policy.
 
  * Upgrade to React SDK 3.21.0 and JS SDK 11.0.0
 
-Changes in [1.7.28-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.28-rc.1) (2021-05-11)
+Changes in [1.7.28-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.28-rc.1) (2021-05-11)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.27...v1.7.28-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.27...v1.7.28-rc.1)
 
  * Upgrade to React SDK 3.21.0-rc.1 and JS SDK 11.0.0-rc.1
  * Switch back to release version of `sanitize-html`
-   [\#17231](https://github.com/vector-im/element-web/pull/17231)
+   [\#17231](https://github.com/matronhq/matron-web/pull/17231)
  * Bump url-parse from 1.4.7 to 1.5.1
-   [\#17199](https://github.com/vector-im/element-web/pull/17199)
+   [\#17199](https://github.com/matronhq/matron-web/pull/17199)
  * Bump lodash from 4.17.20 to 4.17.21
-   [\#17205](https://github.com/vector-im/element-web/pull/17205)
+   [\#17205](https://github.com/matronhq/matron-web/pull/17205)
  * Bump hosted-git-info from 2.8.8 to 2.8.9
-   [\#17219](https://github.com/vector-im/element-web/pull/17219)
+   [\#17219](https://github.com/matronhq/matron-web/pull/17219)
  * Disable host checking on the webpack dev server
-   [\#17194](https://github.com/vector-im/element-web/pull/17194)
+   [\#17194](https://github.com/matronhq/matron-web/pull/17194)
  * Bump ua-parser-js from 0.7.23 to 0.7.24
-   [\#17190](https://github.com/vector-im/element-web/pull/17190)
+   [\#17190](https://github.com/matronhq/matron-web/pull/17190)
 
-Changes in [1.7.27](https://github.com/vector-im/element-web/releases/tag/v1.7.27) (2021-05-10)
+Changes in [1.7.27](https://github.com/matronhq/matron-web/releases/tag/v1.7.27) (2021-05-10)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.27-rc.1...v1.7.27)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.27-rc.1...v1.7.27)
 
  * Upgrade to React SDK 3.20.0 and JS SDK 10.1.0
 
-Changes in [1.7.27-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.27-rc.1) (2021-05-04)
+Changes in [1.7.27-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.27-rc.1) (2021-05-04)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.26...v1.7.27-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.26...v1.7.27-rc.1)
 
  * Upgrade to React SDK 3.20.0-rc.1 and JS SDK 10.1.0-rc.1
  * Translations update from Weblate
-   [\#17160](https://github.com/vector-im/element-web/pull/17160)
+   [\#17160](https://github.com/matronhq/matron-web/pull/17160)
  * Document option for obeying asserted identity
-   [\#17008](https://github.com/vector-im/element-web/pull/17008)
+   [\#17008](https://github.com/matronhq/matron-web/pull/17008)
  * Implement IPC call to Electron to set language
-   [\#17052](https://github.com/vector-im/element-web/pull/17052)
+   [\#17052](https://github.com/matronhq/matron-web/pull/17052)
  * Convert Vector skin react components to Typescript
-   [\#17061](https://github.com/vector-im/element-web/pull/17061)
+   [\#17061](https://github.com/matronhq/matron-web/pull/17061)
  * Add code quality review policy
-   [\#16980](https://github.com/vector-im/element-web/pull/16980)
+   [\#16980](https://github.com/matronhq/matron-web/pull/16980)
  * Register RecorderWorklet from react-sdk
-   [\#17013](https://github.com/vector-im/element-web/pull/17013)
+   [\#17013](https://github.com/matronhq/matron-web/pull/17013)
  * Preload Inter font to avoid FOIT on slow connections
-   [\#17039](https://github.com/vector-im/element-web/pull/17039)
+   [\#17039](https://github.com/matronhq/matron-web/pull/17039)
  * Disable `postcss-calc`'s noisy `warnWhenCannotResolve` option
-   [\#17041](https://github.com/vector-im/element-web/pull/17041)
+   [\#17041](https://github.com/matronhq/matron-web/pull/17041)
 
-Changes in [1.7.26](https://github.com/vector-im/element-web/releases/tag/v1.7.26) (2021-04-26)
+Changes in [1.7.26](https://github.com/matronhq/matron-web/releases/tag/v1.7.26) (2021-04-26)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.26-rc.1...v1.7.26)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.26-rc.1...v1.7.26)
 
  * Upgrade to React SDK 3.19.0 and JS SDK 10.0.0
 
-Changes in [1.7.26-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.26-rc.1) (2021-04-21)
+Changes in [1.7.26-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.26-rc.1) (2021-04-21)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.25...v1.7.26-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.25...v1.7.26-rc.1)
 
  * Upgrade to React SDK 3.19.0-rc.1 and JS SDK 10.0.0-rc.1
  * Translations update from Weblate
-   [\#17031](https://github.com/vector-im/element-web/pull/17031)
+   [\#17031](https://github.com/matronhq/matron-web/pull/17031)
  * Bump ssri from 6.0.1 to 6.0.2
-   [\#17010](https://github.com/vector-im/element-web/pull/17010)
+   [\#17010](https://github.com/matronhq/matron-web/pull/17010)
  * Fix `NODE_ENV` value for CI environments
-   [\#17003](https://github.com/vector-im/element-web/pull/17003)
+   [\#17003](https://github.com/matronhq/matron-web/pull/17003)
  * Use React production mode in CI builds
-   [\#16969](https://github.com/vector-im/element-web/pull/16969)
+   [\#16969](https://github.com/matronhq/matron-web/pull/16969)
  * Labs documentation for DND mode
-   [\#16962](https://github.com/vector-im/element-web/pull/16962)
+   [\#16962](https://github.com/matronhq/matron-web/pull/16962)
  * Rename blackboxing to new option ignore list
-   [\#16965](https://github.com/vector-im/element-web/pull/16965)
+   [\#16965](https://github.com/matronhq/matron-web/pull/16965)
  * Remove velocity-animate from lockfile
-   [\#16963](https://github.com/vector-im/element-web/pull/16963)
+   [\#16963](https://github.com/matronhq/matron-web/pull/16963)
  * Add mobile download link configuration
-   [\#16890](https://github.com/vector-im/element-web/pull/16890)
+   [\#16890](https://github.com/matronhq/matron-web/pull/16890)
  * Switch develop to not-staging Scalar by default
-   [\#16883](https://github.com/vector-im/element-web/pull/16883)
+   [\#16883](https://github.com/matronhq/matron-web/pull/16883)
  * Support a config option to skip login/welcome and go to SSO
-   [\#16880](https://github.com/vector-im/element-web/pull/16880)
+   [\#16880](https://github.com/matronhq/matron-web/pull/16880)
 
-Changes in [1.7.25](https://github.com/vector-im/element-web/releases/tag/v1.7.25) (2021-04-12)
+Changes in [1.7.25](https://github.com/matronhq/matron-web/releases/tag/v1.7.25) (2021-04-12)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.25-rc.1...v1.7.25)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.25-rc.1...v1.7.25)
 
  * Upgrade to React SDK 3.18.0 and JS SDK 9.11.0
 
-Changes in [1.7.25-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.25-rc.1) (2021-04-07)
+Changes in [1.7.25-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.25-rc.1) (2021-04-07)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.24...v1.7.25-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.24...v1.7.25-rc.1)
 
  * Upgrade to React SDK 3.18.0-rc.1 and JS SDK 9.11.0-rc.1
  * Translations update from Weblate
-   [\#16882](https://github.com/vector-im/element-web/pull/16882)
+   [\#16882](https://github.com/matronhq/matron-web/pull/16882)
  * Revert "Docker image: serve pre-compressed assets using gzip_static"
-   [\#16838](https://github.com/vector-im/element-web/pull/16838)
- * Move native node modules documentation to element-desktop
-   [\#16814](https://github.com/vector-im/element-web/pull/16814)
+   [\#16838](https://github.com/matronhq/matron-web/pull/16838)
+ * Move native node modules documentation to matron-desktop
+   [\#16814](https://github.com/matronhq/matron-web/pull/16814)
  * Add user settings for warn before exit
-   [\#16781](https://github.com/vector-im/element-web/pull/16781)
+   [\#16781](https://github.com/matronhq/matron-web/pull/16781)
  * Change ISSUE_TEMPLATE bold lines to proper headers
-   [\#16768](https://github.com/vector-im/element-web/pull/16768)
+   [\#16768](https://github.com/matronhq/matron-web/pull/16768)
  * Add example for deployment into Kubernetes
-   [\#16447](https://github.com/vector-im/element-web/pull/16447)
+   [\#16447](https://github.com/matronhq/matron-web/pull/16447)
  * Create bare-bones `PULL_REQUEST_TEMPLATE.md`
-   [\#16770](https://github.com/vector-im/element-web/pull/16770)
+   [\#16770](https://github.com/matronhq/matron-web/pull/16770)
  * Add webpack config and labs flag docs for voice messages
-   [\#16705](https://github.com/vector-im/element-web/pull/16705)
+   [\#16705](https://github.com/matronhq/matron-web/pull/16705)
 
-Changes in [1.7.24](https://github.com/vector-im/element-web/releases/tag/v1.7.24) (2021-03-29)
+Changes in [1.7.24](https://github.com/matronhq/matron-web/releases/tag/v1.7.24) (2021-03-29)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.24-rc.1...v1.7.24)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.24-rc.1...v1.7.24)
 
  * Upgrade to React SDK 3.17.0 and JS SDK 9.10.0
 
-Changes in [1.7.24-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.24-rc.1) (2021-03-25)
+Changes in [1.7.24-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.24-rc.1) (2021-03-25)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.23...v1.7.24-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.23...v1.7.24-rc.1)
 
  * Upgrade to React SDK 3.17.0-rc.2 and JS SDK 9.10.0-rc.1
  * Translations update from Weblate
-   [\#16766](https://github.com/vector-im/element-web/pull/16766)
+   [\#16766](https://github.com/matronhq/matron-web/pull/16766)
  * Docker image: serve pre-compressed assets using gzip_static
-   [\#16698](https://github.com/vector-im/element-web/pull/16698)
+   [\#16698](https://github.com/matronhq/matron-web/pull/16698)
  * Fix style lint issues
-   [\#16732](https://github.com/vector-im/element-web/pull/16732)
+   [\#16732](https://github.com/matronhq/matron-web/pull/16732)
  * Updated expected webpack output in setup guide
-   [\#16740](https://github.com/vector-im/element-web/pull/16740)
+   [\#16740](https://github.com/matronhq/matron-web/pull/16740)
  * Docs for `loginForWelcome`
-   [\#16468](https://github.com/vector-im/element-web/pull/16468)
+   [\#16468](https://github.com/matronhq/matron-web/pull/16468)
  * Disable rageshake persistence if no logs would be submitted
-   [\#16697](https://github.com/vector-im/element-web/pull/16697)
+   [\#16697](https://github.com/matronhq/matron-web/pull/16697)
 
-Changes in [1.7.23](https://github.com/vector-im/element-web/releases/tag/v1.7.23) (2021-03-15)
+Changes in [1.7.23](https://github.com/matronhq/matron-web/releases/tag/v1.7.23) (2021-03-15)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.23-rc.1...v1.7.23)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.23-rc.1...v1.7.23)
 
  * Upgrade to React SDK 3.16.0 and JS SDK 9.9.0
 
-Changes in [1.7.23-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.23-rc.1) (2021-03-10)
+Changes in [1.7.23-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.23-rc.1) (2021-03-10)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.22...v1.7.23-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.22...v1.7.23-rc.1)
 
  * Upgrade to React SDK 3.16.0-rc.2 and JS SDK 9.9.0-rc.1
  * Translations update from Weblate
-   [\#16655](https://github.com/vector-im/element-web/pull/16655)
+   [\#16655](https://github.com/matronhq/matron-web/pull/16655)
  * Improve docs for customisations
-   [\#16652](https://github.com/vector-im/element-web/pull/16652)
+   [\#16652](https://github.com/matronhq/matron-web/pull/16652)
  * Update triage guide to match the new label scheme
-   [\#16612](https://github.com/vector-im/element-web/pull/16612)
+   [\#16612](https://github.com/matronhq/matron-web/pull/16612)
  * Remove a couple useless 'use strict' calls
-   [\#16650](https://github.com/vector-im/element-web/pull/16650)
+   [\#16650](https://github.com/matronhq/matron-web/pull/16650)
  * Remove old conferencing doc
-   [\#16648](https://github.com/vector-im/element-web/pull/16648)
+   [\#16648](https://github.com/matronhq/matron-web/pull/16648)
  * Bump elliptic from 6.5.3 to 6.5.4
-   [\#16644](https://github.com/vector-im/element-web/pull/16644)
+   [\#16644](https://github.com/matronhq/matron-web/pull/16644)
  * Add option for audio live streaming
-   [\#16604](https://github.com/vector-im/element-web/pull/16604)
+   [\#16604](https://github.com/matronhq/matron-web/pull/16604)
  * Update velocity-animate dependency
-   [\#16605](https://github.com/vector-im/element-web/pull/16605)
+   [\#16605](https://github.com/matronhq/matron-web/pull/16605)
  * Add Edge to the supported tier
-   [\#16611](https://github.com/vector-im/element-web/pull/16611)
+   [\#16611](https://github.com/matronhq/matron-web/pull/16611)
  * Add multi language spell check
-   [\#15851](https://github.com/vector-im/element-web/pull/15851)
+   [\#15851](https://github.com/matronhq/matron-web/pull/15851)
  * Document feature_spaces
-   [\#16538](https://github.com/vector-im/element-web/pull/16538)
+   [\#16538](https://github.com/matronhq/matron-web/pull/16538)
 
-Changes in [1.7.22](https://github.com/vector-im/element-web/releases/tag/v1.7.22) (2021-03-01)
+Changes in [1.7.22](https://github.com/matronhq/matron-web/releases/tag/v1.7.22) (2021-03-01)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.22-rc.1...v1.7.22)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.22-rc.1...v1.7.22)
 
 ## Security notice
 
-Element Web 1.7.22 fixes (by upgrading to matrix-react-sdk 3.15.0) a moderate
+Matron Web 1.7.22 fixes (by upgrading to matrix-react-sdk 3.15.0) a moderate
 severity issue (CVE-2021-21320) where the user content sandbox can be abused to
 trick users into opening unexpected documents after several user interactions.
 The content can be opened with a `blob` origin from the Matrix client, so it is
@@ -1323,399 +1323,399 @@ possible for a malicious document to access user messages and secrets. Thanks to
 
  * Upgrade to React SDK 3.15.0 and JS SDK 9.8.0
 
-Changes in [1.7.22-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.22-rc.1) (2021-02-24)
+Changes in [1.7.22-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.22-rc.1) (2021-02-24)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.21...v1.7.22-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.21...v1.7.22-rc.1)
 
  * Upgrade to React SDK 3.15.0-rc.1 and JS SDK 9.8.0-rc.1
  * Translations update from Weblate
-   [\#16529](https://github.com/vector-im/element-web/pull/16529)
- * Add hostSignup config for element.io clients
-   [\#16515](https://github.com/vector-im/element-web/pull/16515)
+   [\#16529](https://github.com/matronhq/matron-web/pull/16529)
+ * Add hostSignup config for matron.chat clients
+   [\#16515](https://github.com/matronhq/matron-web/pull/16515)
  * VoIP virtual rooms, mkII
-   [\#16442](https://github.com/vector-im/element-web/pull/16442)
+   [\#16442](https://github.com/matronhq/matron-web/pull/16442)
  * Jitsi widget: Read room name from query parameters
-   [\#16456](https://github.com/vector-im/element-web/pull/16456)
+   [\#16456](https://github.com/matronhq/matron-web/pull/16456)
  * fix / sso: make sure to delete only loginToken after redirect
-   [\#16415](https://github.com/vector-im/element-web/pull/16415)
+   [\#16415](https://github.com/matronhq/matron-web/pull/16415)
  * Disable Countly
-   [\#16433](https://github.com/vector-im/element-web/pull/16433)
+   [\#16433](https://github.com/matronhq/matron-web/pull/16433)
 
-Changes in [1.7.21](https://github.com/vector-im/element-web/releases/tag/v1.7.21) (2021-02-16)
+Changes in [1.7.21](https://github.com/matronhq/matron-web/releases/tag/v1.7.21) (2021-02-16)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.21-rc.1...v1.7.21)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.21-rc.1...v1.7.21)
 
  * Upgrade to React SDK 3.14.0 and JS SDK 9.7.0
 
-Changes in [1.7.21-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.21-rc.1) (2021-02-10)
+Changes in [1.7.21-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.21-rc.1) (2021-02-10)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.20...v1.7.21-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.20...v1.7.21-rc.1)
 
  * Upgrade to React SDK 3.14.0-rc.1 and JS SDK 9.7.0-rc.1
  * Translations update from Weblate
-   [\#16427](https://github.com/vector-im/element-web/pull/16427)
+   [\#16427](https://github.com/matronhq/matron-web/pull/16427)
  * Add RegExp dotAll feature test
-   [\#16408](https://github.com/vector-im/element-web/pull/16408)
+   [\#16408](https://github.com/matronhq/matron-web/pull/16408)
  * Fix Electron type merging
-   [\#16405](https://github.com/vector-im/element-web/pull/16405)
+   [\#16405](https://github.com/matronhq/matron-web/pull/16405)
  * README: remove Jenkins reference
-   [\#16381](https://github.com/vector-im/element-web/pull/16381)
+   [\#16381](https://github.com/matronhq/matron-web/pull/16381)
  * Enable PostCSS Calc in webpack builds
-   [\#16307](https://github.com/vector-im/element-web/pull/16307)
+   [\#16307](https://github.com/matronhq/matron-web/pull/16307)
  * Add configuration security best practices to the README.
-   [\#16367](https://github.com/vector-im/element-web/pull/16367)
+   [\#16367](https://github.com/matronhq/matron-web/pull/16367)
  * Upgrade matrix-widget-api
-   [\#16347](https://github.com/vector-im/element-web/pull/16347)
+   [\#16347](https://github.com/matronhq/matron-web/pull/16347)
 
-Changes in [1.7.20](https://github.com/vector-im/element-web/releases/tag/v1.7.20) (2021-02-04)
+Changes in [1.7.20](https://github.com/matronhq/matron-web/releases/tag/v1.7.20) (2021-02-04)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.19...v1.7.20)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.19...v1.7.20)
 
  * Upgrade to React SDK 3.13.1
 
-Changes in [1.7.19](https://github.com/vector-im/element-web/releases/tag/v1.7.19) (2021-02-03)
+Changes in [1.7.19](https://github.com/matronhq/matron-web/releases/tag/v1.7.19) (2021-02-03)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.19-rc.1...v1.7.19)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.19-rc.1...v1.7.19)
 
  * Upgrade to React SDK 3.13.0 and JS SDK 9.6.0
  * [Release] Upgrade matrix-widget-api
-   [\#16348](https://github.com/vector-im/element-web/pull/16348)
+   [\#16348](https://github.com/matronhq/matron-web/pull/16348)
 
-Changes in [1.7.19-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.19-rc.1) (2021-01-29)
+Changes in [1.7.19-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.19-rc.1) (2021-01-29)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.18...v1.7.19-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.18...v1.7.19-rc.1)
 
  * Upgrade to React SDK 3.13.0-rc.1 and JS SDK 9.6.0-rc.1
  * Translations update from Weblate
-   [\#16314](https://github.com/vector-im/element-web/pull/16314)
+   [\#16314](https://github.com/matronhq/matron-web/pull/16314)
  * Use history replaceState instead of redirect for SSO flow
-   [\#16292](https://github.com/vector-im/element-web/pull/16292)
+   [\#16292](https://github.com/matronhq/matron-web/pull/16292)
  * Document the mobile guide toast option
-   [\#16301](https://github.com/vector-im/element-web/pull/16301)
+   [\#16301](https://github.com/matronhq/matron-web/pull/16301)
  * Update widget-api to beta.12
-   [\#16303](https://github.com/vector-im/element-web/pull/16303)
+   [\#16303](https://github.com/matronhq/matron-web/pull/16303)
  * Upgrade deps 2021-01
-   [\#16294](https://github.com/vector-im/element-web/pull/16294)
+   [\#16294](https://github.com/matronhq/matron-web/pull/16294)
  * Move to newer base image for Docker builds
-   [\#16275](https://github.com/vector-im/element-web/pull/16275)
+   [\#16275](https://github.com/matronhq/matron-web/pull/16275)
  * Docs for the VoIP translate pattern option
-   [\#16236](https://github.com/vector-im/element-web/pull/16236)
+   [\#16236](https://github.com/matronhq/matron-web/pull/16236)
  * Fix Riot->Element in permalinkPrefix docs
-   [\#16227](https://github.com/vector-im/element-web/pull/16227)
+   [\#16227](https://github.com/matronhq/matron-web/pull/16227)
  * Supply server_name for optional federation-capable Jitsi auth
-   [\#16215](https://github.com/vector-im/element-web/pull/16215)
+   [\#16215](https://github.com/matronhq/matron-web/pull/16215)
  * Fix Widget API version confusion
-   [\#16212](https://github.com/vector-im/element-web/pull/16212)
+   [\#16212](https://github.com/matronhq/matron-web/pull/16212)
  * Add Hebrew language
-   [\#16210](https://github.com/vector-im/element-web/pull/16210)
+   [\#16210](https://github.com/matronhq/matron-web/pull/16210)
  * Update widget-api to beta 11
-   [\#16177](https://github.com/vector-im/element-web/pull/16177)
+   [\#16177](https://github.com/matronhq/matron-web/pull/16177)
  * Fix develop Docker builds
-   [\#16192](https://github.com/vector-im/element-web/pull/16192)
+   [\#16192](https://github.com/matronhq/matron-web/pull/16192)
  * Skip the service worker for Electron
-   [\#16157](https://github.com/vector-im/element-web/pull/16157)
+   [\#16157](https://github.com/matronhq/matron-web/pull/16157)
  * Use isolated IPC API
-   [\#16137](https://github.com/vector-im/element-web/pull/16137)
+   [\#16137](https://github.com/matronhq/matron-web/pull/16137)
 
-Changes in [1.7.18](https://github.com/vector-im/element-web/releases/tag/v1.7.18) (2021-01-26)
+Changes in [1.7.18](https://github.com/matronhq/matron-web/releases/tag/v1.7.18) (2021-01-26)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.17...v1.7.18)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.17...v1.7.18)
 
  * Upgrade to React SDK 3.12.1 and JS SDK 9.5.1
 
-Changes in [1.7.17](https://github.com/vector-im/element-web/releases/tag/v1.7.17) (2021-01-18)
+Changes in [1.7.17](https://github.com/matronhq/matron-web/releases/tag/v1.7.17) (2021-01-18)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.17-rc.1...v1.7.17)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.17-rc.1...v1.7.17)
 
  * Upgrade to React SDK 3.12.0 and JS SDK 9.5.0
 
-Changes in [1.7.17-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.17-rc.1) (2021-01-13)
+Changes in [1.7.17-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.17-rc.1) (2021-01-13)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.16...v1.7.17-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.16...v1.7.17-rc.1)
 
  * Upgrade to React SDK 3.12.0-rc.1 and JS SDK 9.5.0-rc.1
  * Translations update from Weblate
-   [\#16131](https://github.com/vector-im/element-web/pull/16131)
+   [\#16131](https://github.com/matronhq/matron-web/pull/16131)
  * webplatform: Fix notification closing
-   [\#16028](https://github.com/vector-im/element-web/pull/16028)
+   [\#16028](https://github.com/matronhq/matron-web/pull/16028)
  * Stop building code and types for Element layer
-   [\#15999](https://github.com/vector-im/element-web/pull/15999)
+   [\#15999](https://github.com/matronhq/matron-web/pull/15999)
 
-Changes in [1.7.16](https://github.com/vector-im/element-web/releases/tag/v1.7.16) (2020-12-21)
+Changes in [1.7.16](https://github.com/matronhq/matron-web/releases/tag/v1.7.16) (2020-12-21)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.16-rc.1...v1.7.16)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.16-rc.1...v1.7.16)
 
  * Upgrade to React SDK 3.11.1 and JS SDK 9.4.1
 
-Changes in [1.7.16-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.16-rc.1) (2020-12-16)
+Changes in [1.7.16-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.16-rc.1) (2020-12-16)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.15...v1.7.16-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.15...v1.7.16-rc.1)
 
  * Upgrade to React SDK 3.11.0-rc.2 and JS SDK 9.4.0-rc.2
  * Translations update from Weblate
-   [\#15979](https://github.com/vector-im/element-web/pull/15979)
+   [\#15979](https://github.com/matronhq/matron-web/pull/15979)
  * Bump ini from 1.3.5 to 1.3.7
-   [\#15949](https://github.com/vector-im/element-web/pull/15949)
+   [\#15949](https://github.com/matronhq/matron-web/pull/15949)
  * Document pull request previews
-   [\#15937](https://github.com/vector-im/element-web/pull/15937)
+   [\#15937](https://github.com/matronhq/matron-web/pull/15937)
  * Improve asset path for KaTeX fonts
-   [\#15939](https://github.com/vector-im/element-web/pull/15939)
+   [\#15939](https://github.com/matronhq/matron-web/pull/15939)
  * Fix an important semicolon
-   [\#15912](https://github.com/vector-im/element-web/pull/15912)
+   [\#15912](https://github.com/matronhq/matron-web/pull/15912)
  * Bump highlight.js from 10.1.2 to 10.4.1
-   [\#15898](https://github.com/vector-im/element-web/pull/15898)
+   [\#15898](https://github.com/matronhq/matron-web/pull/15898)
  * Add gitter.im to room directory
-   [\#15894](https://github.com/vector-im/element-web/pull/15894)
+   [\#15894](https://github.com/matronhq/matron-web/pull/15894)
  * Extend Platform to support idpId for SSO flows
-   [\#15771](https://github.com/vector-im/element-web/pull/15771)
+   [\#15771](https://github.com/matronhq/matron-web/pull/15771)
  * Include KaTeX CSS as a dependency
-   [\#15843](https://github.com/vector-im/element-web/pull/15843)
+   [\#15843](https://github.com/matronhq/matron-web/pull/15843)
 
-Changes in [1.7.15](https://github.com/vector-im/element-web/releases/tag/v1.7.15) (2020-12-07)
+Changes in [1.7.15](https://github.com/matronhq/matron-web/releases/tag/v1.7.15) (2020-12-07)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.15-rc.1...v1.7.15)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.15-rc.1...v1.7.15)
 
  * Upgrade to React SDK 3.10.0 and JS SDK 9.3.0
 
-Changes in [1.7.15-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.15-rc.1) (2020-12-02)
+Changes in [1.7.15-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.15-rc.1) (2020-12-02)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.14...v1.7.15-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.14...v1.7.15-rc.1)
 
  * Upgrade to React SDK 3.10.0-rc.1 and JS SDK 9.3.0-rc.1
  * Include KaTeX CSS as a dependency
-   [\#15843](https://github.com/vector-im/element-web/pull/15843)
+   [\#15843](https://github.com/matronhq/matron-web/pull/15843)
  * Translations update from Weblate
-   [\#15884](https://github.com/vector-im/element-web/pull/15884)
+   [\#15884](https://github.com/matronhq/matron-web/pull/15884)
  * added katex.min.css to webpack for math support (main PR in matrix-react-
    sdk)
-   [\#15277](https://github.com/vector-im/element-web/pull/15277)
+   [\#15277](https://github.com/matronhq/matron-web/pull/15277)
  * Rebrand package name and other details
-   [\#15828](https://github.com/vector-im/element-web/pull/15828)
+   [\#15828](https://github.com/matronhq/matron-web/pull/15828)
  * Bump highlight.js from 9.18.1 to 10.1.2
-   [\#15819](https://github.com/vector-im/element-web/pull/15819)
+   [\#15819](https://github.com/matronhq/matron-web/pull/15819)
  * Update branding of packaging artifacts
-   [\#15810](https://github.com/vector-im/element-web/pull/15810)
+   [\#15810](https://github.com/matronhq/matron-web/pull/15810)
  * Update the react-sdk reference in the lockfile
-   [\#15814](https://github.com/vector-im/element-web/pull/15814)
- * Update widget API for good measure in Element Web
-   [\#15812](https://github.com/vector-im/element-web/pull/15812)
+   [\#15814](https://github.com/matronhq/matron-web/pull/15814)
+ * Update widget API for good measure in Matron Web
+   [\#15812](https://github.com/matronhq/matron-web/pull/15812)
  * Stop publishing Element to NPM
-   [\#15811](https://github.com/vector-im/element-web/pull/15811)
+   [\#15811](https://github.com/matronhq/matron-web/pull/15811)
  * Add inotify instance limit info to README
-   [\#15795](https://github.com/vector-im/element-web/pull/15795)
+   [\#15795](https://github.com/matronhq/matron-web/pull/15795)
 
-Changes in [1.7.14](https://github.com/vector-im/element-web/releases/tag/v1.7.14) (2020-11-23)
+Changes in [1.7.14](https://github.com/matronhq/matron-web/releases/tag/v1.7.14) (2020-11-23)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.14-rc.1...v1.7.14)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.14-rc.1...v1.7.14)
 
  * Upgrade to React SDK 3.9.0 and JS SDK 9.2.0
 
-Changes in [1.7.14-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.14-rc.1) (2020-11-18)
+Changes in [1.7.14-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.14-rc.1) (2020-11-18)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.13...v1.7.14-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.13...v1.7.14-rc.1)
 
  * Upgrade to React SDK 3.9.0-rc.1 and JS SDK 9.2.0-rc.1
  * Translations update from Weblate
-   [\#15767](https://github.com/vector-im/element-web/pull/15767)
- * Update the widget-api for element-web
-   [\#15717](https://github.com/vector-im/element-web/pull/15717)
+   [\#15767](https://github.com/matronhq/matron-web/pull/15767)
+ * Update the widget-api for matron-web
+   [\#15717](https://github.com/matronhq/matron-web/pull/15717)
 
-Changes in [1.7.13](https://github.com/vector-im/element-web/releases/tag/v1.7.13) (2020-11-09)
+Changes in [1.7.13](https://github.com/matronhq/matron-web/releases/tag/v1.7.13) (2020-11-09)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.13-rc.1...v1.7.13)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.13-rc.1...v1.7.13)
 
  * Upgrade to React SDK 3.8.0 and JS SDK 9.1.0
 
-Changes in [1.7.13-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.13-rc.1) (2020-11-04)
+Changes in [1.7.13-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.13-rc.1) (2020-11-04)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.12...v1.7.13-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.12...v1.7.13-rc.1)
 
  * Upgrade to React SDK 3.8.0-rc.1 and JS SDK 9.1.0-rc.1
  * Translations update from Weblate
-   [\#15644](https://github.com/vector-im/element-web/pull/15644)
+   [\#15644](https://github.com/matronhq/matron-web/pull/15644)
  * Add countly experiment to develop/nightly configs
-   [\#15614](https://github.com/vector-im/element-web/pull/15614)
+   [\#15614](https://github.com/matronhq/matron-web/pull/15614)
  * Add documentation for new UIFeature flag regarding room history settings
-   [\#15592](https://github.com/vector-im/element-web/pull/15592)
+   [\#15592](https://github.com/matronhq/matron-web/pull/15592)
  * Rename Docker repo in docs
-   [\#15590](https://github.com/vector-im/element-web/pull/15590)
+   [\#15590](https://github.com/matronhq/matron-web/pull/15590)
  * Fix Jitsi regressions with custom themes
-   [\#15575](https://github.com/vector-im/element-web/pull/15575)
+   [\#15575](https://github.com/matronhq/matron-web/pull/15575)
 
-Changes in [1.7.12](https://github.com/vector-im/element-web/releases/tag/v1.7.12) (2020-10-28)
+Changes in [1.7.12](https://github.com/matronhq/matron-web/releases/tag/v1.7.12) (2020-10-28)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.11...v1.7.12)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.11...v1.7.12)
 
  * Upgrade to React SDK 3.7.1 and JS SDK 9.0.1
  * [Release] Fix Jitsi regressions with custom themes
-   [\#15577](https://github.com/vector-im/element-web/pull/15577)
+   [\#15577](https://github.com/matronhq/matron-web/pull/15577)
 
-Changes in [1.7.11](https://github.com/vector-im/element-web/releases/tag/v1.7.11) (2020-10-26)
+Changes in [1.7.11](https://github.com/matronhq/matron-web/releases/tag/v1.7.11) (2020-10-26)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.11-rc.1...v1.7.11)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.11-rc.1...v1.7.11)
 
  * Upgrade to React SDK 3.7.0 and JS SDK 9.0.0
 
-Changes in [1.7.11-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.11-rc.1) (2020-10-21)
+Changes in [1.7.11-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.11-rc.1) (2020-10-21)
 =========================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.10...v1.7.11-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.10...v1.7.11-rc.1)
 
  * Upgrade to React SDK 3.7.0-rc.2 and JS SDK 9.0.0-rc.1
  * Update Weblate URL
-   [\#15516](https://github.com/vector-im/element-web/pull/15516)
+   [\#15516](https://github.com/matronhq/matron-web/pull/15516)
  * Translations update from Weblate
-   [\#15517](https://github.com/vector-im/element-web/pull/15517)
+   [\#15517](https://github.com/matronhq/matron-web/pull/15517)
  * Jitsi accept theme variable and restyle
-   [\#15499](https://github.com/vector-im/element-web/pull/15499)
+   [\#15499](https://github.com/matronhq/matron-web/pull/15499)
  * Skip editor confirmation of upgrades
-   [\#15506](https://github.com/vector-im/element-web/pull/15506)
+   [\#15506](https://github.com/matronhq/matron-web/pull/15506)
  * Adjust for new widget messaging APIs
-   [\#15495](https://github.com/vector-im/element-web/pull/15495)
+   [\#15495](https://github.com/matronhq/matron-web/pull/15495)
  * Use HTTPS_PROXY environment variable for downloading external_api.min…
-   [\#15479](https://github.com/vector-im/element-web/pull/15479)
+   [\#15479](https://github.com/matronhq/matron-web/pull/15479)
  * Document customisation points
-   [\#15475](https://github.com/vector-im/element-web/pull/15475)
+   [\#15475](https://github.com/matronhq/matron-web/pull/15475)
  * Don't fatally end the Jitsi widget when it's not being used as a widget
-   [\#15466](https://github.com/vector-im/element-web/pull/15466)
+   [\#15466](https://github.com/matronhq/matron-web/pull/15466)
  * electron-platform: Pass the user/devce id pair when initializing the event
    index.
-   [\#15455](https://github.com/vector-im/element-web/pull/15455)
+   [\#15455](https://github.com/matronhq/matron-web/pull/15455)
 
-Changes in [1.7.10](https://github.com/vector-im/element-web/releases/tag/v1.7.10) (2020-10-20)
+Changes in [1.7.10](https://github.com/matronhq/matron-web/releases/tag/v1.7.10) (2020-10-20)
 ===============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.9...v1.7.10)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.9...v1.7.10)
 
  * [Release] Adjust for new widget messaging APIs
-   [\#15497](https://github.com/vector-im/element-web/pull/15497)
+   [\#15497](https://github.com/matronhq/matron-web/pull/15497)
  * Upgrade to React SDK 3.6.1
 
-Changes in [1.7.9](https://github.com/vector-im/element-web/releases/tag/v1.7.9) (2020-10-12)
+Changes in [1.7.9](https://github.com/matronhq/matron-web/releases/tag/v1.7.9) (2020-10-12)
 =============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.9-rc.1...v1.7.9)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.9-rc.1...v1.7.9)
 
  * Upgrade to React SDK 3.6.0 and JS SDK 8.5.0
 
-Changes in [1.7.9-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.9-rc.1) (2020-10-07)
+Changes in [1.7.9-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.9-rc.1) (2020-10-07)
 =======================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.8...v1.7.9-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.8...v1.7.9-rc.1)
 
  * Upgrade to React SDK 3.6.0-rc.1 and JS SDK 8.5.0-rc.1
  * Update from Weblate
-   [\#15406](https://github.com/vector-im/element-web/pull/15406)
+   [\#15406](https://github.com/matronhq/matron-web/pull/15406)
  * Update Jest and JSDOM
-   [\#15402](https://github.com/vector-im/element-web/pull/15402)
+   [\#15402](https://github.com/matronhq/matron-web/pull/15402)
  * Add support for dehydration/fallback keys
-   [\#15398](https://github.com/vector-im/element-web/pull/15398)
+   [\#15398](https://github.com/matronhq/matron-web/pull/15398)
  * Remove riot-bot from sample config
-   [\#15376](https://github.com/vector-im/element-web/pull/15376)
+   [\#15376](https://github.com/matronhq/matron-web/pull/15376)
  * Switch to using the Widget API SDK for Jitsi widgets
-   [\#15102](https://github.com/vector-im/element-web/pull/15102)
+   [\#15102](https://github.com/matronhq/matron-web/pull/15102)
  * Remove workbox
-   [\#15352](https://github.com/vector-im/element-web/pull/15352)
+   [\#15352](https://github.com/matronhq/matron-web/pull/15352)
  * Disable workbox when running in webpack dev server, not in dev mode
-   [\#15345](https://github.com/vector-im/element-web/pull/15345)
+   [\#15345](https://github.com/matronhq/matron-web/pull/15345)
  * Update Riot -> Element in contribute.json
-   [\#15326](https://github.com/vector-im/element-web/pull/15326)
+   [\#15326](https://github.com/matronhq/matron-web/pull/15326)
  * Update Riot -> Element in redeploy.py
-   [\#15336](https://github.com/vector-im/element-web/pull/15336)
+   [\#15336](https://github.com/matronhq/matron-web/pull/15336)
  * Update Riot -> Element in docs/feature-flags.md
-   [\#15325](https://github.com/vector-im/element-web/pull/15325)
- * Update Riot -> Element in element.io/README.md
-   [\#15327](https://github.com/vector-im/element-web/pull/15327)
+   [\#15325](https://github.com/matronhq/matron-web/pull/15325)
+ * Update Riot -> Element in matron.chat/README.md
+   [\#15327](https://github.com/matronhq/matron-web/pull/15327)
  * Update Riot -> Element in VectorAuthFooter
-   [\#15328](https://github.com/vector-im/element-web/pull/15328)
+   [\#15328](https://github.com/matronhq/matron-web/pull/15328)
  * Update Riot -> Element in VectorEmbeddedPage
-   [\#15329](https://github.com/vector-im/element-web/pull/15329)
+   [\#15329](https://github.com/matronhq/matron-web/pull/15329)
  * Update Riot -> Element in docs/review.md
-   [\#15330](https://github.com/vector-im/element-web/pull/15330)
+   [\#15330](https://github.com/matronhq/matron-web/pull/15330)
  * Update Riot -> Element in welcome.html
-   [\#15332](https://github.com/vector-im/element-web/pull/15332)
+   [\#15332](https://github.com/matronhq/matron-web/pull/15332)
  * Update Riot -> Element in issues-burndown.pl
-   [\#15333](https://github.com/vector-im/element-web/pull/15333)
+   [\#15333](https://github.com/matronhq/matron-web/pull/15333)
  * Update Riot -> Element in redeploy.py
-   [\#15334](https://github.com/vector-im/element-web/pull/15334)
+   [\#15334](https://github.com/matronhq/matron-web/pull/15334)
  * Update Riot -> Element in index.ts
-   [\#15335](https://github.com/vector-im/element-web/pull/15335)
- * Update Riot -> Element Web in issue templates
-   [\#15324](https://github.com/vector-im/element-web/pull/15324)
+   [\#15335](https://github.com/matronhq/matron-web/pull/15335)
+ * Update Riot -> Matron Web in issue templates
+   [\#15324](https://github.com/matronhq/matron-web/pull/15324)
  * Give the Jitsi widget an icon to help with discovery
-   [\#15316](https://github.com/vector-im/element-web/pull/15316)
+   [\#15316](https://github.com/matronhq/matron-web/pull/15316)
  * Jitsi widget wrapper updates for hangup button
-   [\#15219](https://github.com/vector-im/element-web/pull/15219)
+   [\#15219](https://github.com/matronhq/matron-web/pull/15219)
  * Tidy up Service Worker, only run Workbox in production
-   [\#15271](https://github.com/vector-im/element-web/pull/15271)
+   [\#15271](https://github.com/matronhq/matron-web/pull/15271)
  * Remove conference handler
-   [\#15274](https://github.com/vector-im/element-web/pull/15274)
+   [\#15274](https://github.com/matronhq/matron-web/pull/15274)
  * Rebrand the webpack pipeline for Element
-   [\#15266](https://github.com/vector-im/element-web/pull/15266)
+   [\#15266](https://github.com/matronhq/matron-web/pull/15266)
  * Replace dummy sw.js with pre-caching and runtime-caching workbox SW
-   [\#15196](https://github.com/vector-im/element-web/pull/15196)
+   [\#15196](https://github.com/matronhq/matron-web/pull/15196)
 
-Changes in [1.7.8](https://github.com/vector-im/element-web/releases/tag/v1.7.8) (2020-09-28)
+Changes in [1.7.8](https://github.com/matronhq/matron-web/releases/tag/v1.7.8) (2020-09-28)
 =============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.8-rc.1...v1.7.8)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.8-rc.1...v1.7.8)
 
  * Upgrade to React SDK 3.5.0 and JS SDK 8.4.1
 
-Changes in [1.7.8-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.8-rc.1) (2020-09-23)
+Changes in [1.7.8-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.8-rc.1) (2020-09-23)
 =======================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.7...v1.7.8-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.7...v1.7.8-rc.1)
 
  * Upgrade to React SDK 3.5.0-rc.1 and JS SDK 8.4.0-rc.1
  * Update from Weblate
-   [\#15262](https://github.com/vector-im/element-web/pull/15262)
+   [\#15262](https://github.com/matronhq/matron-web/pull/15262)
  * Upgrade sanitize-html
-   [\#15260](https://github.com/vector-im/element-web/pull/15260)
+   [\#15260](https://github.com/matronhq/matron-web/pull/15260)
  * Document config for preferring Secure Backup setup methods
-   [\#15251](https://github.com/vector-im/element-web/pull/15251)
+   [\#15251](https://github.com/matronhq/matron-web/pull/15251)
  * Add end-user documentation for UI features
-   [\#15190](https://github.com/vector-im/element-web/pull/15190)
+   [\#15190](https://github.com/matronhq/matron-web/pull/15190)
  * Update git checkout instructions
-   [\#15218](https://github.com/vector-im/element-web/pull/15218)
+   [\#15218](https://github.com/matronhq/matron-web/pull/15218)
  * If no bug_report_endpoint_url, hide rageshaking from the App
-   [\#15201](https://github.com/vector-im/element-web/pull/15201)
+   [\#15201](https://github.com/matronhq/matron-web/pull/15201)
  * Bump node-fetch from 2.6.0 to 2.6.1
-   [\#15153](https://github.com/vector-im/element-web/pull/15153)
+   [\#15153](https://github.com/matronhq/matron-web/pull/15153)
  * Remove references to Travis CI
-   [\#15137](https://github.com/vector-im/element-web/pull/15137)
+   [\#15137](https://github.com/matronhq/matron-web/pull/15137)
  * Fix onNewScreen to use replace when going from roomId->roomAlias
-   [\#15127](https://github.com/vector-im/element-web/pull/15127)
+   [\#15127](https://github.com/matronhq/matron-web/pull/15127)
  * Enable Estonian in language menu
-   [\#15136](https://github.com/vector-im/element-web/pull/15136)
+   [\#15136](https://github.com/matronhq/matron-web/pull/15136)
 
-Changes in [1.7.7](https://github.com/vector-im/element-web/releases/tag/v1.7.7) (2020-09-14)
+Changes in [1.7.7](https://github.com/matronhq/matron-web/releases/tag/v1.7.7) (2020-09-14)
 =============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.6...v1.7.7)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.6...v1.7.7)
 
  * Upgrade to React SDK 3.4.1
 
-Changes in [1.7.6](https://github.com/vector-im/element-web/releases/tag/v1.7.6) (2020-09-14)
+Changes in [1.7.6](https://github.com/matronhq/matron-web/releases/tag/v1.7.6) (2020-09-14)
 =============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.6-rc.1...v1.7.6)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.6-rc.1...v1.7.6)
 
  * Upgrade to React SDK 3.4.0 and JS SDK 8.3.0
 
-Changes in [1.7.6-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.6-rc.1) (2020-09-09)
+Changes in [1.7.6-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.6-rc.1) (2020-09-09)
 =======================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.5...v1.7.6-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.5...v1.7.6-rc.1)
 
  * Upgrade to React SDK 3.4.0-rc.1 and JS SDK 8.3.0-rc.1
  * Update from Weblate
-   [\#15125](https://github.com/vector-im/element-web/pull/15125)
+   [\#15125](https://github.com/matronhq/matron-web/pull/15125)
  * Support usage of Jitsi widgets with "openidtoken-jwt" auth
-   [\#15114](https://github.com/vector-im/element-web/pull/15114)
+   [\#15114](https://github.com/matronhq/matron-web/pull/15114)
  * Fix eslint ts override tsx matching and delint
-   [\#15064](https://github.com/vector-im/element-web/pull/15064)
+   [\#15064](https://github.com/matronhq/matron-web/pull/15064)
  * Add testing to review guidelines
-   [\#15050](https://github.com/vector-im/element-web/pull/15050)
+   [\#15050](https://github.com/matronhq/matron-web/pull/15050)
 
-Changes in [1.7.5](https://github.com/vector-im/element-web/releases/tag/v1.7.5) (2020-09-01)
+Changes in [1.7.5](https://github.com/matronhq/matron-web/releases/tag/v1.7.5) (2020-09-01)
 =============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.5-rc.1...v1.7.5)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.5-rc.1...v1.7.5)
 
 ## Security notice
 
-Element Web 1.7.5 fixes an issue where encrypted state events could break incoming call handling.
+Matron Web 1.7.5 fixes an issue where encrypted state events could break incoming call handling.
 Thanks to @awesome-michael from Awesome Technologies for responsibly disclosing this via Matrix's
 Security Disclosure Policy.
 
@@ -1723,78 +1723,78 @@ Security Disclosure Policy.
 
  * Upgrade to React SDK 3.3.0 and JS SDK 8.2.0
 
-Changes in [1.7.5-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.5-rc.1) (2020-08-26)
+Changes in [1.7.5-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.5-rc.1) (2020-08-26)
 =======================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.4...v1.7.5-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.4...v1.7.5-rc.1)
 
  * Upgrade to React SDK 3.3.0-rc.1 and JS SDK 8.2.0-rc.1
  * Update from Weblate
-   [\#15045](https://github.com/vector-im/element-web/pull/15045)
+   [\#15045](https://github.com/matronhq/matron-web/pull/15045)
  * Document .well-known E2EE secure backup setting
-   [\#15003](https://github.com/vector-im/element-web/pull/15003)
+   [\#15003](https://github.com/matronhq/matron-web/pull/15003)
  * Add docs for communities v2 prototyping feature flag
-   [\#15013](https://github.com/vector-im/element-web/pull/15013)
+   [\#15013](https://github.com/matronhq/matron-web/pull/15013)
  * Update links in README.md to point to Element
-   [\#14973](https://github.com/vector-im/element-web/pull/14973)
+   [\#14973](https://github.com/matronhq/matron-web/pull/14973)
  * Make kabyle translation available
-   [\#15027](https://github.com/vector-im/element-web/pull/15027)
+   [\#15027](https://github.com/matronhq/matron-web/pull/15027)
  * Change Riot to Element in readme
-   [\#15016](https://github.com/vector-im/element-web/pull/15016)
+   [\#15016](https://github.com/matronhq/matron-web/pull/15016)
  * Update links to element in the readme
-   [\#15014](https://github.com/vector-im/element-web/pull/15014)
+   [\#15014](https://github.com/matronhq/matron-web/pull/15014)
  * Link to Element in F-Droid as well
-   [\#15002](https://github.com/vector-im/element-web/pull/15002)
+   [\#15002](https://github.com/matronhq/matron-web/pull/15002)
  * Settings v3: Update documentation and configs for new feature flag behaviour
-   [\#14986](https://github.com/vector-im/element-web/pull/14986)
+   [\#14986](https://github.com/matronhq/matron-web/pull/14986)
  * Update jitsi.md with Element Android details
-   [\#14952](https://github.com/vector-im/element-web/pull/14952)
+   [\#14952](https://github.com/matronhq/matron-web/pull/14952)
  * TypeScript: enable es2019 lib for newer definitions
-   [\#14983](https://github.com/vector-im/element-web/pull/14983)
+   [\#14983](https://github.com/matronhq/matron-web/pull/14983)
  * Add reaction preview labs flags to develop
-   [\#14979](https://github.com/vector-im/element-web/pull/14979)
+   [\#14979](https://github.com/matronhq/matron-web/pull/14979)
  * Document new labs tweaks
-   [\#14958](https://github.com/vector-im/element-web/pull/14958)
+   [\#14958](https://github.com/matronhq/matron-web/pull/14958)
 
-Changes in [1.7.4](https://github.com/vector-im/element-web/releases/tag/v1.7.4) (2020-08-17)
+Changes in [1.7.4](https://github.com/matronhq/matron-web/releases/tag/v1.7.4) (2020-08-17)
 =============================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.4-rc.1...v1.7.4)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.4-rc.1...v1.7.4)
 
  * Upgrade to React SDK 3.2.0 and JS SDK 8.1.0
 
-Changes in [1.7.4-rc.1](https://github.com/vector-im/element-web/releases/tag/v1.7.4-rc.1) (2020-08-13)
+Changes in [1.7.4-rc.1](https://github.com/matronhq/matron-web/releases/tag/v1.7.4-rc.1) (2020-08-13)
 =======================================================================================================
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.3...v1.7.4-rc.1)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.3...v1.7.4-rc.1)
 
  * Upgrade to React SDK 3.2.0-rc.1 and JS SDK 8.1.0-rc.1
- * Update policy links to element.io
-   [\#14905](https://github.com/vector-im/element-web/pull/14905)
+ * Update policy links to matron.chat
+   [\#14905](https://github.com/matronhq/matron-web/pull/14905)
  * Update from Weblate
-   [\#14949](https://github.com/vector-im/element-web/pull/14949)
+   [\#14949](https://github.com/matronhq/matron-web/pull/14949)
  * Try to close notification on all platforms which support it, not just
    electron
-   [\#14939](https://github.com/vector-im/element-web/pull/14939)
+   [\#14939](https://github.com/matronhq/matron-web/pull/14939)
  * Update bug report submission URL
-   [\#14903](https://github.com/vector-im/element-web/pull/14903)
+   [\#14903](https://github.com/matronhq/matron-web/pull/14903)
  * Fix arm docker build
-   [\#14522](https://github.com/vector-im/element-web/pull/14522)
+   [\#14522](https://github.com/matronhq/matron-web/pull/14522)
 
-Changes in [1.7.3](https://github.com/vector-im/element-web/releases/tag/v1.7.3) (2020-08-05)
+Changes in [1.7.3](https://github.com/matronhq/matron-web/releases/tag/v1.7.3) (2020-08-05)
 =============================================================================================
 
 ## Security notice
 
-Element Web 1.7.3 (as well as the earlier release 1.7.2) fixes an issue where
+Matron Web 1.7.3 (as well as the earlier release 1.7.2) fixes an issue where
 replying to a specially formatted message would make it seem like the replier
 said something they did not. Thanks to Sorunome for responsibly disclosing this
 via Matrix's Security Disclosure Policy.
 
-Element Web 1.7.3 (as well as the earlier release 1.7.2) fixes an issue where an
+Matron Web 1.7.3 (as well as the earlier release 1.7.2) fixes an issue where an
 unexpected language ID in a code block could cause Element to crash. Thanks to
 SakiiR for responsibly disclosing this via Matrix's Security Disclosure Policy.
 
 ## All changes
 
-[Full Changelog](https://github.com/vector-im/element-web/compare/v1.7.3-rc.1...v1.7.3)
+[Full Changelog](https://github.com/matronhq/matron-web/compare/v1.7.3-rc.1...v1.7.3)
 
  * Upgrade to React SDK 3.1.0 and JS SDK 8.0.1
 

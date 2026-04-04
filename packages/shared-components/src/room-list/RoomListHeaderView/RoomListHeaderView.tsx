@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -9,9 +9,9 @@ import React, { type JSX } from "react";
 import { IconButton, H1 } from "@vector-im/compound-web";
 import ComposeIcon from "@vector-im/compound-design-tokens/assets/web/icons/compose";
 
-import { type ViewModel, useViewModel } from "../../core/viewmodel";
-import { Flex } from "../../core/utils/Flex";
-import { useI18n } from "../../core/i18n/i18nContext";
+import { type ViewModel, useViewModel } from "../../viewmodel";
+import { Flex } from "../../utils/Flex";
+import { useI18n } from "../../utils/i18nContext";
 import { ComposeMenuView, OptionMenuView, SpaceMenuView } from "./menu";
 import styles from "./RoomListHeaderView.module.css";
 
@@ -103,7 +103,7 @@ export interface RoomListHeaderViewActions {
 /**
  * The view model for the room list header component.
  */
-export type RoomListHeaderViewModel = ViewModel<RoomListHeaderViewSnapshot, RoomListHeaderViewActions>;
+export type RoomListHeaderViewModel = ViewModel<RoomListHeaderViewSnapshot> & RoomListHeaderViewActions;
 
 interface RoomListHeaderViewProps {
     /**

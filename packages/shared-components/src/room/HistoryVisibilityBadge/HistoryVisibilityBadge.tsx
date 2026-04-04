@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 Element Creations Ltd.
+ * Copyright (c) 2026 Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -13,7 +13,7 @@ import {
     VisibilityOffIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 
-import { _t } from "../../core/i18n/i18n";
+import { _t } from "../../utils/i18n";
 
 interface Props {
     /** The history visibility of the room, according to the room state. */

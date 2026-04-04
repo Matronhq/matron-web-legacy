@@ -35,7 +35,7 @@ clients commit to doing the associated clean up work once a feature stabilises.
 When starting work on a feature, we should create a matching feature flag:
 
 1. Add a new
-   [setting](https://github.com/element-hq/element-web/blob/develop/src/settings/Settings.tsx)
+   [setting](https://github.com/matronhq/matron-web/blob/develop/src/settings/Settings.tsx)
    of the form:
 
 ```js
@@ -53,7 +53,7 @@ When starting work on a feature, we should create a matching feature flag:
 SettingsStore.getValue("feature_cats");
 ```
 
-3. Document the feature in the [labs documentation](https://github.com/element-hq/element-web/blob/develop/docs/labs.md)
+3. Document the feature in the [labs documentation](https://github.com/matronhq/matron-web/blob/develop/docs/labs.md)
 
 With these steps completed, the feature is disabled by default, but can be
 enabled on develop and nightly by interested users for testing.
@@ -64,9 +64,9 @@ The following lists a few common options.
 ## Enabling by default on develop and nightly
 
 Set the feature to `true` in the
-[develop](https://github.com/element-hq/element-web/blob/develop/apps/web/element.io/develop/config.json)
+[develop](https://github.com/matronhq/matron-web/blob/develop/matron.chat/develop/config.json)
 and
-[nightly](https://github.com/element-hq/element-web/blob/develop/apps/desktop/element.io/nightly/config.json)
+[nightly](https://github.com/matronhq/matron-desktop/blob/develop/matron.chat/nightly/config.json)
 configs:
 
 ```json
@@ -78,12 +78,12 @@ configs:
 ## Enabling by default on staging, app, and release
 
 Set the feature to `true` in the
-[staging / app](https://github.com/element-hq/element-web/blob/develop/apps/web/element.io/app/config.json)
+[staging / app](https://github.com/matronhq/matron-web/blob/develop/matron.chat/app/config.json)
 and
-[release](https://github.com/element-hq/element-web/blob/develop/apps/desktop/element.io/release/config.json)
+[release](https://github.com/matronhq/matron-desktop/blob/develop/matron.chat/release/config.json)
 configs.
 
-**Note:** The above will only enable the feature for https://app.element.io and official Element
+**Note:** The above will only enable the feature for https://app.matron.chat and official Element
 Desktop builds. It will not be enabled for self-hosted installed, custom desktop builds, etc. To
 cover these cases, change the setting's `default` in `Settings.tsx` to `true`.
 
@@ -93,21 +93,21 @@ Once we're confident that a feature is working well, we should remove or convert
 
 If the feature is meant to be turned off/on by the user:
 
-1. Remove `isFeature` from the [setting](https://github.com/element-hq/element-web/blob/develop/src/settings/Settings.ts)
+1. Remove `isFeature` from the [setting](https://github.com/matronhq/matron-web/blob/develop/src/settings/Settings.ts)
 2. Change the `default` to `true` (if desired).
-3. Remove the feature from the [labs documentation](https://github.com/element-hq/element-web/blob/develop/docs/labs.md)
+3. Remove the feature from the [labs documentation](https://github.com/matronhq/matron-web/blob/develop/docs/labs.md)
 4. Celebrate! 🥳
 
 If the feature is meant to be forced on (non-configurable):
 
-1. Remove the [setting](https://github.com/element-hq/element-web/blob/develop/src/settings/Settings.ts)
+1. Remove the [setting](https://github.com/matronhq/matron-web/blob/develop/src/settings/Settings.ts)
 2. Remove all `getValue` lines that test for the feature.
-3. Remove the feature from the [labs documentation](https://github.com/element-hq/element-web/blob/develop/docs/labs.md)
+3. Remove the feature from the [labs documentation](https://github.com/matronhq/matron-web/blob/develop/docs/labs.md)
 4. If applicable, remove the feature state from
-   [develop](https://github.com/element-hq/element-web/blob/develop/apps/web/element.io/develop/config.json),
-   [nightly](https://github.com/element-hq/element-web/blob/develop/apps/desktop/element.io/nightly/config.json),
-   [staging / app](https://github.com/element-hq/element-web/blob/develop/apps/web/element.io/app/config.json),
+   [develop](https://github.com/matronhq/matron-web/blob/develop/matron.chat/develop/config.json),
+   [nightly](https://github.com/matronhq/matron-desktop/blob/develop/matron.chat/nightly/config.json),
+   [staging / app](https://github.com/matronhq/matron-web/blob/develop/matron.chat/app/config.json),
    and
-   [release](https://github.com/element-hq/element-web/blob/develop/apps/desktop/element.io/release/config.json)
+   [release](https://github.com/matronhq/matron-desktop/blob/develop/matron.chat/release/config.json)
    configs
 5. Celebrate! 🥳

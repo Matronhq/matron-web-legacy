@@ -89,7 +89,7 @@ jobs:
                       const { stateReason, timelineItems: { edges } } = result.repository.issue;
 
                       const RAGESHAKE_OWNER = "matrix-org";
-                      const RAGESHAKE_REPO = "element-web-rageshakes";
+                      const RAGESHAKE_REPO = "matron-web-rageshakes";
                       const rageshakes = new Set();
                       const duplicateOf = new Set();
 

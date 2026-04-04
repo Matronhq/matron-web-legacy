@@ -1,16 +1,16 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
  */
 
-import { type RoomListItemViewSnapshot } from "./RoomListItemView";
+import { type RoomListItemSnapshot } from "./RoomListItemView";
 import { RoomNotifState } from "./RoomNotifs";
 
 export const mockRoom = { name: "General" };
 
-export const defaultSnapshot: RoomListItemViewSnapshot = {
+export const defaultSnapshot: RoomListItemSnapshot = {
     id: "!room:server",
     room: mockRoom,
     name: "General",

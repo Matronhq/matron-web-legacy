@@ -3,14 +3,10 @@
         "seek_bar_label": "Barre de recherche audio"
     },
     "action": {
-        "back": "Retour",
-        "collapse": "Réduire",
         "delete": "Supprimer",
         "dismiss": "Ignorer",
-        "download": "Télécharger",
         "edit": "Modifier",
         "explore_rooms": "Parcourir les salons",
-        "go": "C’est parti",
         "invite": "Inviter",
         "new_conversation": "Nouvelle conversation",
         "new_room": "Nouveau salon",
@@ -24,14 +20,10 @@
         "start_chat": "Démarrer une discussion"
     },
     "common": {
-        "attachment": "Pièce jointe",
-        "encryption_enabled": "Chiffrement activé",
-        "preferences": "Préférences",
-        "state_encryption_enabled": "Chiffrement expérimental de l'état activé"
+        "preferences": "Préférences"
     },
     "left_panel": {
-        "open_dial_pad": "Ouvrir le pavé de numérotation",
-        "separator_label": "Cliquez ou glissez pour agrandir"
+        "open_dial_pad": "Ouvrir le pavé de numérotation"
     },
     "notifications": {
         "all_messages": "Tous les messages",
@@ -48,10 +40,6 @@
             "shared": "Les nouveaux membres voient l'historique",
             "world_readable": "Tout le monde voit l'historique"
         },
-        "jump_to_date": "Aller à la date",
-        "jump_to_date_beginning": "Le début du salon",
-        "jump_to_date_prompt": "Choisissez vers quelle date aller",
-        "pinned_message_badge": "Message épinglé",
         "status_bar": {
             "delete_all": "Tout supprimer",
             "exceeded_resource_limit_description": "Veuillez contacter votre administrateur pour continuer à utiliser le service.",
@@ -79,9 +67,7 @@
                 "one": "Ouvrir le salon %(roomName)s avec 1 message non lu.",
                 "other": "Ouvrir le salon %(roomName)s avec %(count)s message non lus."
             },
-            "unsent_message": "Ouvrir le salon %(roomName)s avec un message non envoyé.",
-            "video_call": "Ouvrir le salon %(roomName)s contenant un appel vidéo",
-            "voice_call": "Ouvrir le salon %(roomName)s contenant un appel vocal."
+            "unsent_message": "Ouvrir le salon %(roomName)s avec un message non envoyé."
         },
         "appearance": "Apparence",
         "collapse_filters": "Réduire la liste des filtres",
@@ -128,13 +114,10 @@
             "more_options": "Plus d’options"
         },
         "room_options": "Options du salon",
-        "section_header": {
-            "toggle": "Afficher/masquer la section %(section)s"
-        },
         "show_message_previews": "Afficher les aperçus des messages",
         "sort": "Trier",
         "sort_type": {
-            "activity": "Dernière activité",
+            "activity": "Activité",
             "atoz": "A-Z",
             "unread_first": "Non-lus en premier"
         },
@@ -176,29 +159,6 @@
             "audio_player": "Lecteur audio",
             "error_downloading_audio": "Erreur lors du téléchargement de l’audio",
             "unnamed_audio": "Audio sans nom"
-        },
-        "m.file": {
-            "error_invalid": "Fichier invalide"
-        },
-        "m.room.encryption": {
-            "disable_attempt": "Essai de désactiver le chiffrement ignoré",
-            "disabled": "Chiffrement désactivé",
-            "enabled": "Les messages ici sont chiffrés de bout en bout. Quand les gens viennent, vous pouvez les vérifier dans leur profil, tapez simplement sur leur image de profil.",
-            "enabled_dm": "Les messages ici sont chiffrés de bout en bout. Vérifiez %(displayName)s dans son profil - cliquez sur son image de profil.",
-            "enabled_local": "Les messages de cette discussion seront chiffrés de bout en bout.",
-            "parameters_changed": "Certains paramètres de chiffrement ont été changés.",
-            "state_enabled": "Les messages et les événements de ce salon sont chiffrés de bout en bout. Lorsque des personnes rejoignent le salon, vous pouvez les vérifier dans leur profil en cliquant sur leur photo de profil.",
-            "unsupported": "Le chiffrement utilisé par ce salon n’est pas pris en charge."
-        },
-        "message_timestamp_received_at": "Reçu à : %(dateTime)s",
-        "message_timestamp_sent_at": "Envoyé à : %(dateTime)s",
-        "url_preview": {
-            "close": "Fermer l’aperçu",
-            "show_n_more": {
-                "one": "Montrer %(count)s autre preview",
-                "other": "Montrer %(count)s autres previews"
-            },
-            "view_image": "Afficher l'image"
         }
     },
     "widget": {

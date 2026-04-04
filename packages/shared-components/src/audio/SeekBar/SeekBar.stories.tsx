@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -9,9 +9,9 @@ import React from "react";
 import { useArgs } from "storybook/preview-api";
 
 import { SeekBar } from "./SeekBar";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
-const meta = {
+export default {
     title: "Audio/SeekBar",
     component: SeekBar,
     tags: ["autodocs"],
@@ -23,19 +23,16 @@ const meta = {
     args: {
         value: 50,
     },
-    render: function Render(args) {
-        const [, updateArgs] = useArgs();
-        return <SeekBar onChange={(evt) => updateArgs({ value: parseInt(evt.target.value, 10) })} {...args} />;
-    },
-} satisfies Meta<typeof SeekBar>;
+} as Meta<typeof SeekBar>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+const Template: StoryFn<typeof SeekBar> = (args) => {
+    const [, updateArgs] = useArgs();
+    return <SeekBar onChange={(evt) => updateArgs({ value: parseInt(evt.target.value, 10) })} {...args} />;
+};
 
-export const Default: Story = {};
+export const Default = Template.bind({});
 
-export const Disabled: Story = {
-    args: {
-        disabled: true,
-    },
+export const Disabled = Template.bind({});
+Disabled.args = {
+    disabled: true,
 };

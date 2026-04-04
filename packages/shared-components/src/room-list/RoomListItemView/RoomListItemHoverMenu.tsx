@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -7,8 +7,8 @@
 
 import React, { type JSX } from "react";
 
-import { Flex } from "../../core/utils/Flex";
-import { RoomListItemMoreOptionsMenu, type RoomListItemViewModel } from "./RoomListItemMoreOptionsMenu";
+import { Flex } from "../../utils/Flex";
+import { RoomListItemMoreOptionsMenu, type RoomItemViewModel } from "./RoomListItemMoreOptionsMenu";
 import { RoomListItemNotificationMenu } from "./RoomListItemNotificationMenu";
 import styles from "./RoomListItemView.module.css";
 
@@ -21,7 +21,7 @@ export interface RoomListItemHoverMenuProps {
     /** Whether the notification menu should be shown */
     showNotificationMenu: boolean;
     /** The room item view model */
-    vm: RoomListItemViewModel;
+    vm: RoomItemViewModel;
 }
 
 /**

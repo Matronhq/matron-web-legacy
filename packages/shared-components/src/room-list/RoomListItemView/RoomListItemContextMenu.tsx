@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -8,15 +8,15 @@
 import React, { type JSX, type PropsWithChildren } from "react";
 import { ContextMenu } from "@vector-im/compound-web";
 
-import { _t } from "../../core/i18n/i18n";
-import { MoreOptionContent, type RoomListItemViewModel } from "./RoomListItemMoreOptionsMenu";
+import { _t } from "../../utils/i18n";
+import { MoreOptionContent, type RoomItemViewModel } from "./RoomListItemMoreOptionsMenu";
 
 /**
  * Props for RoomListItemContextMenu component
  */
 export interface RoomListItemContextMenuProps {
     /** The room item view model */
-    vm: RoomListItemViewModel;
+    vm: RoomItemViewModel;
 }
 
 /**

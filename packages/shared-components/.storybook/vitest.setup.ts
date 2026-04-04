@@ -1,5 +1,5 @@
 /*
-Copyright 2026 Element Creations Ltd.
+Copyright 2026 Matron Contributors.
 
 SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
@@ -24,24 +24,6 @@ vis.setup({
                 /* Inhibit all animations for the screenshot to be more stable */
                 *, *::before, *::after {
                     animation: none !important;
-                }
-                /*
-                 * Mask spinner for video overlay during screenshot generation on playwright tests.
-                 */
-                [data-video-body-mask-target] {
-                    position: relative;
-                }
-                [data-video-body-mask-target]::after {
-                    content: "";
-                    position: absolute;
-                    inset-inline-start: 50%;
-                    inset-block-start: 50%;
-                    width: 112px;
-                    height: 112px;
-                    transform: translate(-50%, -50%);
-                    border-radius: 999px;
-                    background: #ff4fcf;
-                    pointer-events: none;
                 }
                 /* Hide all storybook elements */
                 .sb-wrapper {

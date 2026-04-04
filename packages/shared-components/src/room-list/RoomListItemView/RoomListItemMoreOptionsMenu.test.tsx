@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -11,8 +11,8 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 
 import { RoomListItemMoreOptionsMenu } from "./RoomListItemMoreOptionsMenu";
-import { useMockedViewModel } from "../../core/viewmodel";
-import type { RoomListItemViewSnapshot } from "./RoomListItemView";
+import { useMockedViewModel } from "../../viewmodel";
+import type { RoomListItemSnapshot } from "./RoomListItemView";
 import { defaultSnapshot } from "./default-snapshot";
 
 describe("<RoomListItemMoreOptionsMenu />", () => {
@@ -28,7 +28,7 @@ describe("<RoomListItemMoreOptionsMenu />", () => {
         onSetRoomNotifState: vi.fn(),
     };
 
-    const renderMenu = (overrides: Partial<RoomListItemViewSnapshot> = {}): ReturnType<typeof render> => {
+    const renderMenu = (overrides: Partial<RoomListItemSnapshot> = {}): ReturnType<typeof render> => {
         const TestComponent = (): JSX.Element => {
             const vm = useMockedViewModel(
                 {
@@ -36,7 +36,7 @@ describe("<RoomListItemMoreOptionsMenu />", () => {
                     showMoreOptionsMenu: true,
                     showNotificationMenu: false,
                     ...overrides,
-                } as RoomListItemViewSnapshot,
+                } as RoomListItemSnapshot,
                 mockCallbacks,
             );
             return <RoomListItemMoreOptionsMenu vm={vm} />;

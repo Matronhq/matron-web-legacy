@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -12,8 +12,8 @@ import { describe, it, expect, vi } from "vitest";
 
 import { RoomListItemNotificationMenu } from "./RoomListItemNotificationMenu";
 import { RoomNotifState } from "./RoomNotifs";
-import { useMockedViewModel } from "../../core/viewmodel";
-import type { RoomListItemViewSnapshot } from "./RoomListItemView";
+import { useMockedViewModel } from "../../viewmodel";
+import type { RoomListItemSnapshot } from "./RoomListItemView";
 import { defaultSnapshot } from "./default-snapshot";
 
 describe("<RoomListItemNotificationMenu />", () => {
@@ -37,7 +37,7 @@ describe("<RoomListItemNotificationMenu />", () => {
                     showMoreOptionsMenu: false,
                     showNotificationMenu: true,
                     roomNotifState,
-                } as RoomListItemViewSnapshot,
+                } as RoomListItemSnapshot,
                 mockCallbacks,
             );
             return <RoomListItemNotificationMenu vm={vm} />;

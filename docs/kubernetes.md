@@ -1,6 +1,6 @@
 # Running in Kubernetes
 
-In case you would like to deploy element-web in a kubernetes cluster you can use
+In case you would like to deploy matron-web in a kubernetes cluster you can use
 the provided Kubernetes example below as a starting point. Note that this example assumes the
 Nginx ingress to be installed.
 
@@ -10,16 +10,16 @@ to be put in your Kubernetes cluster as a `ConfigMap`.
 So to use it you must create a file with this content as a starting point and modify it so it meets
 the requirements of your environment.
 
-Then you can deploy it to your cluster with something like `kubectl apply -f my-element-web.yaml`.
+Then you can deploy it to your cluster with something like `kubectl apply -f my-matron-web.yaml`.
 
-    # This is an example of a POSSIBLE config for deploying a single element-web instance in Kubernetes
+    # This is an example of a POSSIBLE config for deploying a single matron-web instance in Kubernetes
 
-    # Use the element-web namespace to put it all in.
+    # Use the matron-web namespace to put it all in.
 
     apiVersion: v1
     kind: Namespace
     metadata:
-      name: element-web
+      name: matron-web
 
     ---
 
@@ -31,7 +31,7 @@ Then you can deploy it to your cluster with something like `kubectl apply -f my-
     kind: ConfigMap
     metadata:
       name: element-config
-      namespace: element-web
+      namespace: matron-web
     data:
       config.json: |
         {
@@ -57,7 +57,7 @@ Then you can deploy it to your cluster with something like `kubectl apply -f my-
                     "https://scalar-staging.vector.im/_matrix/integrations/v1",
                     "https://scalar-staging.vector.im/api"
             ],
-            "bug_report_endpoint_url": "https://rageshakes.element.io/api/submit",
+            "bug_report_endpoint_url": "https://rageshakes.matron.chat/api/submit",
             "defaultCountryCode": "GB",
             "show_labs_settings": false,
             "features": { },
@@ -76,20 +76,20 @@ Then you can deploy it to your cluster with something like `kubectl apply -f my-
                 "breadcrumbs": true
             },
             "jitsi": {
-                "preferred_domain": "meet.element.io"
+                "preferred_domain": "meet.matron.chat"
             }
         }
 
 
     ---
 
-    # A deployment of the element-web for a single instance
+    # A deployment of the matron-web for a single instance
 
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       name: element
-      namespace: element-web
+      namespace: matron-web
     spec:
       selector:
         matchLabels:
@@ -102,7 +102,7 @@ Then you can deploy it to your cluster with something like `kubectl apply -f my-
         spec:
           containers:
           - name: element
-            image: vectorim/element-web:latest
+            image: vectorim/matron-web:latest
             volumeMounts:
             - name: config-volume
               mountPath: /app/config.json
@@ -136,7 +136,7 @@ Then you can deploy it to your cluster with something like `kubectl apply -f my-
     kind: Service
     metadata:
       name: element
-      namespace: element-web
+      namespace: matron-web
     spec:
       selector:
         app: element
@@ -154,7 +154,7 @@ Then you can deploy it to your cluster with something like `kubectl apply -f my-
     kind: Ingress
     metadata:
       name: element
-      namespace: element-web
+      namespace: matron-web
       annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/configuration-snippet: |

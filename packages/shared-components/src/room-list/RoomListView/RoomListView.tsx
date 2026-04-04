@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -7,25 +7,17 @@
 
 import React, { type JSX, type ReactNode } from "react";
 
-import { useViewModel, type ViewModel } from "../../core/viewmodel";
+import { useViewModel, type ViewModel } from "../../viewmodel";
 import { RoomListPrimaryFilters, type FilterId } from "../RoomListPrimaryFilters";
 import { RoomListLoadingSkeleton } from "./RoomListLoadingSkeleton";
 import { RoomListEmptyStateView } from "./RoomListEmptyStateView";
 import { VirtualizedRoomListView, type RoomListViewState } from "../VirtualizedRoomListView";
-import { type Room, type RoomListItemViewModel } from "../RoomListItemView";
-import { type RoomListSectionHeaderViewModel } from "../RoomListSectionHeaderView";
-
-export type RoomListSection = {
-    /** Unique identifier for the section */
-    id: string;
-    /** Array of room IDs that belong to this section */
-    roomIds: string[];
-};
+import { type Room } from "../RoomListItemView";
 
 /**
  * Snapshot for the room list view
  */
-export type RoomListViewSnapshot = {
+export type RoomListSnapshot = {
     /** Whether the rooms are currently loading */
     isLoadingRooms: boolean;
     /** Whether the room list is empty */
@@ -36,16 +28,14 @@ export type RoomListViewSnapshot = {
     activeFilterId?: FilterId;
     /** Room list state */
     roomListState: RoomListViewState;
-    /** Array of sections in the room list */
-    sections: RoomListSection[];
+    /** Array of room IDs for virtualization */
+    roomIds: string[];
     /** Optional description for the empty state */
     emptyStateDescription?: string;
     /** Optional action element for the empty state */
     emptyStateAction?: ReactNode;
     /** Whether the user can create rooms */
     canCreateRoom?: boolean;
-    /** Whether the room list is displayed as a flat list */
-    isFlatList: boolean;
 };
 
 /**
@@ -58,21 +48,16 @@ export interface RoomListViewActions {
     createChatRoom: () => void;
     /** Called to create a new room */
     createRoom: () => void;
-    /**
-     * Get view model for a specific room (virtualization API)
-     * Allow undefined to be returned if we don't have a view model for the room. In this case the room will not be rendered.
-     */
-    getRoomItemViewModel: (roomId: string) => RoomListItemViewModel | undefined;
+    /** Get view model for a specific room (virtualization API) */
+    getRoomItemViewModel: (roomId: string) => any;
     /** Called when the visible range changes (virtualization API) */
     updateVisibleRooms: (startIndex: number, endIndex: number) => void;
-    /** Get view model for a specific section header (virtualization API) */
-    getSectionHeaderViewModel: (sectionId: string) => RoomListSectionHeaderViewModel;
 }
 
 /**
  * The view model type for the room list view
  */
-export type RoomListViewModel = ViewModel<RoomListViewSnapshot, RoomListViewActions>;
+export type RoomListViewModel = ViewModel<RoomListSnapshot> & RoomListViewActions;
 
 /**
  * Props for RoomListView component

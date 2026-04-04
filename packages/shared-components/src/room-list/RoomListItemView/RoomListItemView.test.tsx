@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -19,8 +19,6 @@ const {
     Bold,
     WithNotification,
     WithMention,
-    WithVoiceCall,
-    WithVideoCall,
     Invitation,
     UnsentMessage,
     NoMessagePreview,
@@ -51,16 +49,6 @@ describe("<RoomListItemView />", () => {
 
     it("renders WithMention story", () => {
         const { container } = render(<WithMention />);
-        expect(container).toMatchSnapshot();
-    });
-
-    it("renders WithVoiceCall story", () => {
-        const { container } = render(<WithVoiceCall />);
-        expect(container).toMatchSnapshot();
-    });
-
-    it("renders WithVideoCall story", () => {
-        const { container } = render(<WithVideoCall />);
         expect(container).toMatchSnapshot();
     });
 

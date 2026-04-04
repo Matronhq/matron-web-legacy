@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -11,28 +11,22 @@ import { fn } from "storybook/test";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Room } from "../RoomListItemView";
 import { VirtualizedRoomListView, type RoomListViewState } from "./VirtualizedRoomListView";
-import type { RoomListViewSnapshot, RoomListViewActions } from "../RoomListView";
-import { useMockedViewModel } from "../../core/viewmodel";
-import { withViewDocs } from "../../../.storybook/withViewDocs";
+import type { RoomListSnapshot, RoomListViewActions } from "../RoomListView";
+import { useMockedViewModel } from "../../viewmodel";
 import type { FilterId } from "../RoomListPrimaryFilters";
-import {
-    renderAvatar,
-    createGetRoomItemViewModel,
-    mock10RoomsIds,
-    createGetSectionHeaderViewModel,
-    mock10RoomsSections,
-} from "../story-mocks";
+import { renderAvatar, createGetRoomItemViewModel, mockRoomIds } from "../story-mocks";
 
-type RoomListStoryProps = RoomListViewSnapshot &
-    RoomListViewActions & { renderAvatar: (room: Room) => React.ReactElement };
+type RoomListStoryProps = RoomListSnapshot & RoomListViewActions & { renderAvatar: (room: Room) => React.ReactElement };
+
+// Use first 10 room IDs for this story
+const storyRoomIds = mockRoomIds.slice(0, 10);
 
 // Wrapper component that creates a mocked ViewModel
-const RoomListWrapperImpl = ({
+const RoomListWrapper = ({
     onToggleFilter,
     createChatRoom,
     createRoom,
     getRoomItemViewModel,
-    getSectionHeaderViewModel,
     updateVisibleRooms,
     renderAvatar: renderAvatarProp,
     ...rest
@@ -42,7 +36,6 @@ const RoomListWrapperImpl = ({
         createChatRoom,
         createRoom,
         getRoomItemViewModel,
-        getSectionHeaderViewModel,
         updateVisibleRooms,
     });
 
@@ -52,7 +45,6 @@ const RoomListWrapperImpl = ({
         </div>
     );
 };
-const RoomListWrapper = withViewDocs(RoomListWrapperImpl, VirtualizedRoomListView);
 
 const mockFilterIds: FilterId[] = ["unread", "people"];
 
@@ -62,7 +54,7 @@ const defaultRoomListState: RoomListViewState = {
     filterKeys: undefined,
 };
 
-const meta = {
+const meta: Meta<RoomListStoryProps> = {
     title: "Room List/VirtualizedRoomListView",
     component: RoomListWrapper,
     tags: ["autodocs"],
@@ -71,17 +63,15 @@ const meta = {
         isRoomListEmpty: false,
         filterIds: mockFilterIds,
         activeFilterId: undefined,
-        sections: mock10RoomsSections,
+        roomIds: storyRoomIds,
         roomListState: defaultRoomListState,
         canCreateRoom: true,
         onToggleFilter: fn(),
         createChatRoom: fn(),
         createRoom: fn(),
-        getRoomItemViewModel: createGetRoomItemViewModel(mock10RoomsIds),
-        getSectionHeaderViewModel: createGetSectionHeaderViewModel(mock10RoomsSections.map((section) => section.id)),
+        getRoomItemViewModel: createGetRoomItemViewModel(storyRoomIds),
         updateVisibleRooms: fn(),
         renderAvatar,
-        isFlatList: true,
     },
     parameters: {
         design: {
@@ -96,15 +86,9 @@ const meta = {
             </div>
         ),
     ],
-} satisfies Meta<typeof RoomListWrapper>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<RoomListStoryProps>;
 
 export const Default: Story = {};
-
-export const Sections: Story = {
-    args: {
-        isFlatList: false,
-    },
-};

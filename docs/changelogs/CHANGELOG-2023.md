@@ -1,6 +1,6 @@
 
 
-Changes in [1.11.52](https://github.com/element-hq/element-web/releases/tag/v1.11.52) (2023-12-19)
+Changes in [1.11.52](https://github.com/matronhq/matron-web/releases/tag/v1.11.52) (2023-12-19)
 ==================================================================================================
 
 
@@ -16,11 +16,11 @@ Changes in [1.11.52](https://github.com/element-hq/element-web/releases/tag/v1.1
 * Prevent phantom notifications from events not in a room's timeline ([#3942](https://github.com/matrix-org/matrix-js-sdk/pull/3942)). Contributed by @dbkr.
 
 
-Changes in [1.11.51](https://github.com/vector-im/element-web/releases/tag/v1.11.51) (2023-12-05)
+Changes in [1.11.51](https://github.com/matronhq/matron-web/releases/tag/v1.11.51) (2023-12-05)
 =================================================================================================
 ## ✨ Features
 
-* Improve debian package and docs ([#26618](https://github.com/vector-im/element-web/pull/26618)). Contributed by @t3chguy.
+* Improve debian package and docs ([#26618](https://github.com/matronhq/matron-web/pull/26618)). Contributed by @t3chguy.
 
 ## 🦖 Deprecations
 
@@ -43,12 +43,12 @@ Changes in [1.11.51](https://github.com/vector-im/element-web/releases/tag/v1.11
 * Fix "not attempting encryption" warning ([#11899](https://github.com/matrix-org/matrix-react-sdk/pull/11899)). Contributed by @richvdh.
 
 
-Changes in [1.11.50](https://github.com/vector-im/element-web/releases/tag/v1.11.50) (2023-11-21)
+Changes in [1.11.50](https://github.com/matronhq/matron-web/releases/tag/v1.11.50) (2023-11-21)
 =================================================================================================
 
 ## ✨ Features
 
-* Ship element-web as a debian package ([#26533](https://github.com/vector-im/element-web/pull/26533)). Contributed by @t3chguy.
+* Ship matron-web as a debian package ([#26533](https://github.com/matronhq/matron-web/pull/26533)). Contributed by @t3chguy.
 * Update room summary card header ([#11823](https://github.com/matrix-org/matrix-react-sdk/pull/11823)). Contributed by @germain-gg.
 * Add feature flag for disabling encryption in Element Call ([#11837](https://github.com/matrix-org/matrix-react-sdk/pull/11837)). Contributed by @toger5.
 * Adapt the rendering of extra icons in the room header ([#11835](https://github.com/matrix-org/matrix-react-sdk/pull/11835)). Contributed by @charlynguyen.
@@ -64,20 +64,20 @@ Changes in [1.11.50](https://github.com/vector-im/element-web/releases/tag/v1.11
 * Fix rightpanel hiding scrollbar ([#11831](https://github.com/matrix-org/matrix-react-sdk/pull/11831)). Contributed by @kerryarchibald.
 * Switch to updating presence via /sync calls instead of PUT /presence ([#11824](https://github.com/matrix-org/matrix-react-sdk/pull/11824)). Contributed by @t3chguy.
 
-Changes in [1.11.49](https://github.com/vector-im/element-web/releases/tag/v1.11.49) (2023-11-13)
+Changes in [1.11.49](https://github.com/matronhq/matron-web/releases/tag/v1.11.49) (2023-11-13)
 =================================================================================================
 
 ## ✨ Features
- * Ship element-web as a debian package ([\#26533](https://github.com/vector-im/element-web/pull/26533)). Fixes #2777.
+ * Ship matron-web as a debian package ([\#26533](https://github.com/matronhq/matron-web/pull/26533)). Fixes #2777.
 
 ## 🐛 Bug Fixes
- * Ensure `setUserCreator` is called when a store is assigned ([\#3867](https://github.com/matrix-org/matrix-js-sdk/pull/3867)). Fixes vector-im/element-web#26520. Contributed by @MidhunSureshR.
+ * Ensure `setUserCreator` is called when a store is assigned ([\#3867](https://github.com/matrix-org/matrix-js-sdk/pull/3867)). Fixes matronhq/matron-web#26520. Contributed by @MidhunSureshR.
 
-Changes in [1.11.48](https://github.com/vector-im/element-web/releases/tag/v1.11.48) (2023-11-07)
+Changes in [1.11.48](https://github.com/matronhq/matron-web/releases/tag/v1.11.48) (2023-11-07)
 =================================================================================================
 
 ## ✨ Features
- * Correctly fill window.matrixChat even when a Wrapper module is active ([\#26395](https://github.com/vector-im/element-web/pull/26395)). Contributed by @dhenneke.
+ * Correctly fill window.matrixChat even when a Wrapper module is active ([\#26395](https://github.com/matronhq/matron-web/pull/26395)). Contributed by @dhenneke.
  * Knock on a ask-to-join room if a module wants to join the room when navigating to a room ([\#11787](https://github.com/matrix-org/matrix-react-sdk/pull/11787)). Contributed by @dhenneke.
  * Element-R:  Include crypto info in sentry ([\#11798](https://github.com/matrix-org/matrix-react-sdk/pull/11798)). Contributed by @florianduros.
  * Element-R:  Include crypto info in rageshake ([\#11797](https://github.com/matrix-org/matrix-react-sdk/pull/11797)). Contributed by @florianduros.
@@ -103,14 +103,14 @@ Changes in [1.11.48](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix: emoji size in room header topic, remove obsolete emoji style ([\#11757](https://github.com/matrix-org/matrix-react-sdk/pull/11757)). Fixes #26326. Contributed by @kerryarchibald.
  * Fix: Bubble layout design is broken ([\#11763](https://github.com/matrix-org/matrix-react-sdk/pull/11763)). Fixes #25818. Contributed by @manancodes.
 
-Changes in [1.11.47](https://github.com/vector-im/element-web/releases/tag/v1.11.47) (2023-10-24)
+Changes in [1.11.47](https://github.com/matronhq/matron-web/releases/tag/v1.11.47) (2023-10-24)
 =================================================================================================
 
 ## 🦖 Deprecations
- * Deprecate customisations in favour of Module API ([\#25736](https://github.com/vector-im/element-web/pull/25736)). Fixes #25733.
+ * Deprecate customisations in favour of Module API ([\#25736](https://github.com/matronhq/matron-web/pull/25736)). Fixes #25733.
 
 ## ✨ Features
- * vector-im/element-x-ios/issues/1824 - Convert the apple-app-site-association file to a newer format… ([\#26307](https://github.com/vector-im/element-web/pull/26307)). Contributed by @stefanceriu.
+ * vector-im/element-x-ios/issues/1824 - Convert the apple-app-site-association file to a newer format… ([\#26307](https://github.com/matronhq/matron-web/pull/26307)). Contributed by @stefanceriu.
  * Iterate `io.element.late_event` decoration ([\#11760](https://github.com/matrix-org/matrix-react-sdk/pull/11760)). Fixes #26384.
  * Render timeline separator for late event groups ([\#11739](https://github.com/matrix-org/matrix-react-sdk/pull/11739)).
  * OIDC: revoke tokens on logout ([\#11718](https://github.com/matrix-org/matrix-react-sdk/pull/11718)). Fixes #25394. Contributed by @kerryarchibald.
@@ -139,7 +139,7 @@ Changes in [1.11.47](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix: Wierd shadow below room avatar in dark mode. ([\#11678](https://github.com/matrix-org/matrix-react-sdk/pull/11678)). Fixes #26153. Contributed by @manancodes.
  * Fix start_sso / start_cas URLs failing to redirect to a authentication prompt ([\#11681](https://github.com/matrix-org/matrix-react-sdk/pull/11681)). Contributed by @Half-Shot.
 
-Changes in [1.11.46](https://github.com/vector-im/element-web/releases/tag/v1.11.46) (2023-10-10)
+Changes in [1.11.46](https://github.com/matronhq/matron-web/releases/tag/v1.11.46) (2023-10-10)
 =================================================================================================
 
 ## ✨ Features
@@ -151,7 +151,7 @@ Changes in [1.11.46](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Show knock rooms in the list ([\#11573](https://github.com/matrix-org/matrix-react-sdk/pull/11573)). Contributed by @maheichyk.
 
 ## 🐛 Bug Fixes
- * Bump matrix-web-i18n dependency to 3.1.3 ([\#26287](https://github.com/vector-im/element-web/pull/26287))
+ * Bump matrix-web-i18n dependency to 3.1.3 ([\#26287](https://github.com/matronhq/matron-web/pull/26287))
  * Fix: Avatar shrinks with long names ([\#11698](https://github.com/matrix-org/matrix-react-sdk/pull/11698)). Fixes #26252. Contributed by @manancodes.
  * Update custom translations to support nested fields in structured JSON ([\#11685](https://github.com/matrix-org/matrix-react-sdk/pull/11685)).
  * Fix: Edited message remove button is hard to reach. ([\#11674](https://github.com/matrix-org/matrix-react-sdk/pull/11674)). Fixes #24917. Contributed by @manancodes.
@@ -165,13 +165,13 @@ Changes in [1.11.46](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix add to space avatar text centering ([\#11643](https://github.com/matrix-org/matrix-react-sdk/pull/11643)). Fixes #26154.
  * fix avatar styling in lightbox ([\#11641](https://github.com/matrix-org/matrix-react-sdk/pull/11641)). Fixes #26196.
 
-Changes in [1.11.45](https://github.com/vector-im/element-web/releases/tag/v1.11.45) (2023-09-29)
+Changes in [1.11.45](https://github.com/matronhq/matron-web/releases/tag/v1.11.45) (2023-09-29)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Fix Emoji font on Safari 17 ([\#11673](https://github.com/matrix-org/matrix-react-sdk/pull/11673)).
 
-Changes in [1.11.44](https://github.com/vector-im/element-web/releases/tag/v1.11.44) (2023-09-26)
+Changes in [1.11.44](https://github.com/matronhq/matron-web/releases/tag/v1.11.44) (2023-09-26)
 =================================================================================================
 
 ## ✨ Features
@@ -195,26 +195,26 @@ Changes in [1.11.44](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix avatars in public room & space search being flex shrunk ([\#11580](https://github.com/matrix-org/matrix-react-sdk/pull/11580)). Fixes #26133.
  * Fix EventTile avatars being rendered with a size of 0 instead of hidden ([\#11558](https://github.com/matrix-org/matrix-react-sdk/pull/11558)). Fixes #26075.
 
-Changes in [1.11.43](https://github.com/vector-im/element-web/releases/tag/v1.11.43) (2023-09-15)
+Changes in [1.11.43](https://github.com/matronhq/matron-web/releases/tag/v1.11.43) (2023-09-15)
 =================================================================================================
 
-(No changes - bumping the version number for an element-desktop release.)
+(No changes - bumping the version number for an matron-desktop release.)
 
-Changes in [1.11.42](https://github.com/vector-im/element-web/releases/tag/v1.11.42) (2023-09-13)
+Changes in [1.11.42](https://github.com/matronhq/matron-web/releases/tag/v1.11.42) (2023-09-13)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Update Compound to fix Firefox-specific avatar regression ([\#11604](https://github.com/matrix-org/matrix-react-sdk/pull/11604)). Fixes #26155.
 
-Changes in [1.11.41](https://github.com/vector-im/element-web/releases/tag/v1.11.41) (2023-09-12)
+Changes in [1.11.41](https://github.com/matronhq/matron-web/releases/tag/v1.11.41) (2023-09-12)
 =================================================================================================
 
 ## 🦖 Deprecations
- * Deprecate customisations in favour of Module API ([\#25736](https://github.com/vector-im/element-web/pull/25736)). Fixes #25733.
+ * Deprecate customisations in favour of Module API ([\#25736](https://github.com/matronhq/matron-web/pull/25736)). Fixes #25733.
 
 ## ✨ Features
- * Make SVGR icons use forward ref ([\#26082](https://github.com/vector-im/element-web/pull/26082)).
- * Add support for rendering a custom wrapper around Element ([\#25537](https://github.com/vector-im/element-web/pull/25537)). Contributed by @maheichyk.
+ * Make SVGR icons use forward ref ([\#26082](https://github.com/matronhq/matron-web/pull/26082)).
+ * Add support for rendering a custom wrapper around Element ([\#25537](https://github.com/matronhq/matron-web/pull/25537)). Contributed by @maheichyk.
  * Allow creating public knock rooms ([\#11481](https://github.com/matrix-org/matrix-react-sdk/pull/11481)). Contributed by @charlynguyen.
  * Render custom images in reactions according to MSC4027 ([\#11087](https://github.com/matrix-org/matrix-react-sdk/pull/11087)). Contributed by @sumnerevans.
  * Introduce room knocks bar ([\#11475](https://github.com/matrix-org/matrix-react-sdk/pull/11475)). Contributed by @charlynguyen.
@@ -230,7 +230,7 @@ Changes in [1.11.41](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix vertical alignment of default avatar font ([\#11582](https://github.com/matrix-org/matrix-react-sdk/pull/11582)). Fixes #26081.
  * Fix avatars in public room & space search being flex shrunk ([\#11580](https://github.com/matrix-org/matrix-react-sdk/pull/11580)). Fixes #26133.
  * Fix EventTile avatars being rendered with a size of 0 instead of hidden ([\#11558](https://github.com/matrix-org/matrix-react-sdk/pull/11558)). Fixes #26075.
- * Fix compound external assets path in bundle ([\#26069](https://github.com/vector-im/element-web/pull/26069)).
+ * Fix compound external assets path in bundle ([\#26069](https://github.com/matronhq/matron-web/pull/26069)).
  * Use RoomStateEvent.Update for knocks ([\#11516](https://github.com/matrix-org/matrix-react-sdk/pull/11516)). Contributed by @charlynguyen.
  * Prevent event propagation when clicking icon buttons ([\#11515](https://github.com/matrix-org/matrix-react-sdk/pull/11515)).
  * Only display RoomKnocksBar when feature flag is enabled ([\#11513](https://github.com/matrix-org/matrix-react-sdk/pull/11513)). Contributed by @andybalaam.
@@ -242,7 +242,7 @@ Changes in [1.11.41](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix incompatibility of Soft Logout with Element-R ([\#11468](https://github.com/matrix-org/matrix-react-sdk/pull/11468)).
  * Fix instances of double translation and guard translation calls using typescript ([\#11443](https://github.com/matrix-org/matrix-react-sdk/pull/11443)).
 
-Changes in [1.11.40](https://github.com/vector-im/element-web/releases/tag/v1.11.40) (2023-08-29)
+Changes in [1.11.40](https://github.com/matronhq/matron-web/releases/tag/v1.11.40) (2023-08-29)
 =================================================================================================
 
 ## ✨ Features
@@ -258,7 +258,7 @@ Changes in [1.11.40](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Support Matrix 1.1 (drop legacy r0 versions) ([\#9819](https://github.com/matrix-org/matrix-react-sdk/pull/9819)).
 
 ## 🐛 Bug Fixes
- * Fix path separator for Windows based systems ([\#25997](https://github.com/vector-im/element-web/pull/25997)).
+ * Fix path separator for Windows based systems ([\#25997](https://github.com/matronhq/matron-web/pull/25997)).
  * Fix instances of double translation and guard translation calls using typescript ([\#11443](https://github.com/matrix-org/matrix-react-sdk/pull/11443)).
  * Fix export type "Current timeline" to match its behaviour to its name ([\#11426](https://github.com/matrix-org/matrix-react-sdk/pull/11426)). Fixes #25988.
  * Fix Room Settings > Notifications file upload input being shown superfluously ([\#11415](https://github.com/matrix-org/matrix-react-sdk/pull/11415)). Fixes #18392.
@@ -268,16 +268,16 @@ Changes in [1.11.40](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix useRoomMembers missing updates causing incorrect membership counts ([\#11392](https://github.com/matrix-org/matrix-react-sdk/pull/11392)). Fixes #17096.
  * Show error when searching public rooms fails ([\#11378](https://github.com/matrix-org/matrix-react-sdk/pull/11378)).
 
-Changes in [1.11.39](https://github.com/vector-im/element-web/releases/tag/v1.11.39) (2023-08-15)
+Changes in [1.11.39](https://github.com/matronhq/matron-web/releases/tag/v1.11.39) (2023-08-15)
 =================================================================================================
 
 ## 🦖 Deprecations
- * Deprecate camelCase config options ([\#25800](https://github.com/vector-im/element-web/pull/25800)).
- * Deprecate customisations in favour of Module API ([\#25736](https://github.com/vector-im/element-web/pull/25736)). Fixes #25733.
+ * Deprecate camelCase config options ([\#25800](https://github.com/matronhq/matron-web/pull/25800)).
+ * Deprecate customisations in favour of Module API ([\#25736](https://github.com/matronhq/matron-web/pull/25736)). Fixes #25733.
 
 ## ✨ Features
- * Update labs.md for knock rooms ([\#25923](https://github.com/vector-im/element-web/pull/25923)). Contributed by @charlynguyen.
- * Package release builds of element-web in package.element.io debs ([\#25198](https://github.com/vector-im/element-web/pull/25198)).
+ * Update labs.md for knock rooms ([\#25923](https://github.com/matronhq/matron-web/pull/25923)). Contributed by @charlynguyen.
+ * Package release builds of matron-web in package.matron.chat debs ([\#25198](https://github.com/matronhq/matron-web/pull/25198)).
  * Allow knocking rooms ([\#11353](https://github.com/matrix-org/matrix-react-sdk/pull/11353)). Contributed by @charlynguyen.
  * Support adding space-restricted joins on rooms not members of those spaces ([\#9017](https://github.com/matrix-org/matrix-react-sdk/pull/9017)). Fixes #19213.
  * Clear requiresClient and show pop-out if widget-api fails to ready ([\#11321](https://github.com/matrix-org/matrix-react-sdk/pull/11321)). Fixes vector-im/customer-retainer#73.
@@ -300,26 +300,26 @@ Changes in [1.11.39](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Upgrade wysiwyg editor for ctrl+backspace windows fix ([\#11324](https://github.com/matrix-org/matrix-react-sdk/pull/11324)). Fixes vector-im/verticals-internal#102.
  * Unhide the view source event toggle - it works well enough ([\#11336](https://github.com/matrix-org/matrix-react-sdk/pull/11336)). Fixes #25861.
 
-Changes in [1.11.38](https://github.com/vector-im/element-web/releases/tag/v1.11.38) (2023-08-04)
+Changes in [1.11.38](https://github.com/matronhq/matron-web/releases/tag/v1.11.38) (2023-08-04)
 =================================================================================================
 
 ## ✨ Features
- * Package release builds of element-web in package.element.io debs ([\#25198](https://github.com/vector-im/element-web/pull/25198)).
+ * Package release builds of matron-web in package.matron.chat debs ([\#25198](https://github.com/matronhq/matron-web/pull/25198)).
 
 ## 🐛 Bug Fixes
  * Revert to using the /presence API for presence ([\#11366](https://github.com/matrix-org/matrix-react-sdk/pull/11366))
 
-Changes in [1.11.37](https://github.com/vector-im/element-web/releases/tag/v1.11.37) (2023-08-01)
+Changes in [1.11.37](https://github.com/matronhq/matron-web/releases/tag/v1.11.37) (2023-08-01)
 =================================================================================================
 
 ## 🦖 Deprecations
- * Deprecate camelCase config options ([\#25800](https://github.com/vector-im/element-web/pull/25800)).
- * Deprecate customisations in favour of Module API ([\#25736](https://github.com/vector-im/element-web/pull/25736)). Fixes #25733.
+ * Deprecate camelCase config options ([\#25800](https://github.com/matronhq/matron-web/pull/25800)).
+ * Deprecate customisations in favour of Module API ([\#25736](https://github.com/matronhq/matron-web/pull/25736)). Fixes #25733.
 
 ## ✨ Features
  * Do not show "Forget room" button in Room View header for guest users ([\#10898](https://github.com/matrix-org/matrix-react-sdk/pull/10898)). Contributed by @spantaleev.
  * Switch to updating presence via /sync calls instead of PUT /presence ([\#11223](https://github.com/matrix-org/matrix-react-sdk/pull/11223)). Fixes #20809 #13877 and #4813.
- * Fix blockquote colour contrast ([\#11299](https://github.com/matrix-org/matrix-react-sdk/pull/11299)). Fixes matrix-org/element-web-rageshakes#21800.
+ * Fix blockquote colour contrast ([\#11299](https://github.com/matrix-org/matrix-react-sdk/pull/11299)). Fixes matrix-org/matron-web-rageshakes#21800.
  * Don't hide room header buttons in video rooms and rooms with a call ([\#9712](https://github.com/matrix-org/matrix-react-sdk/pull/9712)). Fixes #23900.
  * OIDC: Persist details in session storage, create store ([\#11302](https://github.com/matrix-org/matrix-react-sdk/pull/11302)). Fixes #25710. Contributed by @kerryarchibald.
  * Allow setting room join rule to knock ([\#11248](https://github.com/matrix-org/matrix-react-sdk/pull/11248)). Contributed by @charlynguyen.
@@ -332,7 +332,7 @@ Changes in [1.11.37](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Warn when demoting self via /op and /deop slash commands ([\#11214](https://github.com/matrix-org/matrix-react-sdk/pull/11214)). Fixes #13726.
 
 ## 🐛 Bug Fixes
- * Correct Jitsi preferred_domain property ([\#25813](https://github.com/vector-im/element-web/pull/25813)). Contributed by @benbz.
+ * Correct Jitsi preferred_domain property ([\#25813](https://github.com/matronhq/matron-web/pull/25813)). Contributed by @benbz.
  * Fix edge case with sent indicator being drawn when it shouldn't be ([\#11320](https://github.com/matrix-org/matrix-react-sdk/pull/11320)).
  * Use correct translation function for WYSIWYG buttons ([\#11315](https://github.com/matrix-org/matrix-react-sdk/pull/11315)). Fixes vector-im/verticals-internal#109.
  * Handle empty own profile ([\#11319](https://github.com/matrix-org/matrix-react-sdk/pull/11319)). Fixes #25510.
@@ -365,19 +365,19 @@ Changes in [1.11.37](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix color mapping for blockquote border ([\#11251](https://github.com/matrix-org/matrix-react-sdk/pull/11251)). Fixes #25782.
  * Strip emoji variation when searching emoji by emoji ([\#11221](https://github.com/matrix-org/matrix-react-sdk/pull/11221)). Fixes #18703.
 
-Changes in [1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11.36) (2023-07-18)
+Changes in [1.11.36](https://github.com/matronhq/matron-web/releases/tag/v1.11.36) (2023-07-18)
 =================================================================================================
 
 ## 🔒 Security
  * Fixes for [CVE-2023-37259](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=CVE-2023-37259) / [GHSA-c9vx-2g7w-rp65](https://github.com/matrix-org/matrix-react-sdk/security/advisories/GHSA-c9vx-2g7w-rp65)
 
 ## 🦖 Deprecations
- * Deprecate customisations in favour of Module API ([\#25736](https://github.com/vector-im/element-web/pull/25736)). Fixes #25733.
+ * Deprecate customisations in favour of Module API ([\#25736](https://github.com/matronhq/matron-web/pull/25736)). Fixes #25733.
 
 ## ✨ Features
- * OIDC: store initial screen in session storage  ([\#25688](https://github.com/vector-im/element-web/pull/25688)). Fixes #25656. Contributed by @kerryarchibald.
- * Allow default_server_config as a fallback config ([\#25682](https://github.com/vector-im/element-web/pull/25682)). Contributed by @ShadowRZ.
- * OIDC: remove auth params from url after login attempt ([\#25664](https://github.com/vector-im/element-web/pull/25664)). Contributed by @kerryarchibald.
+ * OIDC: store initial screen in session storage  ([\#25688](https://github.com/matronhq/matron-web/pull/25688)). Fixes #25656. Contributed by @kerryarchibald.
+ * Allow default_server_config as a fallback config ([\#25682](https://github.com/matronhq/matron-web/pull/25682)). Contributed by @ShadowRZ.
+ * OIDC: remove auth params from url after login attempt ([\#25664](https://github.com/matronhq/matron-web/pull/25664)). Contributed by @kerryarchibald.
  * feat(faq): remove keyboard shortcuts button ([\#9342](https://github.com/matrix-org/matrix-react-sdk/pull/9342)). Fixes #22625. Contributed by @gefgu.
  * GYU: Update banner ([\#11211](https://github.com/matrix-org/matrix-react-sdk/pull/11211)). Fixes #25530. Contributed by @justjanne.
  * Linkify mxc:// URLs as links to your media repo ([\#11213](https://github.com/matrix-org/matrix-react-sdk/pull/11213)). Fixes #6942.
@@ -419,7 +419,7 @@ Changes in [1.11.36](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Only trap escape key for cancel reply if there is a reply ([\#11140](https://github.com/matrix-org/matrix-react-sdk/pull/11140)). Fixes #25640.
  * Update linkify to 4.1.1 ([\#11132](https://github.com/matrix-org/matrix-react-sdk/pull/11132)). Fixes #23806.
 
-Changes in [1.11.35](https://github.com/vector-im/element-web/releases/tag/v1.11.35) (2023-07-04)
+Changes in [1.11.35](https://github.com/matronhq/matron-web/releases/tag/v1.11.35) (2023-07-04)
 =================================================================================================
 
 ## 🦖 Deprecations
@@ -444,7 +444,7 @@ Changes in [1.11.35](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Allow specifying help URLs in config.json ([\#11070](https://github.com/matrix-org/matrix-react-sdk/pull/11070)). Fixes #15268.
 
 ## 🐛 Bug Fixes
- * Fix error when generating error for polling for updates ([\#25609](https://github.com/vector-im/element-web/pull/25609)).
+ * Fix error when generating error for polling for updates ([\#25609](https://github.com/matronhq/matron-web/pull/25609)).
  * Fix spurious notifications on non-live events ([\#11133](https://github.com/matrix-org/matrix-react-sdk/pull/11133)). Fixes #24336.
  * Prevent auto-translation within composer ([\#11114](https://github.com/matrix-org/matrix-react-sdk/pull/11114)). Fixes #25624.
  * Fix caret jump when backspacing into empty line at beginning of editor ([\#11128](https://github.com/matrix-org/matrix-react-sdk/pull/11128)). Fixes #22335.
@@ -458,7 +458,7 @@ Changes in [1.11.35](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix slash commands not being enabled in certain cases ([\#11090](https://github.com/matrix-org/matrix-react-sdk/pull/11090)). Fixes #25572.
  * Prevent escape in threads from sending focus to main timeline composer ([\#11061](https://github.com/matrix-org/matrix-react-sdk/pull/11061)). Fixes #23397.
 
-Changes in [1.11.34](https://github.com/vector-im/element-web/releases/tag/v1.11.34) (2023-06-20)
+Changes in [1.11.34](https://github.com/matronhq/matron-web/releases/tag/v1.11.34) (2023-06-20)
 =================================================================================================
 
 ## ✨ Features
@@ -480,18 +480,18 @@ Changes in [1.11.34](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Clear thread panel event permalink when changing rooms ([\#11024](https://github.com/matrix-org/matrix-react-sdk/pull/11024)). Fixes #25484.
  * Fix spinner placement on pinned widgets being reloaded ([\#10970](https://github.com/matrix-org/matrix-react-sdk/pull/10970)). Fixes #25431. Contributed by @luixxiul.
 
-Changes in [1.11.33](https://github.com/vector-im/element-web/releases/tag/v1.11.33) (2023-06-09)
+Changes in [1.11.33](https://github.com/matronhq/matron-web/releases/tag/v1.11.33) (2023-06-09)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Bump matrix-react-sdk to v3.73.1 for matrix-js-sdk v26.0.1. Fixes #25526.
 
-Changes in [1.11.32](https://github.com/vector-im/element-web/releases/tag/v1.11.32) (2023-06-06)
+Changes in [1.11.32](https://github.com/matronhq/matron-web/releases/tag/v1.11.32) (2023-06-06)
 =================================================================================================
 
 ## ✨ Features
- * Redirect to the SSO page if `sso_redirect_options.on_welcome_page` is enabled and the URL hash is empty ([\#25495](https://github.com/vector-im/element-web/pull/25495)). Contributed by @dhenneke.
- * vector/index.html: Allow fetching blob urls ([\#25336](https://github.com/vector-im/element-web/pull/25336)). Contributed by @SuperKenVery.
+ * Redirect to the SSO page if `sso_redirect_options.on_welcome_page` is enabled and the URL hash is empty ([\#25495](https://github.com/matronhq/matron-web/pull/25495)). Contributed by @dhenneke.
+ * vector/index.html: Allow fetching blob urls ([\#25336](https://github.com/matronhq/matron-web/pull/25336)). Contributed by @SuperKenVery.
  * When joining room in sub-space join the parents too ([\#11011](https://github.com/matrix-org/matrix-react-sdk/pull/11011)).
  * Include thread replies in message previews ([\#10631](https://github.com/matrix-org/matrix-react-sdk/pull/10631)). Fixes #23920.
  * Use semantic headings in space preferences ([\#11021](https://github.com/matrix-org/matrix-react-sdk/pull/11021)). Contributed by @kerryarchibald.
@@ -511,7 +511,7 @@ Changes in [1.11.32](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Use semantic headings in user settings Preferences ([\#10794](https://github.com/matrix-org/matrix-react-sdk/pull/10794)). Contributed by @kerryarchibald.
  * Use semantic headings in user settings Keyboard ([\#10793](https://github.com/matrix-org/matrix-react-sdk/pull/10793)). Contributed by @kerryarchibald.
  * RTE plain text mentions as pills ([\#10852](https://github.com/matrix-org/matrix-react-sdk/pull/10852)). Contributed by @alunturner.
- * Allow welcome.html logo to be replaced by config ([\#25339](https://github.com/vector-im/element-web/pull/25339)). Fixes #8636.
+ * Allow welcome.html logo to be replaced by config ([\#25339](https://github.com/matronhq/matron-web/pull/25339)). Fixes #8636.
  * Use semantic headings in user settings Labs ([\#10773](https://github.com/matrix-org/matrix-react-sdk/pull/10773)). Contributed by @kerryarchibald.
  * Use semantic list elements for menu lists and tab lists ([\#10902](https://github.com/matrix-org/matrix-react-sdk/pull/10902)). Fixes #24928.
  * Fix aria-required-children axe violation ([\#10900](https://github.com/matrix-org/matrix-react-sdk/pull/10900)). Fixes #25342.
@@ -556,8 +556,8 @@ Changes in [1.11.32](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix big emoji in replies ([\#10932](https://github.com/matrix-org/matrix-react-sdk/pull/10932)). Fixes #24798.
  * Hide empty `MessageActionBar` on message edit history dialog ([\#10447](https://github.com/matrix-org/matrix-react-sdk/pull/10447)). Fixes #24903. Contributed by @luixxiul.
  * Fix roving tab index getting confused after dragging space order ([\#10901](https://github.com/matrix-org/matrix-react-sdk/pull/10901)).
- * Attempt a potential workaround for stuck notifs ([\#3384](https://github.com/matrix-org/matrix-js-sdk/pull/3384)). Fixes vector-im/element-web#25406. Contributed by @andybalaam.
- * Handle trailing dot FQDNs for domain-specific config.json files ([\#25351](https://github.com/vector-im/element-web/pull/25351)). Fixes #8858.
+ * Attempt a potential workaround for stuck notifs ([\#3384](https://github.com/matrix-org/matrix-js-sdk/pull/3384)). Fixes matronhq/matron-web#25406. Contributed by @andybalaam.
+ * Handle trailing dot FQDNs for domain-specific config.json files ([\#25351](https://github.com/matronhq/matron-web/pull/25351)). Fixes #8858.
  * Ignore edits in message previews when they concern messages other than latest ([\#10868](https://github.com/matrix-org/matrix-react-sdk/pull/10868)). Fixes #14872.
  * Send correct receipts when viewing a room ([\#10864](https://github.com/matrix-org/matrix-react-sdk/pull/10864)). Fixes #25196.
  * Fix timeline search bar being overlapped by the right panel ([\#10809](https://github.com/matrix-org/matrix-react-sdk/pull/10809)). Fixes #25291. Contributed by @luixxiul.
@@ -578,11 +578,11 @@ Changes in [1.11.32](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix accessibility issues around the room list and space panel ([\#10717](https://github.com/matrix-org/matrix-react-sdk/pull/10717)). Fixes #13345.
  * Ensure tooltip contents is linked via aria to the target element ([\#10729](https://github.com/matrix-org/matrix-react-sdk/pull/10729)). Fixes vector-im/customer-retainer#43.
 
-Changes in [1.11.31](https://github.com/vector-im/element-web/releases/tag/v1.11.31) (2023-05-10)
+Changes in [1.11.31](https://github.com/matronhq/matron-web/releases/tag/v1.11.31) (2023-05-10)
 =================================================================================================
 
 ## ✨ Features
- * Improve Content-Security-Policy ([\#25210](https://github.com/vector-im/element-web/pull/25210)).
+ * Improve Content-Security-Policy ([\#25210](https://github.com/matronhq/matron-web/pull/25210)).
  * Add UIFeature.locationSharing to hide location sharing ([\#10727](https://github.com/matrix-org/matrix-react-sdk/pull/10727)).
  * Memoize field validation results ([\#10714](https://github.com/matrix-org/matrix-react-sdk/pull/10714)).
  * Commands for plain text editor ([\#10567](https://github.com/matrix-org/matrix-react-sdk/pull/10567)). Contributed by @alunturner.
@@ -617,7 +617,7 @@ Changes in [1.11.31](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix wrong room topic tooltip position ([\#10667](https://github.com/matrix-org/matrix-react-sdk/pull/10667)). Fixes #25158.
  * Fix create subspace dialog not working ([\#10652](https://github.com/matrix-org/matrix-react-sdk/pull/10652)). Fixes #24882.
 
-Changes in [1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11.30) (2023-04-25)
+Changes in [1.11.30](https://github.com/matronhq/matron-web/releases/tag/v1.11.30) (2023-04-25)
 =================================================================================================
 
 ## 🔒 Security
@@ -642,7 +642,7 @@ Changes in [1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Update rte autocomplete styling ([\#10503](https://github.com/matrix-org/matrix-react-sdk/pull/10503)). Contributed by @alunturner.
 
 ## 🐛 Bug Fixes
- * Fix create subspace dialog not working ([\#10652](https://github.com/matrix-org/matrix-react-sdk/pull/10652)). Fixes vector-im/element-web#24882
+ * Fix create subspace dialog not working ([\#10652](https://github.com/matrix-org/matrix-react-sdk/pull/10652)). Fixes matronhq/matron-web#24882
  * Fix multiple accessibility defects identified by AXE ([\#10606](https://github.com/matrix-org/matrix-react-sdk/pull/10606)).
  * Fix view source from edit history dialog always showing latest event ([\#10626](https://github.com/matrix-org/matrix-react-sdk/pull/10626)). Fixes #21859.
  * #21451 Fix WebGL disabled error message ([\#10589](https://github.com/matrix-org/matrix-react-sdk/pull/10589)). Contributed by @rashmitpankhania.
@@ -661,12 +661,12 @@ Changes in [1.11.30](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Highlight event when any version triggered a highlight ([\#10502](https://github.com/matrix-org/matrix-react-sdk/pull/10502)). Fixes #24923 and #24970. Contributed by @kerryarchibald.
  * Fix spacing of headings of integration manager on General settings tab ([\#10232](https://github.com/matrix-org/matrix-react-sdk/pull/10232)). Fixes #24085. Contributed by @luixxiul.
 
-Changes in [1.11.29](https://github.com/vector-im/element-web/releases/tag/v1.11.29) (2023-04-11)
+Changes in [1.11.29](https://github.com/matronhq/matron-web/releases/tag/v1.11.29) (2023-04-11)
 =================================================================================================
 
 ## ✨ Features
- * Allow desktop app to expose recent rooms in UI integrations ([\#16940](https://github.com/vector-im/element-web/pull/16940)).
- * Add API params to mute audio and/or video in Jitsi calls by default ([\#24820](https://github.com/vector-im/element-web/pull/24820)). Contributed by @dhenneke.
+ * Allow desktop app to expose recent rooms in UI integrations ([\#16940](https://github.com/matronhq/matron-web/pull/16940)).
+ * Add API params to mute audio and/or video in Jitsi calls by default ([\#24820](https://github.com/matronhq/matron-web/pull/24820)). Contributed by @dhenneke.
  * Style mentions as pills in rich text editor ([\#10448](https://github.com/matrix-org/matrix-react-sdk/pull/10448)). Contributed by @alunturner.
  * Show room create icon if "UIComponent.roomCreation" is enabled ([\#10364](https://github.com/matrix-org/matrix-react-sdk/pull/10364)). Contributed by @maheichyk.
  * Mentions as links rte ([\#10463](https://github.com/matrix-org/matrix-react-sdk/pull/10463)). Contributed by @alunturner.
@@ -700,8 +700,8 @@ Changes in [1.11.29](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Support dynamic room predecessors in RoomNotificationStateStore ([\#10297](https://github.com/matrix-org/matrix-react-sdk/pull/10297)). Contributed by @andybalaam.
 
 ## 🐛 Bug Fixes
- * Use a newly generated access_token while joining Jitsi ([\#24646](https://github.com/vector-im/element-web/pull/24646)). Fixes #24687. Contributed by @emrahcom.
- * Fix cloudflare action pointing at commit hash instead of tag ([\#24777](https://github.com/vector-im/element-web/pull/24777)). Contributed by @justjanne.
+ * Use a newly generated access_token while joining Jitsi ([\#24646](https://github.com/matronhq/matron-web/pull/24646)). Fixes #24687. Contributed by @emrahcom.
+ * Fix cloudflare action pointing at commit hash instead of tag ([\#24777](https://github.com/matronhq/matron-web/pull/24777)). Contributed by @justjanne.
  * Allow editing with RTE to overflow for autocomplete visibility ([\#10499](https://github.com/matrix-org/matrix-react-sdk/pull/10499)). Contributed by @alunturner.
  * Added auto focus to Github URL on opening of debug logs modal ([\#10479](https://github.com/matrix-org/matrix-react-sdk/pull/10479)). Contributed by @ShivamSpm.
  * Fix detection of encryption for all users in a room ([\#10487](https://github.com/matrix-org/matrix-react-sdk/pull/10487)). Fixes #24995.
@@ -742,30 +742,30 @@ Changes in [1.11.29](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Handle more edge cases in ACL updates ([\#10279](https://github.com/matrix-org/matrix-react-sdk/pull/10279)). Contributed by @justjanne.
  * Allow parsing png files to fail if thumbnailing is successful ([\#10308](https://github.com/matrix-org/matrix-react-sdk/pull/10308)).
 
-Changes in [1.11.28](https://github.com/vector-im/element-web/releases/tag/v1.11.28) (2023-03-31)
+Changes in [1.11.28](https://github.com/matronhq/matron-web/releases/tag/v1.11.28) (2023-03-31)
 =================================================================================================
 
 ## 🐛 Bug Fixes
- * (No changes, version bumped to sync with element-desktop.)
+ * (No changes, version bumped to sync with matron-desktop.)
 
-Changes in [1.11.27](https://github.com/vector-im/element-web/releases/tag/v1.11.27) (2023-03-31)
+Changes in [1.11.27](https://github.com/matronhq/matron-web/releases/tag/v1.11.27) (2023-03-31)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Fix detection of encryption for all users in a room ([\#10487](https://github.com/matrix-org/matrix-react-sdk/pull/10487)). Fixes #24995.
 
-Changes in [1.11.26](https://github.com/vector-im/element-web/releases/tag/v1.11.26) (2023-03-28)
+Changes in [1.11.26](https://github.com/matronhq/matron-web/releases/tag/v1.11.26) (2023-03-28)
 =================================================================================================
 
 ## 🔒 Security
  * Fixes for [CVE-2023-28427](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=CVE-2023-28427) / GHSA-mwq8-fjpf-c2gr
  * Fixes for [CVE-2023-28103](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=CVE-2023-28103) / GHSA-6g43-88cp-w5gv
 
-Changes in [1.11.25](https://github.com/vector-im/element-web/releases/tag/v1.11.25) (2023-03-15)
+Changes in [1.11.25](https://github.com/matronhq/matron-web/releases/tag/v1.11.25) (2023-03-15)
 =================================================================================================
 
 ## ✨ Features
- * Remove experimental PWA support for Firefox and Safari ([\#24630](https://github.com/vector-im/element-web/pull/24630)).
+ * Remove experimental PWA support for Firefox and Safari ([\#24630](https://github.com/matronhq/matron-web/pull/24630)).
  * Only allow to start a DM with one email if encryption by default is enabled ([\#10253](https://github.com/matrix-org/matrix-react-sdk/pull/10253)). Fixes #23133.
  * DM rooms are now encrypted if encryption by default is enabled and only inviting a single email address. Any action in the result DM room will be blocked until the other has joined. ([\#10229](https://github.com/matrix-org/matrix-react-sdk/pull/10229)).
  * Reduce bottom margin of ReplyChain on compact modern layout ([\#8972](https://github.com/matrix-org/matrix-react-sdk/pull/8972)). Fixes #22748. Contributed by @luixxiul.
@@ -803,7 +803,7 @@ Changes in [1.11.25](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Prevent multiple Jitsi calls started at the same time ([\#10183](https://github.com/matrix-org/matrix-react-sdk/pull/10183)). Fixes #23009.
  * Make localization keys compatible with agglutinative and/or SOV type languages ([\#10159](https://github.com/matrix-org/matrix-react-sdk/pull/10159)). Contributed by @luixxiul.
 
-Changes in [1.11.24](https://github.com/vector-im/element-web/releases/tag/v1.11.24) (2023-02-28)
+Changes in [1.11.24](https://github.com/matronhq/matron-web/releases/tag/v1.11.24) (2023-02-28)
 =================================================================================================
 
 ## ✨ Features
@@ -835,11 +835,11 @@ Changes in [1.11.24](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Correctly Identify emoticons ([\#10108](https://github.com/matrix-org/matrix-react-sdk/pull/10108)). Fixes #19472. Contributed by @adarsh-sgh.
  * Remove a redundant white space ([\#10129](https://github.com/matrix-org/matrix-react-sdk/pull/10129)). Contributed by @luixxiul.
 
-Changes in [1.11.23](https://github.com/vector-im/element-web/releases/tag/v1.11.23) (2023-02-14)
+Changes in [1.11.23](https://github.com/matronhq/matron-web/releases/tag/v1.11.23) (2023-02-14)
 =================================================================================================
 
 ## ✨ Features
- * Description of QR code sign in labs feature ([\#23513](https://github.com/vector-im/element-web/pull/23513)). Contributed by @hughns.
+ * Description of QR code sign in labs feature ([\#23513](https://github.com/matronhq/matron-web/pull/23513)). Contributed by @hughns.
  * Add option to find own location in map views ([\#10083](https://github.com/matrix-org/matrix-react-sdk/pull/10083)).
  * Render poll end events in timeline ([\#10027](https://github.com/matrix-org/matrix-react-sdk/pull/10027)). Contributed by @kerryarchibald.
  * Indicate unread messages in tab title ([\#10096](https://github.com/matrix-org/matrix-react-sdk/pull/10096)). Contributed by @tnt7864.
@@ -863,7 +863,7 @@ Changes in [1.11.23](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Add support for [token authenticated registration](https ([\#7275](https://github.com/matrix-org/matrix-react-sdk/pull/7275)). Fixes #18931. Contributed by @govynnus.
 
 ## 🐛 Bug Fixes
- * Jitsi requests 'requires_client' capability if auth token is provided ([\#24294](https://github.com/vector-im/element-web/pull/24294)). Contributed by @maheichyk.
+ * Jitsi requests 'requires_client' capability if auth token is provided ([\#24294](https://github.com/matronhq/matron-web/pull/24294)). Contributed by @maheichyk.
  * Remove duplicate white space characters from translation keys ([\#10152](https://github.com/matrix-org/matrix-react-sdk/pull/10152)). Contributed by @luixxiul.
  * Fix the caption of new sessions manager on Labs settings page for localization ([\#10143](https://github.com/matrix-org/matrix-react-sdk/pull/10143)). Contributed by @luixxiul.
  * Prevent start another DM with a user if one already exists ([\#10127](https://github.com/matrix-org/matrix-react-sdk/pull/10127)). Fixes #23138.
@@ -877,7 +877,7 @@ Changes in [1.11.23](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix scrollbar colliding with checkbox in add to space section ([\#10093](https://github.com/matrix-org/matrix-react-sdk/pull/10093)). Fixes #23189. Contributed by @Arnabdaz.
  * Add a whitespace character after 'broadcast?' ([\#10097](https://github.com/matrix-org/matrix-react-sdk/pull/10097)). Contributed by @luixxiul.
  * Seekbar in broadcast PiP view is now updated when switching between different broadcasts ([\#10072](https://github.com/matrix-org/matrix-react-sdk/pull/10072)). Fixes #24415.
- * Add border to "reject" button on room preview card for clickable area indication. It fixes vector-im/element-web#22623 ([\#9205](https://github.com/matrix-org/matrix-react-sdk/pull/9205)). Contributed by @gefgu.
+ * Add border to "reject" button on room preview card for clickable area indication. It fixes matronhq/matron-web#22623 ([\#9205](https://github.com/matrix-org/matrix-react-sdk/pull/9205)). Contributed by @gefgu.
  * Element-R: fix rageshages ([\#10081](https://github.com/matrix-org/matrix-react-sdk/pull/10081)). Fixes #24430.
  * Fix markdown paragraph display in timeline ([\#10071](https://github.com/matrix-org/matrix-react-sdk/pull/10071)). Fixes #24419. Contributed by @alunturner.
  * Prevent the remaining broadcast time from being exceeded ([\#10070](https://github.com/matrix-org/matrix-react-sdk/pull/10070)).
@@ -892,23 +892,23 @@ Changes in [1.11.23](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix MessageEditHistoryDialog crashing on complex input ([\#10018](https://github.com/matrix-org/matrix-react-sdk/pull/10018)). Fixes #23665. Contributed by @clarkf.
  * Unify unread notification state determination ([\#9941](https://github.com/matrix-org/matrix-react-sdk/pull/9941)). Contributed by @clarkf.
  * Fix layout and visual regressions around default avatars ([\#10031](https://github.com/matrix-org/matrix-react-sdk/pull/10031)). Fixes #24375 and #24369.
- * Fix useUnreadNotifications exploding with falsey room, like in notif panel ([\#10030](https://github.com/matrix-org/matrix-react-sdk/pull/10030)). Fixes matrix-org/element-web-rageshakes#19334.
+ * Fix useUnreadNotifications exploding with falsey room, like in notif panel ([\#10030](https://github.com/matrix-org/matrix-react-sdk/pull/10030)). Fixes matrix-org/matron-web-rageshakes#19334.
  * Fix "[object Promise]" appearing in HTML exports ([\#9975](https://github.com/matrix-org/matrix-react-sdk/pull/9975)). Fixes #24272. Contributed by @clarkf.
  * changing the color of message time stamp ([\#10016](https://github.com/matrix-org/matrix-react-sdk/pull/10016)). Contributed by @nawarajshah.
  * Fix link creation with backward selection ([\#9986](https://github.com/matrix-org/matrix-react-sdk/pull/9986)). Fixes #24315. Contributed by @florianduros.
  * Misaligned reply preview in thread composer #23396 ([\#9977](https://github.com/matrix-org/matrix-react-sdk/pull/9977)). Fixes #23396. Contributed by @mustafa-kapadia1483.
 
-Changes in [1.11.22](https://github.com/vector-im/element-web/releases/tag/v1.11.22) (2023-01-31)
+Changes in [1.11.22](https://github.com/matronhq/matron-web/releases/tag/v1.11.22) (2023-01-31)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * Bump version number to fix problems upgrading from v1.11.21-rc.1
 
-Changes in [1.11.21](https://github.com/vector-im/element-web/releases/tag/v1.11.21) (2023-01-31)
+Changes in [1.11.21](https://github.com/matronhq/matron-web/releases/tag/v1.11.21) (2023-01-31)
 =================================================================================================
 
 ## ✨ Features
- * Move pin drop out of labs ([\#22993](https://github.com/vector-im/element-web/pull/22993)).
+ * Move pin drop out of labs ([\#22993](https://github.com/matronhq/matron-web/pull/22993)).
  * Quotes for rich text editor (RTE) ([\#9932](https://github.com/matrix-org/matrix-react-sdk/pull/9932)). Contributed by @alunturner.
  * Show the room name in the room header during calls ([\#9942](https://github.com/matrix-org/matrix-react-sdk/pull/9942)). Fixes #24268.
  * Add code blocks to rich text editor ([\#9921](https://github.com/matrix-org/matrix-react-sdk/pull/9921)). Contributed by @alunturner.
@@ -930,7 +930,7 @@ Changes in [1.11.21](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Clear the RTE before sending a message ([\#9948](https://github.com/matrix-org/matrix-react-sdk/pull/9948)). Contributed by @florianduros.
  * Fix {enter} press in RTE ([\#9927](https://github.com/matrix-org/matrix-react-sdk/pull/9927)). Contributed by @florianduros.
  * Fix the problem that the password reset email has to be confirmed twice ([\#9926](https://github.com/matrix-org/matrix-react-sdk/pull/9926)). Fixes #24226.
- * replace .at() with array.length-1 ([\#9933](https://github.com/matrix-org/matrix-react-sdk/pull/9933)). Fixes matrix-org/element-web-rageshakes#19281.
+ * replace .at() with array.length-1 ([\#9933](https://github.com/matrix-org/matrix-react-sdk/pull/9933)). Fixes matrix-org/matron-web-rageshakes#19281.
  * Fix broken threads list timestamp layout ([\#9922](https://github.com/matrix-org/matrix-react-sdk/pull/9922)). Fixes #24243 and #24191. Contributed by @justjanne.
  * Disable multiple messages when {enter} is pressed multiple times ([\#9929](https://github.com/matrix-org/matrix-react-sdk/pull/9929)). Fixes #24249. Contributed by @florianduros.
  * Fix logout devices when resetting the password ([\#9925](https://github.com/matrix-org/matrix-react-sdk/pull/9925)). Fixes #24228.
@@ -944,19 +944,19 @@ Changes in [1.11.21](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Fix unexpected composer growing ([\#9889](https://github.com/matrix-org/matrix-react-sdk/pull/9889)). Contributed by @florianduros.
  * Fix misaligned timestamps for thread roots which are emotes ([\#9875](https://github.com/matrix-org/matrix-react-sdk/pull/9875)). Fixes #23897. Contributed by @justjanne.
 
-Changes in [1.11.20](https://github.com/vector-im/element-web/releases/tag/v1.11.20) (2023-01-20)
+Changes in [1.11.20](https://github.com/matronhq/matron-web/releases/tag/v1.11.20) (2023-01-20)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * (Part 2) of prevent crash on older browsers (replace .at() with array.length-1)
 
-Changes in [1.11.19](https://github.com/vector-im/element-web/releases/tag/v1.11.19) (2023-01-18)
+Changes in [1.11.19](https://github.com/matronhq/matron-web/releases/tag/v1.11.19) (2023-01-18)
 =================================================================================================
 
 ## 🐛 Bug Fixes
  * fix crash on browsers that don't support `Array.at` ([\#9935](https://github.com/matrix-org/matrix-react-sdk/pull/9935)). Contributed by @andybalaam.
 
-Changes in [1.11.18](https://github.com/vector-im/element-web/releases/tag/v1.11.18) (2023-01-18)
+Changes in [1.11.18](https://github.com/matronhq/matron-web/releases/tag/v1.11.18) (2023-01-18)
 =================================================================================================
 
 ## ✨ Features
@@ -1011,7 +1011,7 @@ Changes in [1.11.18](https://github.com/vector-im/element-web/releases/tag/v1.11
  * Ensure that events are correctly updated when they are edited. ([\#9789](https://github.com/matrix-org/matrix-react-sdk/pull/9789)).
  * When stopping a broadcast also stop the playback ([\#9795](https://github.com/matrix-org/matrix-react-sdk/pull/9795)). Fixes #24052.
  * Prevent to start two broadcasts at the same time ([\#9744](https://github.com/matrix-org/matrix-react-sdk/pull/9744)). Fixes #23973.
- * Correctly handle limited sync responses by resetting the thread timeline ([\#3056](https://github.com/matrix-org/matrix-js-sdk/pull/3056)). Fixes vector-im/element-web#23952.
- * Fix failure to start in firefox private browser ([\#3058](https://github.com/matrix-org/matrix-js-sdk/pull/3058)). Fixes vector-im/element-web#24216.
+ * Correctly handle limited sync responses by resetting the thread timeline ([\#3056](https://github.com/matrix-org/matrix-js-sdk/pull/3056)). Fixes matronhq/matron-web#23952.
+ * Fix failure to start in firefox private browser ([\#3058](https://github.com/matrix-org/matrix-js-sdk/pull/3058)). Fixes matronhq/matron-web#24216.
 
 **Changelogs for older versions can be found [here](CHANGELOG-2022.md).**

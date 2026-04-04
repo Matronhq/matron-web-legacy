@@ -1,16 +1,16 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
  */
 
-import React, { type JSX, memo, useId, useState } from "react";
+import React, { type JSX, useId, useState } from "react";
 import { ChatFilter, IconButton } from "@vector-im/compound-web";
 import ChevronDownIcon from "@vector-im/compound-design-tokens/assets/web/icons/chevron-down";
 
-import { Flex } from "../../core/utils/Flex";
-import { _t } from "../../core/i18n/i18n";
+import { Flex } from "../../utils/Flex";
+import { _t } from "../../utils/i18n";
 import { useCollapseFilters } from "./useCollapseFilters";
 import { useVisibleFilters, type FilterId } from "./useVisibleFilters";
 import styles from "./RoomListPrimaryFilters.module.css";
@@ -53,11 +53,11 @@ export interface RoomListPrimaryFiltersProps {
  * The primary filters component for the room list.
  * Displays a collapsible list of filters with expand/collapse functionality.
  */
-export const RoomListPrimaryFilters = memo(function RoomListPrimaryFilters({
+export const RoomListPrimaryFilters: React.FC<RoomListPrimaryFiltersProps> = ({
     filterIds,
     activeFilterId,
     onToggleFilter,
-}: RoomListPrimaryFiltersProps): JSX.Element | null {
+}): JSX.Element | null => {
     const id = useId();
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -113,4 +113,4 @@ export const RoomListPrimaryFilters = memo(function RoomListPrimaryFilters({
             </Flex>
         </Flex>
     );
-});
+};

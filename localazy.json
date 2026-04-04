@@ -8,27 +8,15 @@
         "features": ["plural_object", "filter_untranslated"],
         "files": [
             {
-                "pattern": "apps/web/src/i18n/strings/en_EN.json",
-                "file": "element-web.json",
+                "pattern": "src/i18n/strings/en_EN.json",
+                "file": "matron-web.json",
                 "lang": "inherited"
             },
             {
                 "group": "existing",
-                "pattern": "apps/web/src/i18n/strings/*.json",
-                "file": "element-web.json",
-                "excludes": ["apps/web/src/i18n/strings/en_EN.json"],
-                "lang": "${autodetectLang}"
-            },
-            {
-                "pattern": "apps/desktop/src/i18n/strings/en_EN.json",
-                "file": "element-desktop.json",
-                "lang": "inherited"
-            },
-            {
-                "group": "existing",
-                "pattern": "apps/desktop/src/i18n/strings/*.json",
-                "file": "element-desktop.json",
-                "excludes": ["apps/desktop/src/i18n/strings/en_EN.json"],
+                "pattern": "src/i18n/strings/*.json",
+                "file": "matron-web.json",
+                "excludes": ["src/i18n/strings/en_EN.json"],
                 "lang": "${autodetectLang}"
             },
             {
@@ -49,12 +37,8 @@
     "download": {
         "files": [
             {
-                "conditions": "equals: ${file}, element-web.json",
-                "output": "apps/web/src/i18n/strings/${langLsrUnderscore}.json"
-            },
-            {
-                "conditions": "equals: ${file}, element-desktop.json",
-                "output": "apps/desktop/src/i18n/strings/${langLsrUnderscore}.json"
+                "conditions": "equals: ${file}, matron-web.json",
+                "output": "src/i18n/strings/${langLsrUnderscore}.json"
             },
             {
                 "conditions": "equals: ${file}, shared-components.json",

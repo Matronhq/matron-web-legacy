@@ -1,23 +1,27 @@
 /*
-Copyright 2026 Element Creations Ltd.
+Copyright 2026 Matron Contributors.
 
 SPDX-License-Identifier: AGPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
 */
 
-import { defineConfig, ViteUserConfig } from "vitest/config";
+/// <reference types="@vitest/browser-playwright" />
+
+import { defineConfig } from "vitest/config";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { storybookVis } from "storybook-addon-vis/vitest-plugin";
-import { playwright, PlaywrightProviderOptions } from "@vitest/browser-playwright";
+import { playwright } from "@vitest/browser-playwright";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
+import { InlineConfig } from "vite";
 import { Reporter } from "vitest/reporters";
 import { env } from "process";
+import { BrowserContextOptions } from "playwright-core";
 
 const dirname = typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-const reporters: NonNullable<ViteUserConfig["test"]>["reporters"] = [["default"]];
+const reporters: NonNullable<InlineConfig["test"]>["reporters"] = [["default"]];
 const slowTestReporter: Reporter = {
     onTestRunEnd(testModules, unhandledErrors, reason) {
         const tests = testModules
@@ -57,7 +61,7 @@ if (env["GITHUB_ACTIONS"] !== undefined) {
     }
 }
 
-const commonContextOptions: PlaywrightProviderOptions["contextOptions"] = {
+const commonContextOptions: Omit<BrowserContextOptions, "ignoreHTTPSErrors" | "serviceWorkers"> = {
     reducedMotion: "reduce",
     // Force consistent font rendering
     colorScheme: "light",
@@ -108,11 +112,14 @@ export default defineConfig({
                         headless: true,
                         provider: playwright({
                             contextOptions: commonContextOptions,
-                            launchOptions: commonLaunchOptions,
+                            launchOptions: process.env.PW_TEST_CONNECT_WS_ENDPOINT ? undefined : commonLaunchOptions,
                             connectOptions: process.env.PW_TEST_CONNECT_WS_ENDPOINT
                                 ? {
                                       wsEndpoint: process.env.PW_TEST_CONNECT_WS_ENDPOINT,
                                       exposeNetwork: "<loopback>",
+                                      headers: {
+                                          "x-playwright-launch-options": JSON.stringify(commonLaunchOptions),
+                                      },
                                   }
                                 : undefined,
                         }),
@@ -123,8 +130,7 @@ export default defineConfig({
             },
             {
                 extends: true,
-                // as any is workaround for https://github.com/davidmyersdev/vite-plugin-node-polyfills/issues/150
-                plugins: [nodePolyfills({ include: ["util"], globals: { global: false } }) as any],
+                plugins: [nodePolyfills({ include: ["util"], globals: { global: false } })],
                 test: {
                     name: "unit",
                     browser: {

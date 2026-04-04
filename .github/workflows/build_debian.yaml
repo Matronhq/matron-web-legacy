@@ -7,7 +7,7 @@ permissions: {} # We use ELEMENT_BOT_TOKEN instead
 jobs:
     build:
         name: Build package
-        environment: packages.element.io
+        environment: packages.matron.chat
         runs-on: ubuntu-24.04
         env:
             R2_INCOMING_BUCKET: ${{ vars.R2_INCOMING_BUCKET }}
@@ -15,46 +15,40 @@ jobs:
             VERSION: ${{ github.ref_name }}
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-              with:
-                  persist-credentials: false
 
             - name: Download package
-              working-directory: apps/web
               run: |
-                  wget "https://github.com/element-hq/element-web/releases/download/$VERSION/element-$VERSION.tar.gz"
-                  wget "https://github.com/element-hq/element-web/releases/download/$VERSION/element-$VERSION.tar.gz.asc"
+                  wget "https://github.com/matronhq/matron-web/releases/download/$VERSION/matron-$VERSION.tar.gz"
+                  wget "https://github.com/matronhq/matron-web/releases/download/$VERSION/matron-$VERSION.tar.gz.asc"
 
             - name: Check GPG signature
-              working-directory: apps/web
               run: |
-                  wget "https://packages.element.io/element-release-key.gpg"
-                  gpg --import element-release-key.gpg
+                  wget "https://packages.matron.chat/matron-release-key.gpg"
+                  gpg --import matron-release-key.gpg
                   gpg --fingerprint "$FINGERPRINT"
-                  gpg --verify "element-$VERSION.tar.gz.asc" "element-$VERSION.tar.gz"
+                  gpg --verify "matron-$VERSION.tar.gz.asc" "matron-$VERSION.tar.gz"
               env:
                   FINGERPRINT: ${{ vars.GPG_FINGERPRINT }}
 
             - name: Prepare
-              working-directory: apps/web
               run: |
                   mkdir -p debian/tmp/DEBIAN
                   find debian -maxdepth 1 -type f -exec cp "{}" debian/tmp/DEBIAN/ \;
-                  mkdir -p debian/tmp/usr/share/element-web/ debian/tmp/etc/element-web/
+                  mkdir -p debian/tmp/usr/share/matron-web/ debian/tmp/etc/matron-web/
 
-                  tar -xf "element-$VERSION.tar.gz" -C debian/tmp/usr/share/element-web --strip-components=1 --no-same-owner --no-same-permissions
-                  mv debian/tmp/usr/share/element-web/config.sample.json debian/tmp/etc/element-web/config.json
-                  ln -s /etc/element-web/config.json debian/tmp/usr/share/element-web/config.json
+                  tar -xf "matron-$VERSION.tar.gz" -C debian/tmp/usr/share/matron-web --strip-components=1 --no-same-owner --no-same-permissions
+                  mv debian/tmp/usr/share/matron-web/config.sample.json debian/tmp/etc/matron-web/config.json
+                  ln -s /etc/matron-web/config.json debian/tmp/usr/share/matron-web/config.json
 
             - name: Write changelog
-              working-directory: apps/web
               run: |
                   VERSION=$(cat package.json | jq -r .version)
                   TIME=$(date -d "$PUBLISHED_AT" -R)
                   {
-                      echo "element-web ($VERSION) default; urgency=medium"
+                      echo "matron-web ($VERSION) default; urgency=medium"
                       echo "$BODY" | sed 's/^##/\n  */g;s/^\*/  */g' | perl -pe 's/\[.+?]\((.+?)\)/\1/g'
                       echo ""
-                      echo " -- $ACTOR <support@element.io>  $TIME"
+                      echo " -- $ACTOR <support@matron.chat>  $TIME"
                   } > debian/tmp/DEBIAN/changelog
               env:
                   ACTOR: ${{ github.actor }}
@@ -63,23 +57,22 @@ jobs:
                   PUBLISHED_AT: ${{ github.event.release.published_at }}
 
             - name: Build deb package
-              working-directory: apps/web
               run: |
                   VERSION=$(cat package.json | jq -r .version)
                   dpkg-gencontrol -v"$VERSION" -ldebian/tmp/DEBIAN/changelog
-                  dpkg-deb -Zxz --root-owner-group --build debian/tmp element-web.deb
+                  dpkg-deb -Zxz --root-owner-group --build debian/tmp matron-web.deb
 
-            - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+            - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
               with:
-                  name: element-web.deb
-                  path: apps/web/element-web.deb
+                  name: matron-web.deb
+                  path: matron-web.deb
                   retention-days: 14
 
-            - name: Publish to packages.element.io
+            - name: Publish to packages.matron.chat
               if: github.event.release.prerelease == false
-              uses: element-hq/packages.element.io@master # zizmor: ignore[unpinned-uses]
+              uses: matronhq/packages.matron.chat@master
               with:
-                  file: apps/web/element-web.deb
+                  file: matron-web.deb
                   github-token: ${{ secrets.ELEMENT_BOT_TOKEN }}
                   bucket-api: ${{ vars.CF_R2_S3_API }}
                   bucket-key-id: ${{ secrets.CF_R2_ACCESS_KEY_ID }}

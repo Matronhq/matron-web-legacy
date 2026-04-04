@@ -15,7 +15,7 @@ jobs:
                   headers: '{"GraphQL-Features": "projects_next_graphql"}'
                   query: |
                       query find_team_members($team: String!) {
-                        organization(login: "element-hq") {
+                        organization(login: "matronhq") {
                           team(slug: $team) {
                             members {
                               nodes {
@@ -82,7 +82,7 @@ jobs:
                   headers: '{"GraphQL-Features": "projects_next_graphql"}'
                   query: |
                       query find_team_members($team: String!) {
-                        organization(login: "element-hq") {
+                        organization(login: "matronhq") {
                           team(slug: $team) {
                             members {
                               nodes {

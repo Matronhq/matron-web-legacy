@@ -44,11 +44,9 @@ jobs:
                 shell: bash
         steps:
             - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-              with:
-                  persist-credentials: false
 
-            - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
-            - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
+            - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v4
+            - uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # v6
               with:
                   # Disable cache on Windows as it is slower than not caching
                   # https://github.com/actions/setup-node/issues/975
@@ -59,18 +57,16 @@ jobs:
               run: ./scripts/layered.sh
 
             - name: Copy config
-              working-directory: apps/web
-              run: cp element.io/develop/config.json config.json
+              run: cp matron.chat/develop/config.json config.json
 
             - name: Build
-              working-directory: apps/web
               env:
                   CI_PACKAGE: true
-              run: VERSION=$(scripts/get-version-from-git.sh) pnpm run build
+              run: VERSION=$(scripts/get-version-from-git.sh) pnpm build
 
             - name: Upload Artifact
-              uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
               with:
                   name: webapp-${{ matrix.image }}
-                  path: apps/web/webapp
+                  path: webapp
                   retention-days: 1

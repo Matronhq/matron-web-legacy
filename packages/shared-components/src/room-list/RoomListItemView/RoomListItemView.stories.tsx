@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -10,25 +10,23 @@ import { fn } from "storybook/test";
 
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { Room } from "./RoomListItemView";
-import { RoomListItemView, type RoomListItemViewSnapshot, type RoomListItemViewActions } from "./RoomListItemView";
-import { useMockedViewModel } from "../../core/viewmodel";
-import { withViewDocs } from "../../../.storybook/withViewDocs";
+import { RoomListItemView, type RoomListItemSnapshot, type RoomListItemActions } from "./RoomListItemView";
+import { useMockedViewModel } from "../../viewmodel";
 import { defaultSnapshot } from "./default-snapshot";
 import { renderAvatar } from "../story-mocks";
-import { mockedActions } from "./mocked-actions";
 
-type RoomListItemProps = RoomListItemViewSnapshot &
-    RoomListItemViewActions & {
+type RoomListItemProps = RoomListItemSnapshot &
+    RoomListItemActions & {
         isSelected: boolean;
         isFocused: boolean;
         onFocus: (room: Room, e: React.FocusEvent) => void;
-        isFirstItem: boolean;
-        isLastItem: boolean;
+        roomIndex: number;
+        roomCount: number;
         renderAvatar: (room: Room) => React.ReactElement;
     };
 
 // Wrapper component that creates a mocked ViewModel
-const RoomListItemWrapperImpl = ({
+const RoomListItemWrapper = ({
     onOpenRoom,
     onMarkAsRead,
     onMarkAsUnread,
@@ -41,8 +39,8 @@ const RoomListItemWrapperImpl = ({
     isSelected,
     isFocused,
     onFocus,
-    isFirstItem,
-    isLastItem,
+    roomIndex,
+    roomCount,
     renderAvatar: renderAvatarProp,
     ...rest
 }: RoomListItemProps): JSX.Element => {
@@ -63,14 +61,12 @@ const RoomListItemWrapperImpl = ({
             isSelected={isSelected}
             isFocused={isFocused}
             onFocus={onFocus}
-            isFirstItem={isFirstItem}
-            isLastItem={isLastItem}
+            roomIndex={roomIndex}
+            roomCount={roomCount}
             renderAvatar={renderAvatarProp}
-            role="option"
         />
     );
 };
-const RoomListItemWrapper = withViewDocs(RoomListItemWrapperImpl, RoomListItemView);
 
 const meta = {
     title: "Room List/RoomListItemView",
@@ -78,18 +74,28 @@ const meta = {
     tags: ["autodocs"],
     decorators: [
         (Story) => (
-            <div role="listbox" aria-label="Room list" style={{ width: "320px", padding: "8px" }}>
-                <Story />
+            <div style={{ width: "320px", padding: "8px" }}>
+                <div role="listbox" aria-label="Room list">
+                    <Story />
+                </div>
             </div>
         ),
     ],
     args: {
         ...defaultSnapshot,
-        ...mockedActions,
         isSelected: false,
         isFocused: false,
-        isFirstItem: false,
-        isLastItem: false,
+        roomIndex: 0,
+        roomCount: 10,
+        onOpenRoom: fn(),
+        onMarkAsRead: fn(),
+        onMarkAsUnread: fn(),
+        onToggleFavorite: fn(),
+        onToggleLowPriority: fn(),
+        onInvite: fn(),
+        onCopyRoomLink: fn(),
+        onLeaveRoom: fn(),
+        onSetRoomNotifState: fn(),
         onFocus: fn(),
         renderAvatar,
     },
@@ -160,42 +166,6 @@ export const WithMention: Story = {
     },
 };
 
-export const WithVoiceCall: Story = {
-    args: {
-        isBold: true,
-        notification: {
-            hasAnyNotificationOrActivity: true,
-            isUnsentMessage: false,
-            invited: false,
-            isMention: false,
-            isActivityNotification: false,
-            isNotification: false,
-            hasUnreadCount: false,
-            count: 0,
-            muted: false,
-            callType: "voice",
-        },
-    },
-};
-
-export const WithVideoCall: Story = {
-    args: {
-        isBold: true,
-        notification: {
-            hasAnyNotificationOrActivity: true,
-            isUnsentMessage: false,
-            invited: false,
-            isMention: false,
-            isActivityNotification: false,
-            isNotification: false,
-            hasUnreadCount: false,
-            count: 0,
-            muted: false,
-            callType: "video",
-        },
-    },
-};
-
 export const Invitation: Story = {
     args: {
         name: "Secret Project",
@@ -253,23 +223,10 @@ export const WithLargeFont: Story = {
     args: {
         isSelected: true,
     },
-    // Render the story in an iframe to avoid affecting other story
-    parameters: {
-        docs: {
-            story: {
-                inline: false,
-                iframeHeight: 170,
-            },
-        },
-    },
     decorators: [
         (Story) => {
             useEffect(() => {
-                const originalFontSize = getComputedStyle(document.documentElement).fontSize;
                 document.documentElement.style.setProperty("font-size", "36px");
-                return () => {
-                    document.documentElement.style.setProperty("font-size", originalFontSize);
-                };
             }, []);
             return <Story />;
         },
@@ -287,18 +244,4 @@ export const WithZoom: Story = {
             </div>
         ),
     ],
-};
-
-export const FirstItem: Story = {
-    args: {
-        isFirstItem: true,
-        isSelected: true,
-    },
-};
-
-export const LastItem: Story = {
-    args: {
-        isLastItem: true,
-        isSelected: true,
-    },
 };

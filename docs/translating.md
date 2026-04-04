@@ -14,7 +14,7 @@
 
 ## How to check if your language already is being translated
 
-Go to https://localazy.com/p/element-web. If your language is listed then you can get started. Have a read
+Go to https://localazy.com/p/matron-web. If your language is listed then you can get started. Have a read
 of https://localazy.com/docs/general/translating-strings if you need help getting started. If your language is not yet
 listed please express your wishes to start translating it in the general discussion room linked above.
 
@@ -31,5 +31,5 @@ You must keep these markers surrounding the equivalent string in your language t
 
 ### When will my translations be available?
 
-We automatically pull changes from Localazy 3 times a week, so your translations should be available at https://develop.element.io
+We automatically pull changes from Localazy 3 times a week, so your translations should be available at https://develop.matron.chat
 within a few days of you submitting them and them being approved. They will then also be included in the following release cycle.

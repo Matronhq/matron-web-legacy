@@ -24,4 +24,4 @@ It exposes a function over a postMessage API, when sent an object with the match
 
 If only imgSrc, imgStyle and style are passed then just update the existing link without overwriting other things about it.
 
-It is expected that this target be available at `usercontent/` relative to the root of the app, this can be seen in element-web's webpack config.
+It is expected that this target be available at `usercontent/` relative to the root of the app, this can be seen in matron-web's webpack config.

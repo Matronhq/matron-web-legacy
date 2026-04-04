@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -10,18 +10,17 @@ import { fn } from "storybook/test";
 import { IconButton } from "@vector-im/compound-web";
 import TriggerIcon from "@vector-im/compound-design-tokens/assets/web/icons/overflow-horizontal";
 
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
-    type WidgetContextMenuViewActions,
-    type WidgetContextMenuViewSnapshot,
+    type WidgetContextMenuAction,
+    type WidgetContextMenuSnapshot,
     WidgetContextMenuView,
 } from "./WidgetContextMenuView";
-import { useMockedViewModel } from "../../core/viewmodel/useMockedViewModel";
-import { withViewDocs } from "../../../.storybook/withViewDocs";
+import { useMockedViewModel } from "../../viewmodel/useMockedViewModel";
 
-type WidgetContextMenuViewModelProps = WidgetContextMenuViewSnapshot & WidgetContextMenuViewActions;
+type WidgetContextMenuViewModelProps = WidgetContextMenuSnapshot & WidgetContextMenuAction;
 
-const WidgetContextMenuViewWrapperImpl = ({
+const WidgetContextMenuViewWrapper = ({
     onStreamAudioClick,
     onEditClick,
     onSnapshotClick,
@@ -42,9 +41,8 @@ const WidgetContextMenuViewWrapperImpl = ({
     });
     return <WidgetContextMenuView vm={vm} />;
 };
-const WidgetContextMenuViewWrapper = withViewDocs(WidgetContextMenuViewWrapperImpl, WidgetContextMenuView);
 
-const meta = {
+export default {
     title: "RightPanel/WidgetContextMenuView",
     component: WidgetContextMenuViewWrapper,
     tags: ["autodocs"],
@@ -56,6 +54,7 @@ const meta = {
         showSnapshotButton: true,
         showMoveButtons: [true, true],
         canModify: true,
+        widgetMessaging: undefined,
         isMenuOpened: true,
         trigger: (
             <IconButton size="24px" aria-label="context menu trigger button" inert={true} tabIndex={-1}>
@@ -70,18 +69,16 @@ const meta = {
         onFinished: fn(),
         onMoveButton: fn(),
     },
-} satisfies Meta<typeof WidgetContextMenuViewWrapper>;
+} as Meta<typeof WidgetContextMenuViewWrapper>;
 
-export default meta;
-type Story = StoryObj<typeof WidgetContextMenuViewWrapper>;
+const Template: StoryFn<typeof WidgetContextMenuViewWrapper> = (args) => <WidgetContextMenuViewWrapper {...args} />;
 
-export const Default: Story = {};
+export const Default = Template.bind({});
 
-export const OnlyBasicModification: Story = {
-    args: {
-        showSnapshotButton: false,
-        showMoveButtons: [false, false],
-        showStreamAudioStreamButton: false,
-        showEditButton: false,
-    },
+export const OnlyBasicModification = Template.bind({});
+OnlyBasicModification.args = {
+    showSnapshotButton: false,
+    showMoveButtons: [false, false],
+    showStreamAudioStreamButton: false,
+    showEditButton: false,
 };

@@ -42,7 +42,7 @@ While the profile is in progress, the tab might be frozen or unresponsive.
 
 1. Press CTRL+SHIFT+I (I as in eye).
 2. Click the Memory tab.
-3. Select "Heap Snapshot" and the app.element.io VM instance (not the indexeddb one).
+3. Select "Heap Snapshot" and the app.matron.chat VM instance (not the indexeddb one).
 4. Click "Take Snapshot".
 5. Wait a bit (coffee is a good option).
 6. When the save button appears on the left side of the panel, click it to save the

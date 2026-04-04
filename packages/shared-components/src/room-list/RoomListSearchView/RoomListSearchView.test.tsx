@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -17,7 +17,7 @@ import {
     type RoomListSearchViewActions,
     type RoomListSearchViewSnapshot,
 } from "./RoomListSearchView";
-import { MockViewModel } from "../../core/viewmodel/MockViewModel";
+import { MockViewModel } from "../../viewmodel/MockViewModel";
 
 const { Default, WithDialPad, WithoutExplore, AllButtons } = composeStories(stories);
 

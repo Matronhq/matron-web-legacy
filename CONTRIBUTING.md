@@ -1,11 +1,6 @@
-# Contributing code to Element Web
+# Contributing code to Matron Web
 
-Everyone is welcome to contribute code to Element Web, provided that they are willing to license their contributions to Element under a [Contributor License Agreement](https://cla-assistant.io/element-hq/element-web) (CLA). This ensures that their contribution will be made available under an OSI-approved open-source license, currently licensed under Affero General Public License v3 (AGPLv3) or General Public License v3 (GPLv3) at your choice.
-
-If you're contributing, or thinking about contributing, please come & chat to
-us in our development room, [#element-dev](https://matrix.to/#/#element-dev:matrix.org).
-This is the best place to ask questions about the code, how to work on the project
-or whether a change is likely to be accepted.
+Everyone is welcome to contribute code to Matron Web. Contributions are licensed under the same license as the project: Affero General Public License v3 (AGPLv3) or General Public License v3 (GPLv3).
 
 ## How to contribute
 
@@ -46,14 +41,11 @@ As for your PR description, it should include these things:
 - Add comments to the diff for the reviewer that might help them to understand
   why the change is necessary or how they might better understand and review it.
 
-Please **_do not use force push_** in your PRs. Doing so means we can't see what
-has changed. We use squash merge to get a "clean" git history.
-
 ### Changelogs
 
 There's no need to manually add Changelog entries: we use information in the
 pull request to populate the information that goes into the changelogs our
-users see, both for Element Web itself and other projects on which it is based.
+users see, both for Matron Web itself and other projects on which it is based.
 This is picked up from both labels on the pull request and the `Notes:`
 annotation in the description. By default, the PR title will be used for the
 changelog entry, but you can specify more options, as follows.
@@ -71,16 +63,8 @@ the default for PRs labelled with `T-Task`):
 
 _Remove outdated comment from `Ungulates.ts`_
 
-If your PR introduces a breaking change, use the `Notes` section in the same
-way, additionally adding the `X-Breaking-Change` label (see below). There's no need
-to specify in the notes that it's a breaking change - this will be added
-automatically based on the label - but remember to tell the developer how to
-migrate:
-
-_Remove legacy class_
-
 ```
-Notes: Remove legacy `Camelopard` class. `Giraffe` should be used instead.
+Notes: none
 ```
 
 Other metadata can be added using labels.
@@ -101,11 +85,11 @@ checks, so please check back after a few minutes.
 
 Your PR should include tests.
 
-For new user facing features in `matrix-js-sdk` or `element-web`, you must include:
+For new user facing features, you must include:
 
 1. Comprehensive unit tests written in Jest. These are located in `/test`.
 2. "happy path" end-to-end tests.
-   These are located in `/playwright/e2e`, and are run using `element-web`.
+   These are located in `/playwright/e2e`, and are run using `matron-web`.
    Ideally, you would also include tests for edge and error cases.
 
 Unit tests are expected even when the feature is in labs. It's good practice
@@ -115,12 +99,9 @@ functionality. End-to-end tests should be added prior to the feature
 leaving labs, but don't have to be present from the start (although it might
 be beneficial to have some running early, so you can test things faster).
 
-For bugs in those repos, your change must include at least one unit test or
+For bugs, your change must include at least one unit test or
 end-to-end test; which is best depends on what sort of test most concisely
 exercises the area.
-
-Changes to must be accompanied by unit tests written in Jest.
-These are located in `/spec/` in `matrix-js-sdk` or `/test/` in `element-web`.
 
 When writing unit tests, please aim for a high level of test coverage
 for new code - 80% or greater. If you cannot achieve that, please document
@@ -148,12 +129,9 @@ Note that tests will still be required in order to ship the feature, and it's
 strongly encouraged to think about tests early in the process, as adding
 tests later will become progressively more difficult.
 
-If you're not sure how to approach writing tests for your change, ask for help
-in [#element-dev](https://matrix.to/#/#element-dev:matrix.org).
-
 ## Code style
 
-Element Web aims to target TypeScript/ES6. All new files should be written in
+Matron Web aims to target TypeScript/ES6. All new files should be written in
 TypeScript and existing files should use ES6 principles where possible.
 
 Members should not be exported as a default export in general - it causes problems
@@ -173,7 +151,7 @@ makes it horribly hard to review otherwise.
 When creating new UI components, consider whether they should be added to the shared components package (`packages/shared-components`) rather than directly in the main `src/` directory. Components should be placed in shared components if they:
 
 - Are reusable across different parts of the application
-- Could potentially be used by other Element projects (Element Desktop, Aurora, Element modules...)
+- Could potentially be used by other projects
 - Follow established patterns and don't have tight coupling to specific application logic
 
 For more details, see the [shared components README](./packages/shared-components/README.md).
@@ -183,21 +161,13 @@ For more details, see the [shared components README](./packages/shared-component
 Everyone who contributes anything to Matrix is welcome to be listed in the
 AUTHORS.rst file for the project in question. Please feel free to include a
 change to AUTHORS.rst in your pull request to list yourself and a short
-description of the area(s) you've worked on. Also, we sometimes have swag to
-give away to contributors - if you feel that Matrix-branded apparel is missing
-from your life, please mail us your shipping address to matrix at matrix.org
-and we'll try to fix it :)
-
-# Review expectations
-
-See https://github.com/element-hq/element-meta/wiki/Review-process
+description of the area(s) you've worked on.
 
 # Merge Strategy
 
 The preferred method for merging pull requests is squash merging to keep the
 commit history trim, but it is up to the discretion of the team member merging
-the change. We do not support rebase merges due to `allchange` being unable to
-handle them. When merging make sure to leave the default commit title, or
+the change. When merging make sure to leave the default commit title, or
 at least leave the PR number at the end in brackets like by default.
 When stacking pull requests, you may wish to do the following:
 
@@ -209,7 +179,7 @@ When stacking pull requests, you may wish to do the following:
 
 # Decoding Stack Traces
 
-Element Web has crashed and given you an obfuscated stack trace? Don't panic:
-use the [Decoder Ring](https://app.element.io/decoder-ring/) (or /decoder-ring/
-on any Element Web deploy). It is somewhat of a manual process, but it should
-tell you what lines the stack trace corresponds to from the source maps.
+Matron Web has crashed and given you an obfuscated stack trace? Don't panic:
+use the Decoder Ring (`/decoder-ring/` on any Matron Web deploy). It is somewhat
+of a manual process, but it should tell you what lines the stack trace corresponds
+to from the source maps.

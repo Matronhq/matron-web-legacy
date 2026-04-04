@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -20,10 +20,8 @@ const {
     Empty,
     EmptyWithoutCreatePermission,
     WithActiveFilter,
-    SmallFlatList,
-    LargeFlatList,
-    SmallSectionList,
-    LargeSectionList,
+    SmallList,
+    LargeList,
     EmptyFavouriteFilter,
     EmptyPeopleFilter,
     EmptyRoomsFilter,
@@ -69,23 +67,13 @@ describe("<RoomListView />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("renders SmallFlatList story", () => {
-        const { container } = renderWithMockContext(<SmallFlatList />);
+    it("renders SmallList story", () => {
+        const { container } = renderWithMockContext(<SmallList />);
         expect(container).toMatchSnapshot();
     });
 
-    it("renders LargeFlatList story", () => {
-        const { container } = renderWithMockContext(<LargeFlatList />);
-        expect(container).toMatchSnapshot();
-    });
-
-    it("renders SmallSectionList story", () => {
-        const { container } = renderWithMockContext(<SmallSectionList />);
-        expect(container).toMatchSnapshot();
-    });
-
-    it("renders LargeSectionList story", () => {
-        const { container } = renderWithMockContext(<LargeSectionList />);
+    it("renders LargeList story", () => {
+        const { container } = renderWithMockContext(<LargeList />);
         expect(container).toMatchSnapshot();
     });
 

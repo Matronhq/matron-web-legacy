@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -36,7 +36,7 @@ describe("<OptionMenuView />", () => {
         await user.click(button);
 
         expect(screen.getByRole("menuitemradio", { name: "A-Z" })).toBeChecked();
-        expect(screen.getByRole("menuitemradio", { name: "Latest activity" })).not.toBeChecked();
+        expect(screen.getByRole("menuitemradio", { name: "Activity" })).not.toBeChecked();
         expect(screen.getByRole("menuitemradio", { name: "Unread first" })).not.toBeChecked();
     });
 
@@ -52,7 +52,7 @@ describe("<OptionMenuView />", () => {
 
         expect(screen.getByRole("menuitemradio", { name: "A-Z" })).not.toBeChecked();
         expect(screen.getByRole("menuitemradio", { name: "Unread first" })).not.toBeChecked();
-        expect(screen.getByRole("menuitemradio", { name: "Latest activity" })).toBeChecked();
+        expect(screen.getByRole("menuitemradio", { name: "Activity" })).toBeChecked();
     });
 
     it("should show `Unread First` selected if activeSortOption is unread-first", async () => {
@@ -66,7 +66,7 @@ describe("<OptionMenuView />", () => {
         await user.click(button);
 
         expect(screen.getByRole("menuitemradio", { name: "A-Z" })).not.toBeChecked();
-        expect(screen.getByRole("menuitemradio", { name: "Latest activity" })).not.toBeChecked();
+        expect(screen.getByRole("menuitemradio", { name: "Activity" })).not.toBeChecked();
         expect(screen.getByRole("menuitemradio", { name: "Unread first" })).toBeChecked();
     });
 
@@ -91,7 +91,7 @@ describe("<OptionMenuView />", () => {
 
         await user.click(screen.getByRole("button", { name: "Room Options" }));
 
-        await user.click(screen.getByRole("menuitemradio", { name: "Latest activity" }));
+        await user.click(screen.getByRole("menuitemradio", { name: "Activity" }));
 
         expect(vm.sort).toHaveBeenCalledWith("recent");
     });

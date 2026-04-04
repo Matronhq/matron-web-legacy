@@ -35,7 +35,7 @@ to your [config](./config.md) the following:
 }
 ```
 
-Element's default is `meet.element.io` (a free service offered by Element). `meet.jit.si`
+Element's default is `meet.matron.chat` (a free service offered by Element). `meet.jit.si`
 is an instance hosted by Jitsi themselves and is also free to use.
 
 Once you've applied the config change, refresh Element and press the call button. This
@@ -45,7 +45,7 @@ should start a new conference on your Jitsi server.
 domain will appear later in the URL as a configuration parameter.
 
 **Hint**: If you want everyone on your homeserver to use the same Jitsi server by
-default, and you are using element-web 1.6 or newer, set the following on your homeserver's
+default, and you are using matron-web 1.6 or newer, set the following on your homeserver's
 `/.well-known/matrix/client` config:
 
 ```json
@@ -58,14 +58,14 @@ default, and you are using element-web 1.6 or newer, set the following on your h
 
 ## Element Android
 
-Element Android (1.0.5+) supports custom Jitsi domains, similar to Element Web above.
+Element Android (1.0.5+) supports custom Jitsi domains, similar to Matron Web above.
 
 1:1 calls, or calls between you and one other person, do not use Jitsi. Instead, those
 calls work directly between clients or via TURN servers configured on the respective
 homeservers.
 
-For rooms with more than 2 joined members, when creating a Jitsi conference via call/video buttons of the toolbar (not via integration manager), Element Android will create a widget using the [wrapper](https://github.com/element-hq/element-web/blob/develop/docs/jitsi-dev.md) hosted on `app.element.io`.
-The domain used is the one specified by the `/.well-known/matrix/client` endpoint, and if not present it uses the fallback defined in `config.json` (meet.element.io)
+For rooms with more than 2 joined members, when creating a Jitsi conference via call/video buttons of the toolbar (not via integration manager), Element Android will create a widget using the [wrapper](https://github.com/matronhq/matron-web/blob/develop/docs/jitsi-dev.md) hosted on `app.matron.chat`.
+The domain used is the one specified by the `/.well-known/matrix/client` endpoint, and if not present it uses the fallback defined in `config.json` (meet.matron.chat)
 
 For active Jitsi widgets in the room, a native Jitsi widget UI is created and points to the instance specified in the `domain` key of the widget content data.
 
@@ -104,7 +104,7 @@ _Hash/fragment (formatted as a query string)_:
   be null.
 
 The react-sdk will assume that `jitsi.html` is at the path of wherever it is currently
-being served. For example, `https://develop.element.io/jitsi.html` or `vector://webapp/jitsi.html`.
+being served. For example, `https://develop.matron.chat/jitsi.html` or `vector://webapp/jitsi.html`.
 
 The `jitsi.html` wrapper can use the react-sdk's `WidgetApi` to communicate, making
 it easier to actually implement the feature.

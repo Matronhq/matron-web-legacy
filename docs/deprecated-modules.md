@@ -1,27 +1,27 @@
 # Deprecated Module system
 
 > [!CAUTION]
-> DEPRECATED. Use [Element web module api](https://github.com/element-hq/element-modules/tree/main/packages/element-web-module-api) instead.
+> DEPRECATED. Use [Element web module api](https://github.com/matronhq/element-modules/tree/main/packages/matron-web-module-api) instead.
 
-The module system in Element Web is a way to add or modify functionality of Element Web itself, bundled at compile time
+The module system in Matron Web is a way to add or modify functionality of Matron Web itself, bundled at compile time
 for the app. This means that modules are loaded as part of the `pnpm build` process but have an effect on user experience
 at runtime.
 
 ## Installing modules
 
-If you already have a module you want to install, such as our [ILAG Module](https://github.com/element-hq/element-web-ilag-module),
+If you already have a module you want to install, such as our [ILAG Module](https://github.com/matronhq/matron-web-ilag-module),
 then copy `build_config.sample.yaml` to `build_config.yaml` in the same directory. In your new `build_config.yaml` simply
 add the reference to the module as described by the sample file, using the same syntax you would for `pnpm add`:
 
 ```yaml
 modules:
     # Our module happens to be published on NPM, so we use that syntax to reference it.
-    - "@vector-im/element-web-ilag-module@latest"
+    - "@matronhq/matron-web-ilag-module@latest"
 ```
 
 Then build the app as you normally would: `pnpm build` or `pnpm dist` (if compatible on your platform). If you are building
 the Docker image then ensure your `build_config.yaml` ends up in the build directory. Usually this works fine if you use
-the current directory as the build context (the `.` in `docker build -t my-element-web .`).
+the current directory as the build context (the `.` in `docker build -t my-matron-web .`).
 
 ## Writing modules
 
@@ -30,10 +30,10 @@ exposed in the module API, the module API will need to be updated. This means a 
 and [`matrix-react-sdk-module-api`](https://github.com/matrix-org/matrix-react-sdk-module-api).
 
 Once your change to the module API is accepted, the `@matrix-org/react-sdk-module-api` dependency gets updated at the
-`element-web` layer (usually by us, the maintainers) to ensure your module can operate.
+`matron-web` layer (usually by us, the maintainers) to ensure your module can operate.
 
 If you're not adding anything to the module API, or your change was accepted per above, then start off with a clone of
-our [ILAG module](https://github.com/element-hq/element-web-ilag-module) which will give you a general idea for what the
+our [ILAG module](https://github.com/matronhq/matron-web-ilag-module) which will give you a general idea for what the
 structure of a module is and how it works.
 
 The following requirements are key for any module:

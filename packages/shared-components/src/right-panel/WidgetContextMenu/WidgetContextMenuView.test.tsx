@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -14,14 +14,14 @@ import TriggerIcon from "@vector-im/compound-design-tokens/assets/web/icons/over
 import { describe, vi, expect, it, afterEach } from "vitest";
 
 import {
-    type WidgetContextMenuViewActions,
-    type WidgetContextMenuViewSnapshot,
+    type WidgetContextMenuAction,
+    type WidgetContextMenuSnapshot,
     WidgetContextMenuView,
 } from "./WidgetContextMenuView";
 import * as stories from "./WidgetContextMenuView.stories.tsx";
-import { MockViewModel } from "../../core/viewmodel/MockViewModel.ts";
-import { I18nApi } from "../../core/i18n/I18nApi.ts";
-import { I18nContext } from "../../core/i18n/i18nContext.ts";
+import { MockViewModel } from "../../viewmodel/MockViewModel.ts";
+import { I18nApi } from "../../utils/I18nApi.ts";
+import { I18nContext } from "../../utils/i18nContext.ts";
 
 const { Default, OnlyBasicModification } = composeStories(stories);
 
@@ -52,8 +52,8 @@ describe("<WidgetContextMenuView />", () => {
     const onFinished = vi.fn();
     const onMoveButton = vi.fn();
     class WidgetContextMenuViewModel
-        extends MockViewModel<WidgetContextMenuViewSnapshot>
-        implements WidgetContextMenuViewActions
+        extends MockViewModel<WidgetContextMenuSnapshot>
+        implements WidgetContextMenuAction
     {
         public onKeyDown = onKeyDown;
         public togglePlay = togglePlay;
@@ -68,7 +68,7 @@ describe("<WidgetContextMenuView />", () => {
         public onMoveButton = onMoveButton;
     }
 
-    const defaultValue: WidgetContextMenuViewSnapshot = {
+    const defaultValue: WidgetContextMenuSnapshot = {
         showStreamAudioStreamButton: true,
         showEditButton: true,
         showRevokeButton: true,

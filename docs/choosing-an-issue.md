@@ -1,9 +1,9 @@
 # Choosing an issue to work on
 
-So you want to contribute to Element Web? That is awesome!
+So you want to contribute to Matron Web? That is awesome!
 
 If you're not sure where to start, make sure you read
-[CONTRIBUTING.md](https://github.com/element-hq/element-web/blob/develop/CONTRIBUTING.md), and the
+[CONTRIBUTING.md](../CONTRIBUTING.md), and the
 [Development](../README.md#development) and
 [Setting up a dev environment](../README.md#setting-up-a-dev-environment)
 sections of the README.
@@ -17,12 +17,12 @@ If you're looking for inspiration on where to start, keep reading!
 
 ## Finding a good first issue
 
-All the issues for Element Web live in the
-[element-web](https://github.com/element-hq/element-web) repository, including
+All the issues for Matron Web live in the
+[matron-web](https://github.com/matronhq/matron-web) repository, including
 issues that actually need fixing in one of the related repos.
 
 The first place to look is for
-[issues tagged with "good first issue"](https://github.com/element-hq/element-web/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
+[issues tagged with "good first issue"](https://github.com/matronhq/matron-web/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
 
 Look through that list and find something that catches your interest. If there
 is nothing, there, try gently asking in
@@ -35,10 +35,10 @@ issue a **GOOD** choice:
 - It is a problem or feature you care about.
 - It concerns a type of code you know a little about.
 - You think you can understand what's needed.
-- It already has approval from Element Web's designers (look for comments from
+- It already has approval from Matron Web's designers (look for comments from
   members of the
-  [Product](https://github.com/orgs/element-hq/teams/product/members) or
-  [Design](https://github.com/orgs/element-hq/teams/design/members) teams).
+  [Product](https://github.com/orgs/matronhq/teams/product/members) or
+  [Design](https://github.com/orgs/matronhq/teams/design/members) teams).
 
 Here are some things that might make it a **BAD** choice:
 
@@ -46,7 +46,7 @@ Here are some things that might make it a **BAD** choice:
 - It sounds difficult, or is part of a larger change you don't know about.
 - **It is tagged with `X-Needs-Design` or `X-Needs-Product`.**
 
-**Element Web's Design and Product teams tend to be very busy**, so if you make
+**Matron Web's Design and Product teams tend to be very busy**, so if you make
 changes that require approval from one of those teams, you will probably have
 to wait a very long time. The kind of change affected by this is changing the
 way the product works, or how it looks in a specific area.
@@ -56,7 +56,7 @@ way the product works, or how it looks in a specific area.
 Once you've fixed a few small things, you can consider taking on something a
 little larger. This should mostly be driven by what you find interesting, but
 you may also find the
-[Help Wanted](https://github.com/element-hq/element-web/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22Help+Wanted%22)
+[Help Wanted](https://github.com/matronhq/matron-web/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22Help+Wanted%22)
 label useful.
 
 Note that the same comment applies as in the previous section: if you want to
@@ -75,6 +75,6 @@ room.
 
 ## Thank you
 
-Thank you again for contributing to Element Web. We welcome your contributions
+Thank you again for contributing to Matron Web. We welcome your contributions
 and are grateful for your work. We find working on it great fun, and we hope
 you do too!

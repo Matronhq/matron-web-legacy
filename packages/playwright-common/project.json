@@ -20,10 +20,10 @@
                 "provenance": "true",
                 "sbom": true,
                 "build-args": ["PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION"],
-                "context": "{projectRoot}",
+                "context": "packages/playwright-common",
                 "metadata": {
-                    "images": ["ghcr.io/element-hq/element-web/playwright-server"],
-                    "tags": ["type=ref,event=branch", "type=raw,enable={{is_default_branch}},value=$PLAYWRIGHT_VERSION"]
+                    "images": ["ghcr.io/matronhq/matron-web/playwright-server"],
+                    "tags": ["type=raw,enable=true,value=$PLAYWRIGHT_VERSION"]
                 }
             }
         }

@@ -5,10 +5,10 @@
     "license": "SEE LICENSE IN README.md",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/element-hq/element-web.git",
+        "url": "git+https://github.com/matronhq/matron-web.git",
         "directory": "packages/playwright-common"
     },
-    "author": "element-hq",
+    "author": "matronhq",
     "engines": {
         "node": ">=20.0.0"
     },
@@ -16,6 +16,7 @@
         "playwright-screenshots-experimental": "playwright-screenshots.sh"
     },
     "devDependencies": {
+        "@playwright/test": "catalog:",
         "wait-on": "^9.0.4"
     }
 }

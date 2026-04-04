@@ -13,7 +13,6 @@
 .container {
     flex: 1;
     padding-bottom: var(--cpd-space-3x);
-    min-width: 0;
 }
 
 .title {

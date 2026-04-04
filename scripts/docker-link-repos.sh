@@ -24,5 +24,5 @@ cd js-sdk
 pnpm install
 cd ../
 
-echo "Setting up element-web with js-sdk package"
+echo "Setting up matron-web with js-sdk package"
 pnpm link ./js-sdk

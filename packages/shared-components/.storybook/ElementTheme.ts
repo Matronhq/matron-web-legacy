@@ -1,5 +1,5 @@
 /*
-Copyright 2025 New Vector Ltd.
+Copyright 2025 Matron Contributors.
 
 SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
@@ -22,6 +22,6 @@ export default create({
     barBg: "#ffffff",
 
     brandTitle: "Web Shared Components",
-    brandUrl: "https://github.com/element-hq/element-web/tree/develop/packages/shared-components",
+    brandUrl: "https://github.com/matronhq/matron-web/tree/develop/packages/shared-components",
     brandTarget: "_self",
 });

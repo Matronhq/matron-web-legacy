@@ -1,5 +1,5 @@
 /*
-Copyright 2025 New Vector Ltd.
+Copyright 2025 Matron Contributors.
 
 SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
 Please see LICENSE files in the repository root for full details.
@@ -9,13 +9,11 @@ import type { StorybookConfig } from "@storybook/react-vite";
 import fs from "node:fs";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { mergeConfig } from "vite";
-import { dirname, join } from "node:path";
+import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
 // Get a list of available languages so the language selector can display them at runtime
-const languageFiles = fs.readdirSync(join(__dirname, "..", "src", "i18n", "strings")).map((f) => f.slice(0, -5));
+const languageFiles = fs.readdirSync("src/i18n/strings").map((f) => f.slice(0, -5));
 
 const languages: Record<string, string> = {};
 for (const lang of languageFiles) {
@@ -51,12 +49,6 @@ const config: StorybookConfig = {
     },
     typescript: {
         reactDocgen: "react-docgen-typescript",
-        reactDocgenTypescriptOptions: {
-            // The default exclude is ["**/**.stories.tsx"] which prevents
-            // docgen from extracting snapshot field descriptions from wrapper
-            // components defined in story files.
-            exclude: [],
-        },
     },
     async viteFinal(config) {
         return mergeConfig(config, {
@@ -71,9 +63,6 @@ const config: StorybookConfig = {
                                 // Dynamically generate a languages.json file based on what files are available
                                 res.setHeader("Content-Type", "application/json");
                                 res.end(JSON.stringify(languages));
-                            } else if (req.url === "/usercontent/" || req.url === "/usercontent") {
-                                // Mock usercontent endpoint used by encrypted download iframes.
-                                res.end("This is where /usercontent/ is loaded.");
                             } else if (req.url?.startsWith("/i18n/")) {
                                 // Serve the individual language files, which annoyingly can't be a simple
                                 // static dir because the directory structure in src doesn't match what
@@ -96,7 +85,7 @@ const config: StorybookConfig = {
     refs: {
         "compound-web": {
             title: "Compound Web",
-            url: "https://element-hq.github.io/compound-web/",
+            url: "https://matronhq.github.io/compound-web/",
         },
     },
     env: (config) => ({

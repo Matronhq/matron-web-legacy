@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -9,11 +9,11 @@ import React, { type ReactNode, type JSX } from "react";
 import { IconButton, Menu, MenuItem } from "@vector-im/compound-web";
 import TriggerIcon from "@vector-im/compound-design-tokens/assets/web/icons/overflow-horizontal";
 
-import { type ViewModel } from "../../core/viewmodel/ViewModel.ts";
-import { useI18n } from "../../core/i18n/i18nContext.ts";
-import { useViewModel } from "../../core/viewmodel/useViewModel.ts";
+import { type ViewModel } from "../../viewmodel/ViewModel.ts";
+import { useI18n } from "../../utils/i18nContext.ts";
+import { useViewModel } from "../../viewmodel/useViewModel.ts";
 
-export interface WidgetContextMenuViewSnapshot {
+export interface WidgetContextMenuSnapshot {
     /**
      * Indicates if the audio stream button needs to be shown or not
      * depending on the config value audio_stream_url and widget type jitsi
@@ -57,7 +57,7 @@ export interface WidgetContextMenuViewSnapshot {
     userWidget: boolean;
 }
 
-export interface WidgetContextMenuViewActions {
+export interface WidgetContextMenuAction {
     /**
      * Function triggered when stream audio is clicked
      */
@@ -89,7 +89,7 @@ export interface WidgetContextMenuViewActions {
     onMoveButton: (direction: number) => void;
 }
 
-export type WidgetContextMenuViewModel = ViewModel<WidgetContextMenuViewSnapshot, WidgetContextMenuViewActions>;
+export type WidgetContextMenuViewModel = ViewModel<WidgetContextMenuSnapshot> & WidgetContextMenuAction;
 
 interface WidgetContextMenuViewProps {
     vm: WidgetContextMenuViewModel;

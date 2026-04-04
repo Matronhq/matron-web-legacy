@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -12,9 +12,9 @@ import SearchIcon from "@vector-im/compound-design-tokens/assets/web/icons/searc
 import DialPadIcon from "@vector-im/compound-design-tokens/assets/web/icons/dial-pad";
 
 import styles from "./RoomListSearchView.module.css";
-import { type ViewModel, useViewModel } from "../../core/viewmodel";
-import { Flex } from "../../core/utils/Flex";
-import { useI18n } from "../../core/i18n/i18nContext";
+import { type ViewModel, useViewModel } from "../../viewmodel";
+import { Flex } from "../../utils/Flex";
+import { useI18n } from "../../utils/i18nContext";
 
 export interface RoomListSearchViewSnapshot {
     /**
@@ -50,7 +50,7 @@ export interface RoomListSearchViewActions {
 /**
  * The view model for the room list search component.
  */
-export type RoomListSearchViewModel = ViewModel<RoomListSearchViewSnapshot, RoomListSearchViewActions>;
+export type RoomListSearchViewModel = ViewModel<RoomListSearchViewSnapshot> & RoomListSearchViewActions;
 
 interface RoomListSearchViewProps {
     /**

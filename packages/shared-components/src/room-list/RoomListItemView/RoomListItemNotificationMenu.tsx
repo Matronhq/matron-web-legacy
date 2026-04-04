@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -13,22 +13,22 @@ import {
     CheckIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
 
-import { _t } from "../../core/i18n/i18n";
+import { _t } from "../../utils/i18n";
 import { RoomNotifState } from "./RoomNotifs";
-import { useViewModel, type ViewModel } from "../../core/viewmodel";
-import type { RoomListItemViewSnapshot, RoomListItemViewActions } from "./RoomListItemView";
+import { useViewModel, type ViewModel } from "../../viewmodel";
+import type { RoomListItemSnapshot, RoomListItemActions } from "./RoomListItemView";
 
 /**
  * View model type for room list item
  */
-export type RoomListItemViewModel = ViewModel<RoomListItemViewSnapshot, RoomListItemViewActions>;
+export type RoomItemViewModel = ViewModel<RoomListItemSnapshot> & RoomListItemActions;
 
 /**
  * Props for RoomListItemNotificationMenu component
  */
 export interface RoomListItemNotificationMenuProps {
     /** The room item view model */
-    vm: RoomListItemViewModel;
+    vm: RoomItemViewModel;
 }
 
 /**

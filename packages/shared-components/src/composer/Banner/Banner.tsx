@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Element Creations Ltd.
+ * Copyright (c) 2025 Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -16,11 +16,11 @@ import React, {
 } from "react";
 import { Button } from "@vector-im/compound-web";
 import CheckCircleIcon from "@vector-im/compound-design-tokens/assets/web/icons/check-circle";
-import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error";
+import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error-solid";
 import InfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info";
 
 import styles from "./Banner.module.css";
-import { _t } from "../../core/i18n/i18n";
+import { _t } from "../../utils/i18n";
 
 interface BannerProps {
     /**

@@ -14,5 +14,5 @@ system works for you. The react-sdk does not have any particular functions to ca
 extend the components/stores/etc you're after and build. As a reminder though, this is done completely at your own risk
 as we cannot guarantee a stable interface at this time.
 
-Taking a look at [element-web](https://github.com/vector-im/element-web)'s approach to skinning may be worthwhile, as it
+Taking a look at [matron-web](https://github.com/matronhq/matron-web)'s approach to skinning may be worthwhile, as it
 overrides some relatively simple components.

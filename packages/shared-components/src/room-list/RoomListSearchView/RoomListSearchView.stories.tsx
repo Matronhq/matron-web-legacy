@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -8,18 +8,17 @@
 import React, { type JSX } from "react";
 import { fn } from "storybook/test";
 
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
     RoomListSearchView,
     type RoomListSearchViewActions,
     type RoomListSearchViewSnapshot,
 } from "./RoomListSearchView";
-import { useMockedViewModel } from "../../core/viewmodel";
-import { withViewDocs } from "../../../.storybook/withViewDocs";
+import { useMockedViewModel } from "../../viewmodel";
 
 type RoomListSearchProps = RoomListSearchViewSnapshot & RoomListSearchViewActions;
 
-const RoomListSearchViewWrapperImpl = ({
+const RoomListSearchViewWrapper = ({
     onSearchClick,
     onDialPadClick,
     onExploreClick,
@@ -32,9 +31,8 @@ const RoomListSearchViewWrapperImpl = ({
     });
     return <RoomListSearchView vm={vm} />;
 };
-const RoomListSearchViewWrapper = withViewDocs(RoomListSearchViewWrapperImpl, RoomListSearchView);
 
-const meta = {
+export default {
     title: "Room List/RoomListSearchView",
     component: RoomListSearchViewWrapper,
     tags: ["autodocs"],
@@ -52,29 +50,25 @@ const meta = {
             url: "https://www.figma.com/design/vlmt46QDdE4dgXDiyBJXqp/ER-33-Left-Panel-2025?node-id=98-1979&t=vafb4zoYMNLRuAbh-4",
         },
     },
-} satisfies Meta<typeof RoomListSearchViewWrapper>;
+} as Meta<typeof RoomListSearchViewWrapper>;
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+const Template: StoryFn<typeof RoomListSearchViewWrapper> = (args) => <RoomListSearchViewWrapper {...args} />;
 
-export const Default: Story = {};
+export const Default = Template.bind({});
 
-export const WithDialPad: Story = {
-    args: {
-        displayDialButton: true,
-    },
+export const WithDialPad = Template.bind({});
+WithDialPad.args = {
+    displayDialButton: true,
 };
 
-export const WithoutExplore: Story = {
-    args: {
-        displayExploreButton: false,
-    },
+export const WithoutExplore = Template.bind({});
+WithoutExplore.args = {
+    displayExploreButton: false,
 };
 
-export const AllButtons: Story = {
-    args: {
-        displayExploreButton: true,
-        displayDialButton: true,
-        searchShortcut: "⌘ K",
-    },
+export const AllButtons = Template.bind({});
+AllButtons.args = {
+    displayExploreButton: true,
+    displayDialButton: true,
+    searchShortcut: "⌘ K",
 };

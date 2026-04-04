@@ -91,6 +91,6 @@ e.g. in config.json:
     }
 ```
 
-`compound` may contain overrides for any [semantic design token](https://compound.element.io/?path=/docs/tokens-semantic-colors--docs) belonging to our design system. The above example shows how you might change the accent color to blue by setting the relevant semantic tokens to refer to blue [base tokens](https://compound.element.io/?path=/docs/tokens-color-palettes--docs).
+`compound` may contain overrides for any [semantic design token](https://compound.matron.chat/?path=/docs/tokens-semantic-colors--docs) belonging to our design system. The above example shows how you might change the accent color to blue by setting the relevant semantic tokens to refer to blue [base tokens](https://compound.matron.chat/?path=/docs/tokens-color-palettes--docs).
 
 All properties in `fonts` are optional, and will default to the standard Riot fonts.

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 New Vector Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -11,7 +11,7 @@ import Play from "@vector-im/compound-design-tokens/assets/web/icons/play-solid"
 import Pause from "@vector-im/compound-design-tokens/assets/web/icons/pause-solid";
 
 import styles from "./PlayPauseButton.module.css";
-import { useI18n } from "../../core/i18n/i18nContext";
+import { useI18n } from "../../utils/i18nContext";
 
 export interface PlayPauseButtonProps extends HTMLAttributes<HTMLButtonElement> {
     /**

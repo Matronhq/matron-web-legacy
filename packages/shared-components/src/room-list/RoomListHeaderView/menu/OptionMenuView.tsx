@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Element Creations Ltd.
+ * Copyright Matron Contributors.
  *
  * SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
  * Please see LICENSE files in the repository root for full details.
@@ -10,8 +10,8 @@ import React, { type JSX, useState } from "react";
 import OverflowHorizontalIcon from "@vector-im/compound-design-tokens/assets/web/icons/overflow-horizontal";
 
 import { type RoomListHeaderViewModel } from "../RoomListHeaderView";
-import { useViewModel } from "../../../core/viewmodel";
-import { useI18n } from "../../../core/i18n/i18nContext";
+import { useViewModel } from "../../../viewmodel";
+import { useI18n } from "../../../utils/i18nContext";
 import styles from "./OptionMenuView.module.css";
 
 interface OptionMenuViewProps {

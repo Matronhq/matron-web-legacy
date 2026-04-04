@@ -43,7 +43,7 @@ body:
       attributes:
           label: Application version
           description: You can find the version information in Settings -> Help & About.
-          placeholder: e.g. Element version 1.7.34, olm version 3.2.3
+          placeholder: e.g. Matron version 1.7.34, olm version 3.2.3
       validations:
           required: false
     - type: input
@@ -51,7 +51,7 @@ body:
       attributes:
           label: How did you install the app?
           description: Where did you install the app from? Please give a link or a description.
-          placeholder: e.g. From https://element.io/get-started
+          placeholder: e.g. From https://matron.chat/get-started
       validations:
           required: false
     - type: input

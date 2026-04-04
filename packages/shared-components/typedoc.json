@@ -12,8 +12,8 @@
     "enumMembersFormat": "table",
     "typeDeclarationFormat": "table",
     "indexFormat": "table",
-    "publicPath": "https://github.com/element-hq/element-web/blob/develop/packages/shared-components/",
-    "sourceLinkTemplate": "https://github.com/element-hq/element-web/blob/develop/{path}#L{line}",
+    "publicPath": "https://github.com/matronhq/matron-web/blob/develop/packages/shared-components/",
+    "sourceLinkTemplate": "https://github.com/matronhq/matron-web/blob/develop/{path}#L{line}",
     "name": "@element-hq/web-shared-components",
     "categorizeByGroup": true,
     "externalSymbolLinkMappings": {

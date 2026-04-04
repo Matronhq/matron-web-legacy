@@ -4,7 +4,7 @@
 
 Read the [Choosing an issue](docs/choosing-an-issue.md) page for some guidance
 about where to start. Before starting work on a feature, it's best to ensure
-your plan aligns well with our vision for Element. Please chat with the team in
+your plan aligns well with our vision for Matron. Please chat with the team in
 [#element-dev:matrix.org](https://matrix.to/#/#element-dev:matrix.org) before
 you start so we can ensure it's something we'd be willing to merge.
 
@@ -12,14 +12,14 @@ You should also familiarise yourself with the ["Here be Dragons" guide
 ](https://docs.google.com/document/d/12jYzvkidrp1h7liEuLIe6BMdU0NUjndUYI971O06ooM)
 to the tame & not-so-tame dragons (gotchas) which exist in the codebase.
 
-Please note that Element is intended to run correctly without access to the public
+Please note that Matron is intended to run correctly without access to the public
 internet. So please don't depend on resources (JS libs, CSS, images, fonts)
 hosted by external CDNs or servers but instead please package all dependencies
-into Element itself.
+into Matron itself.
 
 ## Setting up a dev environment
 
-Much of the functionality in Element is actually in the `matrix-js-sdk` module.
+Much of the functionality in Matron is actually in the `matrix-js-sdk` module.
 It is possible to set these up in a way that makes it easy to track the `develop` branches
 in git and to make local changes without having to manually rebuild each time.
 
@@ -32,11 +32,11 @@ pnpm install
 popd
 ```
 
-Clone the repo and switch to the `element-web/apps/web` directory:
+Clone the repo and switch to the `matron-web` directory:
 
 ```bash
-git clone https://github.com/element-hq/element-web.git
-cd element-web/apps/web
+git clone https://github.com/matronhq/matron-web.git
+cd matron-web
 ```
 
 Configure the app by copying `config.sample.json` to `config.json` and
@@ -48,7 +48,7 @@ Set up your local development link by creating a `.link-config` file with conten
 matrix-js-sdk=/path/to/matrix-js-sdk
 ```
 
-Finally, build and start Element itself:
+Finally, build and start Matron itself:
 
 ```bash
 pnpm install
@@ -58,10 +58,10 @@ pnpm start
 Wait a few seconds for the initial build to finish; you should see something like:
 
 ```
-[element-js] <s> [webpack.Progress] 100%
-[element-js]
-[element-js] ℹ ｢wdm｣:    1840 modules
-[element-js] ℹ ｢wdm｣: Compiled successfully.
+[matron-js] <s> [webpack.Progress] 100%
+[matron-js]
+[matron-js] ℹ ｢wdm｣:    1840 modules
+[matron-js] ℹ ｢wdm｣: Compiled successfully.
 ```
 
 Remember, the command will not terminate since it runs the web server
@@ -75,8 +75,8 @@ for changes. If the inotify limits are too low your build will fail silently or 
 `Error: EMFILE: too many open files`. To avoid these issues, we recommend a watch limit
 of at least `128M` and instance limit around `512`.
 
-You may be interested in issues [#15750](https://github.com/element-hq/element-web/issues/15750) and
-[#15774](https://github.com/element-hq/element-web/issues/15774) for further details.
+You may be interested in issues [#15750](https://github.com/matronhq/matron-web/issues/15750) and
+[#15774](https://github.com/matronhq/matron-web/issues/15774) for further details.
 
 To set a new inotify watch and instance limit, execute:
 
@@ -125,7 +125,6 @@ See [`docs/playwright.md`](./docs/playwright.md) for how to run the end-to-end t
 
 New code should be committed as follows:
 
-- New UI components that are reusable, could be used by other Element projects (Element Desktop, Aurora, Element modules...), or don't have tight coupling to specific application logic: [`packages/shared-components`](./packages/shared-components/README.md) (see the [contributing guide](./CONTRIBUTING.md#shared-components))
-- All other new components: https://github.com/element-hq/element-web/tree/develop/src/components
-- CSS: https://github.com/element-hq/element-web/tree/develop/res/css
-- Theme specific CSS & resources: https://github.com/element-hq/element-web/tree/develop/res/themes
+- All new components: https://github.com/matronhq/matron-web/tree/develop/src/components
+- CSS: https://github.com/matronhq/matron-web/tree/develop/res/css
+- Theme specific CSS & resources: https://github.com/matronhq/matron-web/tree/develop/res/themes

@@ -74,7 +74,7 @@ people in the room, a plain WebRTC call is made instead of using a widget at all
 are defined in the Matrix specification.
 
 The Jitsi widget created by Element uses a local `jitsi.html` wrapper (or one hosted by
-`https://app.element.io` for desktop users or those on non-https domains) as the widget
+`https://app.matron.chat` for desktop users or those on non-https domains) as the widget
 `url`. The wrapper has some basic functionality for talking to Element to ensure the
 required `postMessage` calls are fulfilled.
 
@@ -85,7 +85,7 @@ client .well-known data.
 
 Whenever Element sees a Jitsi widget, it ditches the `url` and instead replaces it with
 its local wrapper, much like what it would do when creating a widget. However, instead
-of using one from [app.element.io](https://app.element.io), it will use one local to the client instead.
+of using one from [app.matron.chat](https://app.matron.chat), it will use one local to the client instead.
 
 The wrapper is used to provide a consistent experience to users, as well as being faster
 and less risky to load. The local wrapper URL is populated with the conference information

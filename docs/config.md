@@ -14,11 +14,11 @@ configuration options depending on if you're hitting e.g. `app1.example.com` or 
 in any way, it either entirely uses the domain config, or entirely uses `config.json`.
 
 The possible configuration options are described here. If you run into issues, please visit
-[#element-web:matrix.org](https://matrix.to/#/#element-web:matrix.org) on Matrix.
+[#matron-web:matrix.org](https://matrix.to/#/#matron-web:matrix.org) on Matrix.
 
-For a good example of a production-tuned config, see https://app.element.io/config.json
+For a good example of a production-tuned config, see https://app.matron.chat/config.json
 
-For an example of a development/beta-tuned config, see https://develop.element.io/config.json
+For an example of a development/beta-tuned config, see https://develop.matron.chat/config.json
 
 After changing the config, the app will need to be reloaded. For web browsers this is a simple page refresh, however
 for the desktop app the application will need to be exited fully (including via the task tray) and re-started.
@@ -82,7 +82,7 @@ the functionality.
 
 ## Default settings
 
-Some settings additionally support being specified at the config level to affect the user experience of your Element Web
+Some settings additionally support being specified at the config level to affect the user experience of your Matron Web
 instance. As of writing those settings are not fully documented, however a few are:
 
 1. `default_federate`: When `true` (default), rooms will be marked as "federatable" during creation. Typically this setting
@@ -109,7 +109,7 @@ instance. As of writing those settings are not fully documented, however a few a
     }
     ```
     These values will take priority over the hardcoded defaults for the settings. For a list of available settings, see
-    [Settings.tsx](https://github.com/element-hq/element-web/blob/develop/src/settings/Settings.tsx).
+    [Settings.tsx](https://github.com/matronhq/matron-web/blob/develop/src/settings/Settings.tsx).
 
 ## Customisation & branding
 
@@ -123,12 +123,12 @@ complete re-branding/private labeling, a more personalised experience can be ach
 2. `default_device_display_name`: Optional public name for devices created by login and registration, instead of the default
    templated string. Note that this option does not support templating, currently.
 3. `brand`: Optional name for the app. Defaults to `Element`. This is used throughout the application in various strings/locations.
-4. `permalink_prefix`: An optional URL pointing to an Element Web deployment. For example, `https://app.element.io`. This will
-   change all permalinks (via the "Share" menus) to point at the Element Web deployment rather than `matrix.to`.
+4. `permalink_prefix`: An optional URL pointing to an Matron Web deployment. For example, `https://app.matron.chat`. This will
+   change all permalinks (via the "Share" menus) to point at the Matron Web deployment rather than `matrix.to`.
 5. `desktop_builds`: Optional. Where the desktop builds for the application are, if available. This is explained in more detail
    down below.
 6. `mobile_builds`: Optional. Like `desktop_builds`, except for the mobile apps. Also described in more detail down below.
-7. `mobile_guide_toast`: When `true` (default), users accessing the Element Web instance from a mobile device will be prompted to
+7. `mobile_guide_toast`: When `true` (default), users accessing the Matron Web instance from a mobile device will be prompted to
    download the app instead.
 8. `mobile_guide_app_variant`: Optional. The mobile app that the user is prompted to download from the `/mobile_guide` page. When omitted
    the mobile guide will be configured for the new Element X apps. Allowed values are as follows:
@@ -136,7 +136,7 @@ complete re-branding/private labeling, a more personalised experience can be ach
     2. `element-classic`: Element Classic Android/iOS.
     3. `element-pro`: Element Pro Android/iOS.
 9. `update_base_url`: For the desktop app only, the URL where to acquire update packages. If specified, must be a path to a directory
-   containing `macos` and `win32` directories, with the update packages within. Defaults to `https://packages.element.io/desktop/update/`
+   containing `macos` and `win32` directories, with the update packages within. Defaults to `https://packages.matron.chat/desktop/update/`
    in production.
 10. `map_style_url`: Map tile server style URL for location sharing. e.g. `https://api.maptiler.com/maps/streets/style.json?key=YOUR_KEY_GOES_HERE`
     This setting is ignored if your homeserver provides `/.well-known/matrix/client` in its well-known location, and the JSON file
@@ -158,9 +158,9 @@ complete re-branding/private labeling, a more personalised experience can be ach
     1. `title`: Required. Title to show at the top of the notice.
     2. `description`: Required. The description to use for the notice.
     3. `show_once`: Optional. If true then the notice will only be shown once per device.
-19. `help_url`: The URL to point users to for help with the app, defaults to `https://element.io/help`.
-20. `help_encryption_url`: The URL to point users to for help with encryption, defaults to `https://element.io/help#encryption`.
-21. `help_key_storage_url`: The URL to point users to for help with key storage, defaults to `https://element.io/help#encryption5`.
+19. `help_url`: The URL to point users to for help with the app, defaults to `https://matron.chat/help`.
+20. `help_encryption_url`: The URL to point users to for help with encryption, defaults to `https://matron.chat/help#encryption`.
+21. `help_key_storage_url`: The URL to point users to for help with key storage, defaults to `https://matron.chat/help#encryption5`.
 22. `force_verification`: If true, users must verify new logins (eg. with another device / their recovery key)
 
 ### `desktop_builds` and `mobile_builds`
@@ -179,7 +179,7 @@ Starting with `desktop_builds`, the following sub-properties are available:
 6. `url_win64arm`: Optional. Direct link to download Windows ARM 64-bit desktop app.
 7. `url_linux`: Optional. Direct link to download Linux desktop app.
 
-When `desktop_builds` is not specified at all, the app will assume desktop downloads are available from https://element.io
+When `desktop_builds` is not specified at all, the app will assume desktop downloads are available from https://matron.chat
 
 For `mobile_builds`, the following subproperties are available:
 
@@ -247,7 +247,7 @@ Together, the options might look like this in your config:
 }
 ```
 
-Note that `index.html` also has an og:image meta tag that is set to an image hosted on element.io. This is the image used if
+Note that `index.html` also has an og:image meta tag that is set to an image hosted on matron.chat. This is the image used if
 links to your copy of Element appear in some websites like Facebook, and indeed Element itself. This has to be static in the HTML
 and an absolute URL (and HTTP rather than HTTPS), so it's not possible for this to be an option in config.json. If you'd like to
 change it, you can build Element, but run `RIOT_OG_IMAGE_URL="http://example.com/logo.png" pnpm build`. Alternatively, you can edit
@@ -324,7 +324,7 @@ More information about the Jitsi setup can be found [here](./jitsi.md).
 The VoIP and Jitsi options are:
 
 1. `jitsi`: Optional configuration for how to start Jitsi conferences. Currently can only contain a single `preferred_domain`
-   value which points at the domain of the Jitsi instance. Defaults to `meet.element.io`. This is _not_ used if the Jitsi widget
+   value which points at the domain of the Jitsi instance. Defaults to `meet.matron.chat`. This is _not_ used if the Jitsi widget
    was created by an integration manager, or if the homeserver provides Jitsi information in `/.well-known/matrix/client`. For
    example:
     ```json
@@ -393,7 +393,7 @@ The VoIP and Jitsi options are:
     - `brand`: Optional name for the app. Defaults to `Element Call`. This is
       used throughout the application in various strings/locations.
     - `guest_spa_url`: Optional URL for an Element Call single-page app (SPA),
-      for guest links. If this is set, Element Web will expose a "join" link
+      for guest links. If this is set, Matron Web will expose a "join" link
       for public video rooms, which can then be shared to non-matrix users.
       The target Element Call SPA is typically set up to use a homeserver that
       allows users to register without email ("passwordless guest users") and to
@@ -404,11 +404,14 @@ The VoIP and Jitsi options are:
 If you run your own rageshake server to collect bug reports, the following options may be of interest:
 
 1. `bug_report_endpoint_url`: URL for where to submit rageshake logs to. Rageshakes include feedback submissions and bug reports. When
-   not present in the config, the app will disable all rageshake functionality. Set to `https://rageshakes.element.io/api/submit` to submit
+   not present in the config, the app will disable all rageshake functionality. Set to `https://rageshakes.matron.chat/api/submit` to submit
    rageshakes to us, or use your own rageshake server.
    You may also set the value to `"local"` if you wish to only store logs locally, in order to download them for debugging.
-2. `existing_issues_url`: URL for where to find existing issues.
-3. `new_issue_url`: URL for where to submit new issues.
+2. `uisi_autorageshake_app`: If a user has enabled the "automatically send debug logs on decryption errors" flag, this option will be sent
+   alongside the rageshake so the rageshake server can filter them by app name. By default, this will be `element-auto-uisi`
+   (in contrast to other rageshakes submitted by the app, which use `matron-web`).
+3. `existing_issues_url`: URL for where to find existing issues.
+4. `new_issue_url`: URL for where to submit new issues.
 
 If you would like to use [Sentry](https://sentry.io/) for rageshake data, add a `sentry` object to your config with the following values:
 
@@ -537,7 +540,7 @@ decentralised.
 
 ## Desktop app configuration
 
-See https://github.com/element-hq/element-web/blob/develop/apps/desktop/README.md#user-specified-configjson
+See https://github.com/matronhq/matron-desktop#user-specified-configjson
 
 ## UI Features
 
@@ -583,7 +586,7 @@ Currently, the following UI feature flags are supported:
 
 ## Modules
 
-`modules`: An optional array of module paths to load at runtime. Each entry is a URL or path to a JavaScript module entry point that will be dynamically imported when Element Web starts.
+`modules`: An optional array of module paths to load at runtime. Each entry is a URL or path to a JavaScript module entry point that will be dynamically imported when Matron Web starts.
 
 **Note:** This is separate from the build-time module system configured via `build_config.yaml`. Runtime modules are loaded dynamically from the paths specified in `config.json`, while build-time modules are bundled during compilation.
 
@@ -595,7 +598,7 @@ Currently, the following UI feature flags are supported:
 }
 ```
 
-Each module URL is loaded using dynamic import (`import()`). The modules are loaded in order after Element Web initializes but before the application fully starts. Modules must be accessible from the browser and should export a compatible module format that works with the [Module API](https://github.com/element-hq/element-modules/tree/main/packages/element-web-module-api).
+Each module URL is loaded using dynamic import (`import()`). The modules are loaded in order after Matron Web initializes but before the application fully starts. Modules must be accessible from the browser and should export a compatible module format that works with the [Module API](https://github.com/matronhq/element-modules/tree/main/packages/matron-web-module-api).
 
 ## Undocumented / developer options
 
@@ -605,15 +608,3 @@ The following are undocumented or intended for developer use only.
 2. `sync_timeline_limit`
 3. `dangerously_allow_unsafe_and_insecure_passwords`
 4. `latex_maths_delims`: An optional setting to override the default delimiters used for maths parsing. See https://github.com/matrix-org/matrix-react-sdk/pull/5939 for details. Only used when `feature_latex_maths` is enabled.
-
-## Additional config options for Element Desktop
-
-1. `update_base_url`: Specifies the URL of the update server, see [document](https://github.com/element-hq/element-web/blob/develop/apps/desktop/docs/updates.md).
-2. `web_base_url`: Specifies the Element Web URL when performing actions such as popout widget. Defaults to `https://app.element.io/`.
-
----
-
-The app contains a configuration file specified at build time using [these instructions](https://github.com/element-hq/element-web/blob/develop/apps/desktop/README.md#config).
-This config can be overwritten by the end using by creating a `config.json` file at the paths described [here](https://github.com/element-hq/element-web/blob/develop/apps/desktop/README.md#user-specified-configjson).
-
-After changing the config, the app will need to be exited fully (including via the task tray) and re-started.
