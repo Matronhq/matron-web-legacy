@@ -49,6 +49,7 @@ import { ModuleApi } from "../modules/Api";
 import { EncryptionEventViewModel } from "../viewmodels/event-tiles/EncryptionEventViewModel";
 import { TextualEventViewModel } from "../viewmodels/event-tiles/TextualEventViewModel";
 import { ElementCallEventType } from "../call-types";
+import { MATRON_BUTTON_RESPONSE } from "../matron/EventTypes";
 
 // Subset of EventTile's IProps plus some mixins
 export interface EventTileTypeProps extends Pick<
@@ -202,6 +203,10 @@ export function pickFactory(
                 // override the factory
                 return VerificationReqFactory;
             }
+        }
+
+        if (content?.[MATRON_BUTTON_RESPONSE] != null) {
+            return noEventFactoryFactory();
         }
     }
 

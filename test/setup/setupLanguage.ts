@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import fetchMock from "@fetch-mock/jest";
-import { ModuleLoader } from "@matronhq/matron-web-module-api";
+import { ModuleLoader } from "@element-hq/element-web-module-api";
 import { merge } from "lodash";
 
 import * as languageHandler from "../../src/languageHandler";

@@ -6,13 +6,13 @@ Forked from [Element Web](https://github.com/element-hq/element-web). Built on t
 
 ## Part of the Matron ecosystem
 
-| Project | Description |
-|---------|-------------|
-| [Matron Desktop](https://github.com/matronhq/matron-desktop) | Desktop client |
-| **Matron Web** | Web client (this repo) |
-| [Matron iOS](https://github.com/matronhq/matron-ios) | iOS client |
-| [Matron Server](https://github.com/matronhq/matron-server) | Matrix homeserver |
-| [Dev Boxer](https://github.com/matronhq/dev-boxer) | One-command dev environment setup |
+| Project                                                      | Description                       |
+| ------------------------------------------------------------ | --------------------------------- |
+| [Matron Desktop](https://github.com/matronhq/matron-desktop) | Desktop client                    |
+| **Matron Web**                                               | Web client (this repo)            |
+| [Matron iOS](https://github.com/matronhq/matron-ios)         | iOS client                        |
+| [Matron Server](https://github.com/matronhq/matron-server)   | Matrix homeserver                 |
+| [Dev Boxer](https://github.com/matronhq/dev-boxer)           | One-command dev environment setup |
 
 ## Supported browsers
 

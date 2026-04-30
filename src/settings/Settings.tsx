@@ -1092,7 +1092,7 @@ export const SETTINGS: Settings = {
         default: false,
     },
     "pseudonymousAnalyticsOptIn": {
-        supportedLevels: [SettingLevel.ACCOUNT],
+        supportedLevels: [SettingLevel.ACCOUNT, SettingLevel.CONFIG],
         displayName: _td("settings|security|send_analytics"),
         default: null,
     },

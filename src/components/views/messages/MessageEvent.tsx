@@ -40,6 +40,8 @@ import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
 import { type GetRelationsForEvent, type IEventTileOps } from "../rooms/EventTile";
 import { DecryptionFailureBodyViewModel } from "../../../viewmodels/message-body/DecryptionFailureBodyViewModel";
+import MButtonGroupBody from "./MButtonGroupBody";
+import { MATRON_BUTTONS } from "../../../matron/EventTypes";
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -246,6 +248,12 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
+        if (!this.props.mxEvent.isRedacted() && content[MATRON_BUTTONS]) {
+            return (
+                <MButtonGroupBody mxEvent={this.props.mxEvent} getRelationsForEvent={this.props.getRelationsForEvent} />
+            );
+        }
+
         let BodyType: React.ComponentType<IBodyProps> = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted

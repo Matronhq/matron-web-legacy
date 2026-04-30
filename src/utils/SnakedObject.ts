@@ -24,9 +24,7 @@ export class SnakedObject<T = Record<string, any>> {
         if (!!fallback && !this.fallbackWarnings.has(fallbackKey)) {
             this.fallbackWarnings.add(fallbackKey);
             console.warn(`Using deprecated camelCase config ${fallbackKey}`);
-            console.warn(
-                "See https://github.com/matronhq/matron-web/blob/develop/docs/config.md#-deprecation-notice",
-            );
+            console.warn("See https://github.com/matronhq/matron-web/blob/develop/docs/config.md#-deprecation-notice");
         }
         return fallback;
     }

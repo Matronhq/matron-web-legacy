@@ -1,0 +1,138 @@
+/*
+Copyright 2026 Matron Contributors.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+/*
+ * Matron UI overrides.
+ *
+ * Keep product-specific interface polish here where possible, instead of
+ * changing upstream Element styles throughout the tree.
+ */
+
+.mx_Dialog_background:not(.mx_Dialog_staticBackground) {
+    background-color: rgb(28, 24, 20, 0.26);
+    backdrop-filter: blur(12px);
+}
+
+.mx_Dialog_border {
+    max-height: calc(100% - var(--cpd-space-10x));
+}
+
+.mx_Dialog {
+    width: min(92vw, 520px);
+    border: 1px solid rgb(28, 24, 20, 0.08);
+    border-radius: var(--cpd-space-6x);
+    background-color: #fbfaf6;
+    box-shadow:
+        0 24px 80px rgb(28, 24, 20, 0.18),
+        0 2px 8px rgb(28, 24, 20, 0.08);
+    color: var(--cpd-color-text-primary);
+    padding: var(--cpd-space-7x);
+}
+
+.mx_Dialog_fixedWidth {
+    width: min(92vw, 520px);
+    max-width: 520px;
+}
+
+.mx_Dialog_header {
+    margin-bottom: var(--cpd-space-3x);
+    padding-inline-end: var(--cpd-space-8x);
+}
+
+.mx_Dialog_title {
+    color: var(--cpd-color-text-primary);
+    font: var(--cpd-font-heading-md-semibold);
+    letter-spacing: var(--cpd-font-letter-spacing-heading-md);
+}
+
+.mx_Dialog_content {
+    margin: var(--cpd-space-5x) 0 var(--cpd-space-6x);
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_Dialog_buttons {
+    margin-top: var(--cpd-space-6x);
+}
+
+.mx_Dialog_buttons .mx_Dialog_buttons_row {
+    gap: var(--cpd-space-3x);
+    justify-content: flex-end;
+}
+
+.mx_Dialog_cancelButton {
+    top: var(--cpd-space-5x);
+    right: var(--cpd-space-5x);
+    background-color: transparent;
+}
+
+.mx_Dialog_cancelButton:hover {
+    background-color: rgb(28, 24, 20, 0.06);
+}
+
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton, .mx_AccessibleButton),
+.mx_Dialog input[type="submit"],
+.mx_Dialog_buttons input[type="submit"] {
+    min-height: 40px;
+    border-radius: 999px;
+    padding: var(--cpd-space-2x) var(--cpd-space-5x);
+}
+
+.mx_Dialog_buttons
+    button:not(
+        .mx_Dialog_nonDialogButton,
+        .mx_AccessibleButton,
+        .mx_UserProfileSettings button,
+        .mx_ThemeChoicePanel_CustomTheme button,
+        .mx_UnpinAllDialog button,
+        .mx_ShareDialog button,
+        .mx_EncryptionUserSettingsTab button
+    ),
+.mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
+    min-width: auto;
+}
+
+.mx_Dialog button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton, [class|="maplibregl"]),
+.mx_Dialog input[type="submit"].mx_Dialog_primary,
+.mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
+    box-shadow: 0 1px 3px rgb(28, 24, 20, 0.14);
+}
+
+.mx_AccessSecretStorageDialog {
+    gap: var(--cpd-space-6x);
+    border: 0;
+    border-radius: var(--cpd-space-6x);
+    box-shadow: none;
+    padding: 0;
+}
+
+.mx_AccessSecretStorageDialog .mx_EncryptionCard_header {
+    gap: var(--cpd-space-3x);
+}
+
+.mx_AccessSecretStorageDialog .mx_EncryptionCard_header > h2 {
+    font: var(--cpd-font-heading-md-semibold);
+}
+
+.mx_AccessSecretStorageDialog .mx_EncryptionCard_header > span {
+    max-width: 34rem;
+}
+
+.mx_AccessSecretStorageDialog_primaryContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cpd-space-4x);
+}
+
+.mx_AccessSecretStorageDialog_recoveryKeyFeedback {
+    min-height: 24px;
+    color: var(--cpd-color-text-secondary);
+    font: var(--cpd-font-body-sm-regular);
+}
+
+.mx_EncryptionCard_buttons {
+    gap: var(--cpd-space-3x);
+}

@@ -11,7 +11,6 @@ import React from "react";
 import classNames from "classnames";
 
 import SdkConfig from "../../../SdkConfig";
-import AuthFooter from "./AuthFooter";
 
 interface IProps {
     /**
@@ -24,31 +23,31 @@ interface IProps {
 }
 
 export default class AuthPage extends React.PureComponent<React.PropsWithChildren<IProps>> {
-    private static welcomeBackgroundUrl?: string;
+    private static welcomeBackground?: string;
 
-    // cache the url as a static to prevent it changing without refreshing
-    private static getWelcomeBackgroundUrl(): string {
-        if (AuthPage.welcomeBackgroundUrl) return AuthPage.welcomeBackgroundUrl;
+    // cache the background as a static to prevent it changing without refreshing
+    private static getWelcomeBackground(): string {
+        if (AuthPage.welcomeBackground) return AuthPage.welcomeBackground;
 
         const brandingConfig = SdkConfig.getObject("branding");
-        AuthPage.welcomeBackgroundUrl = "themes/element/img/backgrounds/lake.jpg";
+        AuthPage.welcomeBackground = "#fbfaf6";
 
         const configuredUrl = brandingConfig?.get("welcome_background_url");
         if (configuredUrl) {
             if (Array.isArray(configuredUrl)) {
                 const index = Math.floor(Math.random() * configuredUrl.length);
-                AuthPage.welcomeBackgroundUrl = configuredUrl[index];
+                AuthPage.welcomeBackground = `center/cover fixed url(${configuredUrl[index]})`;
             } else {
-                AuthPage.welcomeBackgroundUrl = configuredUrl;
+                AuthPage.welcomeBackground = `center/cover fixed url(${configuredUrl})`;
             }
         }
 
-        return AuthPage.welcomeBackgroundUrl;
+        return AuthPage.welcomeBackground;
     }
 
     public render(): React.ReactElement {
         const pageStyle = {
-            background: `center/cover fixed url(${AuthPage.getWelcomeBackgroundUrl()})`,
+            background: AuthPage.getWelcomeBackground(),
         };
 
         const modalStyle: React.CSSProperties = {
@@ -97,7 +96,6 @@ export default class AuthPage extends React.PureComponent<React.PropsWithChildre
                         {this.props.children}
                     </main>
                 </div>
-                <AuthFooter />
             </div>
         );
     }
