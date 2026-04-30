@@ -1220,12 +1220,14 @@ export const SETTINGS: Settings = {
         controller: new FallbackIceServerController(),
     },
     "RoomList.preferredSorting": {
-        supportedLevels: [SettingLevel.DEVICE],
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
         default: SortingAlgorithm.Recency,
     },
     "RoomList.showMessagePreview": {
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: false,
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG_PRIORITISED,
+        supportedLevelsAreOrdered: true,
+        default: true,
         displayName: _td("settings|show_message_previews"),
     },
     "RightPanel.phasesGlobal": {

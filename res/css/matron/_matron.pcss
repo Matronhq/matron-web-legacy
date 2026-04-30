@@ -33,7 +33,17 @@ Please see LICENSE files in the repository root for full details.
     padding: var(--cpd-space-7x);
 }
 
-.mx_Dialog_fixedWidth {
+.mx_Dialog:has(.mx_UserSettingsDialog, .mx_RoomSettingsDialog, .mx_SpaceSettingsDialog, .mx_SpacePreferencesDialog) {
+    width: min(90vw, 980px);
+    max-width: 980px;
+}
+
+.mx_Dialog_fixedWidth:not(
+    .mx_UserSettingsDialog,
+    .mx_RoomSettingsDialog,
+    .mx_SpaceSettingsDialog,
+    .mx_SpacePreferencesDialog
+) {
     width: min(92vw, 520px);
     max-width: 520px;
 }
