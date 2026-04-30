@@ -318,6 +318,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const isCaption = [MsgType.Image, MsgType.File, MsgType.Audio, MsgType.Video].includes(
             content.msgtype as MsgType,
         );
+        const annotatedClassName = isEmote
+            ? "mx_EventTile_annotated mx_EventTile_annotatedInline"
+            : "mx_EventTile_annotated";
 
         const willHaveWrapper =
             this.props.replacingEventId || this.props.isSeeingThroughMessageHiddenForModeration || isEmote;
@@ -343,7 +346,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         if (this.props.replacingEventId) {
             body = (
-                <div dir="auto" className="mx_EventTile_annotated">
+                <div dir="auto" className={annotatedClassName}>
                     {body}
                     {this.renderEditedMarker()}
                 </div>
@@ -351,7 +354,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         if (this.props.isSeeingThroughMessageHiddenForModeration) {
             body = (
-                <div dir="auto" className="mx_EventTile_annotated">
+                <div dir="auto" className={annotatedClassName}>
                     {body}
                     {this.renderPendingModerationMarker()}
                 </div>

@@ -14,9 +14,10 @@ Please see LICENSE files in the repository root for full details.
 
 import { type ComponentVisibilityCustomisations as IComponentVisibilityCustomisations } from "@element-hq/element-web-module-api";
 
+import { shouldShowUIComponent } from "../matron/FeaturePolicy";
+
 // A real customisation module will define and export one or more of the
 // customisation points that make up the interface above.
 export const ComponentVisibilityCustomisations: IComponentVisibilityCustomisations = {
-    // while we don't specify the functions here, their defaults are described
-    // in their pseudo-implementations above.
+    shouldShowComponent: shouldShowUIComponent,
 };

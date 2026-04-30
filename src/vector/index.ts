@@ -14,7 +14,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { shouldPolyfill as shouldPolyFillIntlSegmenter } from "@formatjs/intl-segmenter/should-polyfill.js";
 
 // These are things that can run before the skin loads - be careful not to reference the react-sdk though.
-import { parseQsFromFragment } from "./url_utils";
+import { parseQsFromFragment, searchParamsToQueryDict } from "./url_utils";
 import "./modernizr.cjs";
 
 // Import shared components CSS
@@ -137,12 +137,13 @@ async function start(): Promise<void> {
         await settled(rageshakePromise);
 
         const fragparts = parseQsFromFragment(window.location);
+        const fragmentParams = fragparts.params;
 
         // don't try to redirect to the native apps if we're
         // verifying a 3pid (but after we've loaded the config)
         // or if the user is following a deep link
         // (https://github.com/matronhq/matron-web/issues/7378)
-        const preventRedirect = fragparts.params.client_secret || fragparts.location.length > 0;
+        const preventRedirect = fragmentParams?.has("client_secret") || fragparts.location.length > 0;
 
         if (!preventRedirect) {
             const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -232,7 +233,7 @@ async function start(): Promise<void> {
 
         // Finally, load the app. All of the other react-sdk imports are in this file which causes the skinner to
         // run on the components.
-        await loadApp(fragparts.params);
+        await loadApp(fragmentParams ? searchParamsToQueryDict(fragmentParams) : {});
     } catch (err) {
         logger.error(err);
         // Like the compatibility page, AWOOOOOGA at the user

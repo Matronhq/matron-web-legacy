@@ -21,7 +21,6 @@ import {
     ProfileKeyMSC4175Timezone,
 } from "matrix-js-sdk/src/matrix";
 import { type MatrixCall } from "matrix-js-sdk/src/webrtc/call";
-import classNames from "classnames";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from "../../Keyboard";
 import PageTypes from "../../PageTypes";
@@ -30,13 +29,11 @@ import dis from "../../dispatcher/dispatcher";
 import { type IMatrixClientCreds } from "../../MatrixClientPeg";
 import SettingsStore from "../../settings/SettingsStore";
 import { SettingLevel } from "../../settings/SettingLevel";
-import ResizeHandle from "../views/elements/ResizeHandle";
 import { CollapseDistributor, Resizer } from "../../resizer";
 import PlatformPeg from "../../PlatformPeg";
 import { DefaultTagID } from "../../stores/room-list/models";
 import { hideToast as hideServerLimitToast, showToast as showServerLimitToast } from "../../toasts/ServerLimitToast";
 import { Action } from "../../dispatcher/actions";
-import LeftPanel from "./LeftPanel";
 import { type ViewRoomDeltaPayload } from "../../dispatcher/payloads/ViewRoomDeltaPayload";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import NonUrgentToastContainer from "./NonUrgentToastContainer";
@@ -45,7 +42,6 @@ import Modal from "../../Modal";
 import { type CollapseItem, type ICollapseConfig } from "../../resizer/distributors/collapse";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { type IOpts } from "../../createRoom";
-import SpacePanel from "../views/spaces/SpacePanel";
 import LegacyCallHandler, { LegacyCallHandlerEvent } from "../../LegacyCallHandler";
 import AudioFeedArrayForLegacyCall from "../views/voip/AudioFeedArrayForLegacyCall";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
@@ -53,7 +49,6 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import { RoomView } from "./RoomView";
 import ToastContainer from "./ToastContainer";
 import UserView from "./UserView";
-import { BackdropPanel } from "./BackdropPanel";
 import { mediaFromMxc } from "../../customisations/Media";
 import { UserTab } from "../views/dialogs/UserTab";
 import { type OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
@@ -61,7 +56,6 @@ import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { type SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
-import LeftPanelLiveShareWarning from "../views/beacon/LeftPanelLiveShareWarning";
 import HomePage from "./HomePage";
 import { PipContainer } from "./PipContainer";
 import { monitorSyncedPushRules } from "../../utils/pushRules/monitorSyncedPushRules";
@@ -70,6 +64,7 @@ import { MatrixClientContextProvider } from "./MatrixClientContextProvider";
 import { Landmark, LandmarkNavigation } from "../../accessibility/LandmarkNavigation";
 import { ModuleApi } from "../../modules/Api.ts";
 import { SDKContext } from "../../contexts/SDKContext.ts";
+import { MatronLoggedInShell } from "../../matron/MatronLoggedInShell";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -736,22 +731,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             }
         }
 
-        const wrapperClasses = classNames({
-            mx_MatrixChat_wrapper: true,
-            mx_MatrixChat_useCompactLayout: this.state.useCompactLayout,
-        });
-        const bodyClasses = classNames({
-            "mx_MatrixChat": true,
-            "mx_MatrixChat--with-avatar": this.state.backgroundImage,
-        });
-
         const useNewRoomList = SettingsStore.getValue("feature_new_room_list");
-
-        const leftPanelWrapperClasses = classNames({
-            mx_LeftPanel_wrapper: true,
-            mx_LeftPanel_newRoomList: useNewRoomList,
-        });
-
         const audioFeedArraysForCalls = this.state.activeCalls.map((call) => {
             return <AudioFeedArrayForLegacyCall call={call} key={call.callId} />;
         });
@@ -759,41 +739,22 @@ class LoggedInView extends React.Component<IProps, IState> {
         const shouldUseMinimizedUI = !useNewRoomList && this.props.collapseLhs;
         return (
             <MatrixClientContextProvider client={this._matrixClient}>
-                <div
-                    onPaste={this.onPaste}
+                <ToastContainer />
+                <MatronLoggedInShell
+                    backgroundImage={this.state.backgroundImage}
+                    hideToSRUsers={this.props.hideToSRUsers}
+                    isModuleRenderer={!!moduleRenderer}
                     onKeyDown={this.onReactKeyDown}
-                    className={wrapperClasses}
-                    aria-hidden={this.props.hideToSRUsers}
-                >
-                    <ToastContainer />
-                    <div className={bodyClasses}>
-                        <div className="mx_LeftPanel_outerWrapper">
-                            <LeftPanelLiveShareWarning isMinimized={shouldUseMinimizedUI || false} />
-                            <div className={leftPanelWrapperClasses}>
-                                {!useNewRoomList && (
-                                    <BackdropPanel blurMultiplier={0.5} backgroundImage={this.state.backgroundImage} />
-                                )}
-                                <SpacePanel />
-                                {!useNewRoomList && <BackdropPanel backgroundImage={this.state.backgroundImage} />}
-                                {!moduleRenderer && (
-                                    <div
-                                        className="mx_LeftPanel_wrapper--user"
-                                        ref={this._resizeContainer}
-                                        data-collapsed={shouldUseMinimizedUI ? true : undefined}
-                                    >
-                                        <LeftPanel
-                                            pageType={this.props.page_type as PageTypes}
-                                            isMinimized={shouldUseMinimizedUI || false}
-                                            resizeNotifier={this.context.resizeNotifier}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                        {!moduleRenderer && <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />}
-                        <div className="mx_RoomView_wrapper">{pageElement}</div>
-                    </div>
-                </div>
+                    onPaste={this.onPaste}
+                    pageElement={pageElement}
+                    pageType={this.props.page_type}
+                    resizeContainerRef={this._resizeContainer}
+                    resizeHandlerRef={this.resizeHandler}
+                    resizeNotifier={this.context.resizeNotifier}
+                    shouldUseMinimizedUI={shouldUseMinimizedUI || false}
+                    useCompactLayout={this.state.useCompactLayout}
+                    useNewRoomList={useNewRoomList}
+                />
                 <PipContainer />
                 <NonUrgentToastContainer />
                 {audioFeedArraysForCalls}

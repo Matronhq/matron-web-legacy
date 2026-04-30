@@ -44,9 +44,9 @@ export function EncryptionCard({
     children,
 }: PropsWithChildren<EncryptionCardProps>): JSX.Element {
     return (
-        <div className={classNames("mx_EncryptionCard", className)}>
+        <div className={classNames("mx_EncryptionCard", className, { mx_EncryptionCard_destructive: destructive })}>
             <div className="mx_EncryptionCard_header">
-                <BigIcon destructive={destructive}>
+                <BigIcon>
                     <Icon />
                 </BigIcon>
                 <Heading as="h2" size="sm" weight="semibold">
