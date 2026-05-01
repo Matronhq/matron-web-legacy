@@ -6,7 +6,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 import { type MatrixClient } from "matrix-js-sdk/src/matrix";
 import { type RoomMessageEventContent } from "matrix-js-sdk/src/types";
@@ -17,7 +16,6 @@ import { type Command, CommandCategories, getCommand } from "../slash-commands/S
 import { UserFriendlyError, _t, _td } from "../languageHandler";
 import Modal from "../Modal";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
-import QuestionDialog from "../components/views/dialogs/QuestionDialog";
 
 export function isSlashCommand(model: EditorModel): boolean {
     const parts = model.parts;
@@ -103,37 +101,4 @@ export async function runSlashCommand(
         logger.log("Command success.");
         return [messageContent, true];
     }
-}
-
-export async function shouldSendAnyway(commandText: string): Promise<boolean> {
-    // ask the user if their unknown command should be sent as a message
-    const { finished } = Modal.createDialog(QuestionDialog, {
-        title: _t("slash_command|unknown_command"),
-        description: (
-            <div>
-                <p>{_t("slash_command|unknown_command_detail", { commandText })}</p>
-                <p>
-                    {_t(
-                        "slash_command|unknown_command_help",
-                        {},
-                        {
-                            code: (t) => <code>{t}</code>,
-                        },
-                    )}
-                </p>
-                <p>
-                    {_t(
-                        "slash_command|unknown_command_hint",
-                        {},
-                        {
-                            code: (t) => <code>{t}</code>,
-                        },
-                    )}
-                </p>
-            </div>
-        ),
-        button: _t("slash_command|unknown_command_button"),
-    });
-    const [sendAnyway] = await finished;
-    return sendAnyway || false;
 }

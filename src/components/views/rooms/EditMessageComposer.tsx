@@ -38,7 +38,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { withMatrixClientHOC, type MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import RoomContext from "../../../contexts/RoomContext";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { getSlashCommand, isSlashCommand, runSlashCommand } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
@@ -46,6 +46,7 @@ import type DocumentOffset from "../../../editor/offset";
 import { attachMentions, attachRelation } from "../../../utils/messages";
 import { filterBoolean } from "../../../utils/arrays";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { isMatronCommand } from "../../../matron/commands";
 
 // exported for tests
 export function createEditContent(
@@ -312,34 +313,31 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (this.isContentModified(newContent)) {
             const roomId = editedEvent.getRoomId()!;
             if (!containsEmote(this.model) && isSlashCommand(this.model)) {
-                const [cmd, args, commandText] = getSlashCommand(roomId, this.model);
-                if (cmd) {
-                    const threadId = editedEvent?.getThread()?.id || null;
-                    const [content, commandSuccessful] = await runSlashCommand(
-                        MatrixClientPeg.safeGet(),
-                        cmd,
-                        args,
-                        roomId,
-                        threadId,
-                    );
-                    if (!commandSuccessful) {
-                        return; // errored
-                    }
+                const firstPartText = this.model.parts[0]?.text || "";
+                const cmdName = firstPartText.split(/\s+/)[0]?.slice(1);
+                const room = this.props.mxClient.getRoom(roomId);
 
-                    if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
-                        editContent["m.new_content"] = content!;
-                    } else {
-                        shouldSend = false;
+                if (!room || !isMatronCommand(room, cmdName)) {
+                    const [cmd, args] = getSlashCommand(roomId, this.model);
+                    if (cmd) {
+                        const threadId = editedEvent?.getThread()?.id || null;
+                        const [content, commandSuccessful] = await runSlashCommand(
+                            MatrixClientPeg.safeGet(),
+                            cmd,
+                            args,
+                            roomId,
+                            threadId,
+                        );
+                        if (!commandSuccessful) {
+                            return; // errored
+                        }
+
+                        if (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects) {
+                            editContent["m.new_content"] = content!;
+                        } else {
+                            shouldSend = false;
+                        }
                     }
-                } else {
-                    const sendAnyway = await shouldSendAnyway(commandText);
-                    // re-focus the composer after QuestionDialog is closed
-                    dis.dispatch({
-                        action: Action.FocusAComposer,
-                        context: this.context.timelineRenderingType,
-                    });
-                    // if !sendAnyway bail to let the user edit the composer and try again
-                    if (!sendAnyway) return;
                 }
             }
             if (shouldSend) {

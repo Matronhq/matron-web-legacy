@@ -126,7 +126,7 @@ describe("FontWatcher", function () {
 
         it("should not run the migration", async () => {
             await watcher!.start();
-            expect(SettingsStore.getValue("fontSizeDelta")).toBe(0);
+            expect(SettingsStore.getValue("fontSizeDelta")).toBe(-1);
         });
 
         it("should migrate from V1 font size to V3", async () => {

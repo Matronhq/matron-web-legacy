@@ -33,6 +33,7 @@ import { type Mocked, mocked } from "jest-mock";
 import { forEachRight } from "lodash";
 
 import TimelinePanel from "../../../../src/components/structures/TimelinePanel";
+import MessagePanel from "../../../../src/components/structures/MessagePanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import {
     clientAndSDKContextRenderOptions,
@@ -45,7 +46,7 @@ import {
 import { mkThread } from "../../../test-utils/threads";
 import { createMessageEventContent } from "../../../test-utils/events";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import ScrollPanel from "../../../../src/components/structures/ScrollPanel";
+import ScrollPanel, { type IScrollState } from "../../../../src/components/structures/ScrollPanel";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import { Action } from "../../../../src/dispatcher/actions";
 import { SettingLevel } from "../../../../src/settings/SettingLevel";
@@ -553,6 +554,34 @@ describe("TimelinePanel", () => {
             client.emit(RoomEvent.Timeline, event, room, false, false, data);
 
             expect(paginateSpy).toHaveBeenCalledWith(EventTimeline.FORWARDS, 1, false);
+        });
+
+        it("advances own timeline events even when not stuck at bottom", () => {
+            const [client, room, events] = setupTestData();
+
+            const props = getProps(room, events);
+            const getScrollStateSpy = jest
+                .spyOn(MessagePanel.prototype, "getScrollState")
+                .mockReturnValue({ stuckAtBottom: false } satisfies IScrollState);
+            const paginateSpy = jest.spyOn(TimelineWindow.prototype, "paginate").mockClear();
+
+            try {
+                render(<TimelinePanel {...props} />, clientAndSDKContextRenderOptions(client, sdkContext));
+
+                const event = new MatrixEvent({
+                    room_id: room.roomId,
+                    type: EventType.RoomMessage,
+                    sender: client.getSafeUserId(),
+                    content: createMessageEventContent("Sent message"),
+                    origin_server_ts: 0,
+                });
+                const data = { timeline: props.timelineSet.getLiveTimeline(), liveEvent: true };
+                client.emit(RoomEvent.Timeline, event, room, false, false, data);
+
+                expect(paginateSpy).toHaveBeenCalledWith(EventTimeline.FORWARDS, 1, false);
+            } finally {
+                getScrollStateSpy.mockRestore();
+            }
         });
     });
 

@@ -2570,6 +2570,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             highlightedEventId = this.state.initialEventId;
         }
 
+        const encryptionNotice = isRoomEncrypted ? (
+            <li className="mx_RoomView_encryptionNotice">Messages are end-to-end encrypted</li>
+        ) : undefined;
+
         let messagePanel: JSX.Element | undefined;
         if (!isRoomEncryptionLoading) {
             messagePanel = (
@@ -2598,6 +2602,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     layout={this.state.layout}
                     editState={this.state.editState}
                     enableReadReceiptsAndMarkersOnActivity={this.props.enableReadReceiptsAndMarkersOnActivity}
+                    topTimelineTile={encryptionNotice}
                 />
             );
         }

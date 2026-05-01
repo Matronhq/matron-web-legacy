@@ -30,10 +30,10 @@ import type EditorStateTransfer from "../../../../../utils/EditorStateTransfer";
 import { createMessageContent, EMOTE_PREFIX } from "./createMessageContent";
 import { isContentModified } from "./isContentModified";
 import { CommandCategories, getCommand } from "../../../../../slash-commands/SlashCommands";
-import { runSlashCommand, shouldSendAnyway } from "../../../../../editor/commands";
-import { Action } from "../../../../../dispatcher/actions";
+import { runSlashCommand } from "../../../../../editor/commands";
 import { addReplyToMessageContent } from "../../../../../utils/Reply";
 import { attachRelation } from "../../../../../utils/messages";
+import { isMatronCommand } from "../../../../../matron/commands";
 
 export interface SendMessageParams {
     mxClient: MatrixClient;
@@ -76,37 +76,31 @@ export async function sendMessage(
     // Slash command handling here approximates what can be found in SendMessageComposer.sendMessage()
     // but note that the /me and // special cases are handled by the call to createMessageContent
     if (message.startsWith("/") && !message.startsWith("//") && !message.startsWith(EMOTE_PREFIX)) {
-        const { cmd, args } = getCommand(roomId, message);
-        if (cmd) {
-            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
-            let commandSuccessful: boolean;
-            [content, commandSuccessful] = await runSlashCommand(mxClient, cmd, args, roomId, threadId ?? null);
+        const commandName = message.trimStart().slice(1).split(/\s+/)[0];
+        if (!isMatronCommand(room, commandName)) {
+            const { cmd, args } = getCommand(roomId, message);
+            if (cmd) {
+                const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation?.event_id : null;
+                let commandSuccessful: boolean;
+                [content, commandSuccessful] = await runSlashCommand(mxClient, cmd, args, roomId, threadId ?? null);
 
-            if (!commandSuccessful) {
-                return; // errored
-            }
-
-            if (
-                content &&
-                (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects)
-            ) {
-                attachRelation(content, relation);
-                if (replyToEvent) {
-                    addReplyToMessageContent(content, replyToEvent);
+                if (!commandSuccessful) {
+                    return; // errored
                 }
-            } else {
-                // instead of setting shouldSend to false as in SendMessageComposer, just return
-                return;
+
+                if (
+                    content &&
+                    (cmd.category === CommandCategories.messages || cmd.category === CommandCategories.effects)
+                ) {
+                    attachRelation(content, relation);
+                    if (replyToEvent) {
+                        addReplyToMessageContent(content, replyToEvent);
+                    }
+                } else {
+                    // instead of setting shouldSend to false as in SendMessageComposer, just return
+                    return;
+                }
             }
-        } else {
-            const sendAnyway = await shouldSendAnyway(message);
-            // re-focus the composer after QuestionDialog is closed
-            dis.dispatch({
-                action: Action.FocusAComposer,
-                context: roomContext.timelineRenderingType,
-            });
-            // if !sendAnyway bail to let the user edit the composer and try again
-            if (!sendAnyway) return;
         }
     }
 

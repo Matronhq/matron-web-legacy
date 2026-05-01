@@ -280,7 +280,7 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_RoomListItemView > div {
     margin-inline: var(--cpd-space-1x) var(--cpd-space-2x);
-    padding: 3px var(--cpd-space-2x) 3px var(--cpd-space-1x);
+    padding: 5px var(--cpd-space-2x) 5px var(--cpd-space-1x);
 }
 
 .mx_RoomListItemView.mx_RoomListItemView_selected > div {
@@ -291,16 +291,131 @@ Please see LICENSE files in the repository root for full details.
     display: none;
 }
 
+.mx_RoomView_body[data-layout="bubble"] {
+    --matron-room-timeline-background: #f3eee8;
+    --matron-room-timeline-background-bottom: #e8dfd4;
+    background:
+        linear-gradient(
+            180deg,
+            var(--matron-room-timeline-background) 0%,
+            var(--matron-room-timeline-background-bottom) 100%
+        ),
+        var(--matron-room-timeline-background);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_RoomView_timeline,
+.mx_RoomView_body[data-layout="bubble"] .mx_RoomView_messagePanel {
+    background: transparent;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_MessagePanel_myReadMarker hr {
+    display: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_RoomView_encryptionNotice {
+    align-self: center;
+    clear: both;
+    width: fit-content;
+    margin: var(--cpd-space-2x) auto var(--cpd-space-3x);
+    border: 1px solid var(--cpd-color-gray-300);
+    border-radius: var(--cpd-space-2x);
+    background-color: var(--cpd-color-bg-canvas-default);
+    color: var(--cpd-color-text-secondary);
+    font: var(--cpd-font-body-sm-regular);
+    padding: var(--cpd-space-1x) var(--cpd-space-3x);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_MessageComposer_wrapper {
+    border-top-color: var(--cpd-color-gray-200);
+    background-color: var(--matron-room-timeline-background);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_MessageComposer {
+    padding-bottom: 0;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_SendMessageComposer .mx_BasicMessageComposer_input,
+.mx_RoomView_body[data-layout="bubble"] .mx_SendWysiwygComposer .mx_WysiwygComposer_Editor {
+    box-sizing: border-box;
+    border: 1px solid var(--cpd-color-gray-300);
+    background-color: var(--cpd-color-bg-canvas-default);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_SendMessageComposer .mx_BasicMessageComposer_input {
+    width: 100%;
+    min-height: 38px;
+    border-radius: var(--cpd-space-2x);
+    padding: var(--cpd-space-2x) var(--cpd-space-3x);
+}
+
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_BasicMessageComposer
+    .mx_BasicMessageComposer_inputEmpty
+    > :first-child::before,
+.mx_RoomView_body[data-layout="bubble"] .mx_WysiwygComposer_Editor_content_placeholder::before {
+    content: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_SendWysiwygComposer .mx_WysiwygComposer_Editor {
+    border-radius: var(--cpd-space-2x);
+}
+
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_SendWysiwygComposer
+    .mx_WysiwygComposer_Editor[data-is-expanded="false"] {
+    border-radius: var(--cpd-space-2x);
+}
+
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_SendMessageComposer
+    .mx_BasicMessageComposer:focus-within
+    .mx_BasicMessageComposer_input,
+.mx_RoomView_body[data-layout="bubble"] .mx_SendWysiwygComposer-focused .mx_WysiwygComposer_Editor {
+    border-color: var(--cpd-color-gray-400);
+}
+
 .mx_EventTile[data-layout="bubble"][data-self="false"] {
-    --backgroundColor: var(--cpd-color-gray-200);
+    --backgroundColor: var(--cpd-color-bg-canvas-default);
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body blockquote,
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body pre,
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body pre code {
+    background-color: color-mix(in srgb, var(--cpd-color-gray-100) 15%, var(--cpd-color-gray-200));
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body code:not(pre *) {
+    background-color: color-mix(in srgb, var(--cpd-color-gray-100) 15%, var(--cpd-color-gray-200));
+    border-color: var(--cpd-color-gray-200);
 }
 
 .mx_EventTile[data-layout="bubble"][data-self="true"] {
-    --backgroundColor: var(--cpd-color-gray-300);
+    --backgroundColor: #e4f8ea;
 }
 
 .mx_EventTile[data-layout="bubble"][data-self="true"] .mx_MediaBody {
-    background: var(--cpd-color-gray-300);
+    background: #e4f8ea;
+}
+
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] .mx_EventTile_line,
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] .mx_EventTileBubble,
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] .mx_TextualEvent,
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] [class*="_container_"] {
+    --backgroundColor: transparent !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none;
+}
+
+.mx_EventTile[data-layout="bubble"],
+.mx_GenericEventListSummary[data-layout="bubble"] {
+    --EventTile_bubble-margin-inline-start: var(--cpd-space-5x);
+    --EventTile_bubble-margin-inline-end: var(--cpd-space-5x);
+}
+
+.mx_EventTile[data-layout="bubble"] .mx_EventTile_avatar {
+    display: none;
 }
 
 .mx_EventTile[data-layout="bubble"]:hover::before,
@@ -309,13 +424,15 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_EventTile[data-layout="bubble"]:hover .mx_EventTile_avatar,
+.mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_avatar,
 .mx_EventTile[data-layout="bubble"].mx_EventTile_selected .mx_EventTile_avatar {
-    border-color: var(--cpd-color-bg-canvas-default);
+    border-color: var(--matron-room-timeline-background);
 }
 
 .mx_EventTile[data-layout="bubble"]:hover .mx_EventTile_avatar img,
+.mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_avatar img,
 .mx_EventTile[data-layout="bubble"].mx_EventTile_selected .mx_EventTile_avatar img {
-    box-shadow: 0 0 0 3px var(--cpd-color-bg-canvas-default);
+    box-shadow: 0 0 0 3px var(--matron-room-timeline-background);
 }
 
 .mx_EventTile .mx_MessageActionBar {
@@ -324,4 +441,9 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_SessionSummaryDialog_content {
     white-space: pre-wrap;
+}
+
+.mx_RoomView .mx_NewRoomIntro,
+.mx_RoomView [data-testid="matron-room-creation-summary"] {
+    display: none;
 }

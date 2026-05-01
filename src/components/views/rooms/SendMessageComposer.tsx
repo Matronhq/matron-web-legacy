@@ -50,7 +50,7 @@ import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTime
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { getSlashCommand, isSlashCommand, runSlashCommand } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
@@ -60,7 +60,7 @@ import { type IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
 import { EMOJI_REGEX } from "../../../HtmlUtils";
 import { attachMentions, attachRelation } from "../../../utils/messages";
-import { MATRON_COMMANDS } from "../../../matron/EventTypes";
+import { isMatronCommand } from "../../../matron/commands";
 
 // The prefix used when persisting editor drafts to localstorage.
 export const EDITOR_STATE_STORAGE_PREFIX = "mx_cider_state_";
@@ -359,12 +359,9 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (!containsEmote(model) && isSlashCommand(this.model)) {
             const firstPartText = this.model.parts[0]?.text || "";
             const cmdName = firstPartText.split(/\s+/)[0]?.slice(1);
-            const matronState = this.props.room.currentState.getStateEvents(MATRON_COMMANDS, "");
-            const matronCommands: { command: string }[] = matronState?.getContent()?.commands || [];
-            const isMatronCommand = matronCommands.some((cmd) => cmd.command === cmdName);
 
-            if (!isMatronCommand) {
-                const [cmd, args, commandText] = getSlashCommand(this.props.room.roomId, this.model);
+            if (!isMatronCommand(this.props.room, cmdName)) {
+                const [cmd, args] = getSlashCommand(this.props.room.roomId, this.model);
                 if (cmd) {
                     const threadId =
                         this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
@@ -398,15 +395,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     } else {
                         shouldSend = false;
                     }
-                } else {
-                    const sendAnyway = await shouldSendAnyway(commandText);
-                    // re-focus the composer after QuestionDialog is closed
-                    dis.dispatch({
-                        action: Action.FocusAComposer,
-                        context: this.context.timelineRenderingType,
-                    });
-                    // if !sendAnyway bail to let the user edit the composer and try again
-                    if (!sendAnyway) return;
                 }
             }
         }

@@ -132,6 +132,7 @@ export class CreationGrouper extends BaseGrouper {
         ret.push(
             <GenericEventListSummary
                 key="roomcreationsummary"
+                data-testid="matron-room-creation-summary"
                 events={this.events.map((e) => e.event)}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 summaryMembers={ev.sender ? [ev.sender] : undefined}

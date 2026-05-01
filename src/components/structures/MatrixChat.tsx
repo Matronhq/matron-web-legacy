@@ -15,6 +15,7 @@ import {
     type MatrixClient,
     MatrixEvent,
     MsgType,
+    type Room,
     type RoomType,
     SyncState,
     type SyncStateData,
@@ -133,6 +134,7 @@ import { SessionLockStolenView } from "./auth/SessionLockStolenView";
 import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView";
 import { LoginSplashView } from "./auth/LoginSplashView";
 import { cleanUpDraftsIfRequired } from "../../DraftCleaner";
+import { shouldAutoJoinMatronInvite } from "../../utils/matronAutoJoin";
 import { InitialCryptoSetupStore } from "../../stores/InitialCryptoSetupStore";
 import { setTheme } from "../../theme";
 import { type OpenForwardDialogPayload } from "../../dispatcher/payloads/OpenForwardDialogPayload";
@@ -247,6 +249,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private themeWatcher?: ThemeWatcher;
     private fontWatcher?: FontWatcher;
     private readonly stores: SdkContextClass;
+    private readonly matronAutoJoiningRooms = new Set<string>();
     private loadSessionAbortController = new AbortController();
 
     private sessionLoadStarted = false;
@@ -1581,6 +1584,22 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setPageSubtitle();
     }
 
+    private maybeAutoJoinMatronInvite(cli: MatrixClient, room: Room): void {
+        const ownUserId = cli.getSafeUserId();
+        if (this.matronAutoJoiningRooms.has(room.roomId) || !shouldAutoJoinMatronInvite(room, ownUserId)) {
+            return;
+        }
+
+        this.matronAutoJoiningRooms.add(room.roomId);
+        logger.info(`Auto-joining Matron bot invite for room ${room.roomId}`);
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: room.roomId,
+            auto_join: true,
+            metricsTrigger: "RoomList",
+        });
+    }
+
     /**
      * Called just before the matrix client is started
      * (useful for setting listeners)
@@ -1718,6 +1737,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 );
                 room.setBlacklistUnverifiedDevices(blacklistEnabled);
             }
+
+            this.maybeAutoJoinMatronInvite(cli, room);
         });
         cli.on(CryptoEvent.KeyBackupFailed, async (errcode): Promise<void> => {
             let haveNewVersion: boolean | undefined;
