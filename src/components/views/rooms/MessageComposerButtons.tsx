@@ -7,19 +7,12 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import classNames from "classnames";
-import {
-    type IEventRelation,
-    type Room,
-    type MatrixClient,
-    THREAD_RELATION_TYPE,
-    M_POLL_START,
-} from "matrix-js-sdk/src/matrix";
+import { type IEventRelation, type Room, type MatrixClient } from "matrix-js-sdk/src/matrix";
 import React, { type JSX, createContext, type ReactElement, type ReactNode, useContext, useRef } from "react";
 import {
     AttachmentIcon,
     MicOnIcon,
     OverflowHorizontalIcon,
-    PollsIcon,
     StickerIcon,
     TextFormattingIcon,
 } from "@vector-im/compound-design-tokens/assets/web/icons";
@@ -28,11 +21,7 @@ import { _t } from "../../../languageHandler";
 import { CollapsibleButton } from "./CollapsibleButton";
 import { type MenuProps } from "../../structures/ContextMenu";
 import dis from "../../../dispatcher/dispatcher";
-import ErrorDialog from "../dialogs/ErrorDialog";
 import { LocationButton } from "../location";
-import Modal from "../../../Modal";
-import PollCreateDialog from "../elements/PollCreateDialog";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import ContentMessages from "../../../ContentMessages";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useDispatcher } from "../../../hooks/useDispatcher";
@@ -54,7 +43,6 @@ interface IProps {
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
-    showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
     isRichTextEnabled: boolean;
@@ -91,8 +79,6 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
-            voiceRecordingButton(props, narrow),
-            props.showPollsButton ? pollButton(room, props.relation) : null,
             showLocationButton(props, room, matrixClient),
         ];
     } else {
@@ -107,13 +93,9 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                 emojiButton(props)
             ),
             uploadButton(), // props passed via UploadButtonContext
-        ];
-        moreButtons = [
-            showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton ? pollButton(room, props.relation) : null,
-            showLocationButton(props, room, matrixClient),
         ];
+        moreButtons = [showStickersButton(props), showLocationButton(props, room, matrixClient)];
     }
 
     mainButtons = filterBoolean(mainButtons);
@@ -277,63 +259,6 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement | nu
             <MicOnIcon />
         </CollapsibleButton>
     );
-}
-
-function pollButton(room: Room, relation?: IEventRelation): ReactElement {
-    return <PollButton key="polls" room={room} relation={relation} />;
-}
-
-interface IPollButtonProps {
-    room: Room;
-    relation?: IEventRelation;
-}
-
-class PollButton extends React.PureComponent<IPollButtonProps> {
-    public static contextType = OverflowMenuContext;
-    declare public context: React.ContextType<typeof OverflowMenuContext>;
-
-    private onCreateClick = (): void => {
-        this.context?.(); // close overflow menu
-        const canSend = this.props.room.currentState.maySendEvent(
-            M_POLL_START.name,
-            MatrixClientPeg.safeGet().getSafeUserId(),
-        );
-        if (!canSend) {
-            Modal.createDialog(ErrorDialog, {
-                title: _t("composer|poll_button_no_perms_title"),
-                description: _t("composer|poll_button_no_perms_description"),
-            });
-        } else {
-            const threadId =
-                this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation.event_id : undefined;
-
-            Modal.createDialog(
-                PollCreateDialog,
-                {
-                    room: this.props.room,
-                    threadId,
-                },
-                "mx_CompoundDialog",
-                false, // isPriorityModal
-                true, // isStaticModal
-            );
-        }
-    };
-
-    public render(): React.ReactNode {
-        // do not allow sending polls within threads at this time
-        if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) return null;
-
-        return (
-            <CollapsibleButton
-                className="mx_MessageComposer_button"
-                onClick={this.onCreateClick}
-                title={_t("composer|poll_button")}
-            >
-                <PollsIcon />
-            </CollapsibleButton>
-        );
-    }
 }
 
 function showLocationButton(props: IProps, room: Room, matrixClient: MatrixClient): ReactElement | null {

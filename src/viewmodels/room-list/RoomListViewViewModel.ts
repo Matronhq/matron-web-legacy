@@ -46,6 +46,7 @@ export class RoomListViewViewModel
 {
     // State tracking
     private activeFilter: FilterKey | undefined = undefined;
+    private searchQuery = "";
     private roomsResult: RoomsResult;
     private lastActiveRoomIndex: number | undefined = undefined;
 
@@ -127,8 +128,7 @@ export class RoomListViewViewModel
         this.activeFilter = newFilter;
 
         // Update rooms result with new filter
-        const filterKeys = this.activeFilter !== undefined ? [this.activeFilter] : undefined;
-        this.roomsResult = RoomListStoreV3.instance.getSortedRoomsInActiveSpace(filterKeys);
+        this.roomsResult = this.getFilteredRoomsResult();
 
         // Update roomsMap immediately before clearing VMs
         this.updateRoomsMap(this.roomsResult);
@@ -138,6 +138,38 @@ export class RoomListViewViewModel
 
         this.updateRoomListData();
     };
+
+    public setSearchQuery = (query: string): void => {
+        const normalizedQuery = query.trim().toLowerCase();
+        if (normalizedQuery === this.searchQuery) return;
+
+        this.searchQuery = normalizedQuery;
+        this.roomsResult = this.getFilteredRoomsResult();
+        this.updateRoomsMap(this.roomsResult);
+        this.clearViewModels();
+        this.updateRoomListData(true);
+    };
+
+    private getActiveFilterKeys(): FilterKey[] | undefined {
+        return this.activeFilter !== undefined ? [this.activeFilter] : undefined;
+    }
+
+    private getFilteredRoomsResult(): RoomsResult {
+        const filterKeys = this.getActiveFilterKeys();
+        const roomsResult = RoomListStoreV3.instance.getSortedRoomsInActiveSpace(filterKeys);
+        if (!this.searchQuery) return roomsResult;
+
+        return {
+            ...roomsResult,
+            rooms: roomsResult.rooms.filter((room) => this.matchesSearchQuery(room)),
+        };
+    }
+
+    private matchesSearchQuery(room: Room): boolean {
+        const searchableValues = [room.name, room.roomId, room.getCanonicalAlias() ?? "", ...room.getAltAliases()];
+
+        return searchableValues.some((value) => value.toLowerCase().includes(this.searchQuery));
+    }
 
     /**
      * Rebuild roomsMap when roomsResult changes.
@@ -282,11 +314,10 @@ export class RoomListViewViewModel
      * indirectly through room list updates.
      */
     private onListsUpdate = (): void => {
-        const filterKeys = this.activeFilter !== undefined ? [this.activeFilter] : undefined;
         const oldSpaceId = this.roomsResult.spaceId;
 
         // Refresh room data from store
-        this.roomsResult = RoomListStoreV3.instance.getSortedRoomsInActiveSpace(filterKeys);
+        this.roomsResult = this.getFilteredRoomsResult();
         this.updateRoomsMap(this.roomsResult);
 
         const newSpaceId = this.roomsResult.spaceId;

@@ -16,7 +16,7 @@ import {
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import PosthogTrackers from "../../PosthogTrackers";
 import { Action } from "../../dispatcher/actions";
-import { getMetaSpaceName, type MetaSpace, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import { getMetaSpaceName, MetaSpace, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { type SpaceStoreClass } from "../../stores/spaces/SpaceStore";
 import {
     shouldShowSpaceSettings,
@@ -145,6 +145,10 @@ export class RoomListHeaderViewModel
         }
     };
 
+    public openUserSettings = (): void => {
+        defaultDispatcher.dispatch({ action: Action.ViewUserSettings });
+    };
+
     public openSpaceHome = (): void => {
         if (!this.activeSpace) return;
         defaultDispatcher.dispatch<ViewRoomPayload>({
@@ -239,6 +243,8 @@ function getInitialSnapshot(spaceStore: SpaceStoreClass, matrixClient: MatrixCli
 function getHeaderTitle(spaceStore: SpaceStoreClass): string {
     const activeSpace = spaceStore.activeSpaceRoom;
     const spaceName = activeSpace?.name;
+    if (!spaceName && spaceStore.activeSpace === MetaSpace.Home) return "Chats";
+
     return spaceName ?? getMetaSpaceName(spaceStore.activeSpace as MetaSpace, spaceStore.allRoomsInHome);
 }
 

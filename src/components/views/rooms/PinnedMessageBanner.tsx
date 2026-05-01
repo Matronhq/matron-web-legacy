@@ -6,7 +6,7 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-import React, { type JSX, useContext, useEffect, useId, useRef, useState } from "react";
+import React, { type JSX, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
 import PinIcon from "@vector-im/compound-design-tokens/assets/web/icons/pin-solid";
 import { Button } from "@vector-im/compound-web";
 import { type MatrixEvent, type Room } from "matrix-js-sdk/src/matrix";
@@ -26,6 +26,7 @@ import MessageEvent from "../messages/MessageEvent";
 import PosthogTrackers from "../../../PosthogTrackers.ts";
 import { EventPreview } from "./EventPreview.tsx";
 import { SDKContext } from "../../../contexts/SDKContext.ts";
+import { isSessionSummaryEvent } from "../../../utils/sessionSummary.ts";
 
 /**
  * The props for the {@link PinnedMessageBanner} component.
@@ -46,7 +47,14 @@ interface PinnedMessageBannerProps {
  */
 export function PinnedMessageBanner({ room, permalinkCreator }: PinnedMessageBannerProps): JSX.Element | null {
     const pinnedEventIds = usePinnedEvents(room);
-    const pinnedEvents = useSortedFetchedPinnedEvents(room, pinnedEventIds);
+    const fetchedPinnedEvents = useSortedFetchedPinnedEvents(room, pinnedEventIds);
+    const pinnedEvents = useMemo(
+        () =>
+            fetchedPinnedEvents.filter((event): event is MatrixEvent =>
+                Boolean(event && !isSessionSummaryEvent(event)),
+            ),
+        [fetchedPinnedEvents],
+    );
     const eventCount = pinnedEvents.length;
     const isSinglePinnedEvent = eventCount === 1;
 

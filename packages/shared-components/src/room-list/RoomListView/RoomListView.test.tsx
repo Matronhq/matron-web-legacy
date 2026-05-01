@@ -112,13 +112,10 @@ describe("<RoomListView />", () => {
         expect(container).toMatchSnapshot();
     });
 
-    it("should call onToggleFilter when filter is clicked", async () => {
-        const user = userEvent.setup();
+    it("does not render primary filters", () => {
         renderWithMockContext(<Default />);
 
-        await user.click(screen.getByRole("option", { name: "People" }));
-
-        expect(Default.args.onToggleFilter).toHaveBeenCalled();
+        expect(screen.queryByRole("listbox", { name: "Room list filters" })).toBeNull();
     });
 
     it("should call createRoom when New room button is clicked", async () => {

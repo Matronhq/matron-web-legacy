@@ -97,7 +97,6 @@ interface IState {
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
-    showPollsButton: boolean;
     isWysiwygLabEnabled: boolean;
     isRichTextEnabled: boolean;
     initialComposerContent: string;
@@ -148,7 +147,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
-            showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
             isWysiwygLabEnabled: isWysiwygLabEnabled,
             isRichTextEnabled: isRichTextEnabled,
             initialComposerContent: initialComposerContent,
@@ -242,7 +240,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
         }
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
-        SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
         SettingsStore.monitorSetting("feature_wysiwyg_composer", null);
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -283,13 +280,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
                         if (this.state.showStickersButton !== showStickersButton) {
                             this.setState({ showStickersButton });
-                        }
-                        break;
-                    }
-                    case "MessageComposerInput.showPollsButton": {
-                        const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
-                        if (this.state.showPollsButton !== showPollsButton) {
-                            this.setState({ showPollsButton });
                         }
                         break;
                     }
@@ -698,7 +688,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     showLocationButton={
                                         !window.electron && SettingsStore.getValue(UIFeature.LocationSharing)
                                     }
-                                    showPollsButton={this.state.showPollsButton}
                                     showStickersButton={this.showStickersButton}
                                     isRichTextEnabled={this.state.isRichTextEnabled}
                                     onComposerModeClick={this.onRichTextToggle}

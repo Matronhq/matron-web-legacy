@@ -6,7 +6,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { useState, useCallback } from "react";
-import { Flex } from "@element-hq/web-shared-components";
+import { Flex, RoomListHeaderView, useCreateAutoDisposedViewModel } from "@element-hq/web-shared-components";
 
 import { RoomListSearch } from "./RoomListSearch";
 import { RoomListView } from "./RoomListView";
@@ -15,6 +15,10 @@ import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import { Landmark, LandmarkNavigation } from "../../../../accessibility/LandmarkNavigation";
 import { type IState as IRovingTabIndexState } from "../../../../accessibility/RovingTabIndex";
+import { RoomListHeaderViewModel } from "../../../../viewmodels/room-list/RoomListHeaderViewModel";
+import { RoomListViewViewModel } from "../../../../viewmodels/room-list/RoomListViewViewModel";
+import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
+import SpaceStore from "../../../../stores/spaces/SpaceStore";
 
 type RoomListPanelProps = {
     /**
@@ -54,6 +58,12 @@ export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => 
         [focusedElement],
     );
 
+    const matrixClient = useMatrixClientContext();
+    const headerVm = useCreateAutoDisposedViewModel(
+        () => new RoomListHeaderViewModel({ matrixClient, spaceStore: SpaceStore.instance }),
+    );
+    const roomListVm = useCreateAutoDisposedViewModel(() => new RoomListViewViewModel({ client: matrixClient }));
+
     return (
         <Flex
             as="nav"
@@ -65,8 +75,9 @@ export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => 
             onBlur={onBlur}
             onKeyDown={onKeyDown}
         >
-            <RoomListSearch activeSpace={activeSpace} />
-            <RoomListView />
+            <RoomListHeaderView vm={headerVm} />
+            <RoomListSearch activeSpace={activeSpace} onSearchQueryChange={roomListVm.setSearchQuery} />
+            <RoomListView vm={roomListVm} />
         </Flex>
     );
 };

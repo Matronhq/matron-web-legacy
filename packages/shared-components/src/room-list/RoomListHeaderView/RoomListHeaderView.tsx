@@ -8,11 +8,12 @@
 import React, { type JSX } from "react";
 import { IconButton, H1 } from "@vector-im/compound-web";
 import ComposeIcon from "@vector-im/compound-design-tokens/assets/web/icons/compose";
+import SettingsIcon from "@vector-im/compound-design-tokens/assets/web/icons/settings";
 
 import { type ViewModel, useViewModel } from "../../viewmodel";
 import { Flex } from "../../utils/Flex";
 import { useI18n } from "../../utils/i18nContext";
-import { ComposeMenuView, OptionMenuView, SpaceMenuView } from "./menu";
+import { ComposeMenuView, SpaceMenuView } from "./menu";
 import styles from "./RoomListHeaderView.module.css";
 
 /**
@@ -74,6 +75,10 @@ export interface RoomListHeaderViewActions {
      * Create a video room
      */
     createVideoRoom: () => void;
+    /**
+     * Open the user settings
+     */
+    openUserSettings: () => void;
     /**
      * Open the active space home
      */
@@ -141,8 +146,14 @@ export function RoomListHeaderView({ vm }: Readonly<RoomListHeaderViewProps>): J
                     {displaySpaceMenu && <SpaceMenuView vm={vm} />}
                 </Flex>
                 <Flex align="center" gap="var(--cpd-space-2x)">
-                    <OptionMenuView vm={vm} />
-
+                    <IconButton
+                        size="28px"
+                        style={{ padding: "4px" }}
+                        onClick={vm.openUserSettings}
+                        tooltip={_t("common|settings")}
+                    >
+                        <SettingsIcon color="var(--cpd-color-icon-secondary)" aria-hidden />
+                    </IconButton>
                     {/* If we don't display the compose menu, it means that the user can only send DM */}
                     {displayComposeMenu ? (
                         <ComposeMenuView vm={vm} />

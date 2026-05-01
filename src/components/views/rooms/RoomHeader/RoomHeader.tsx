@@ -26,24 +26,20 @@ import { HistoryIcon, UserProfileSolidIcon } from "@vector-im/compound-design-to
 import { useRoomName } from "../../../../hooks/useRoomName.ts";
 import { RightPanelPhases } from "../../../../stores/right-panel/RightPanelStorePhases.ts";
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext.tsx";
-import { useRoomMemberCount, useRoomMembers } from "../../../../hooks/useRoomMembers.ts";
 import { _t } from "../../../../languageHandler.tsx";
 import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/useRoomCall.tsx";
 import { useGlobalNotificationState } from "../../../../hooks/useGlobalNotificationState.ts";
 import { useFeatureEnabled } from "../../../../hooks/useSettings.ts";
 import { useEncryptionStatus } from "../../../../hooks/useEncryptionStatus.ts";
 import { E2EStatus } from "../../../../utils/ShieldUtils.ts";
-import FacePile from "../../elements/FacePile.tsx";
 import { useRoomState } from "../../../../hooks/useRoomState.ts";
 import RoomAvatar from "../../avatars/RoomAvatar.tsx";
-import { formatCount } from "../../../../utils/FormattingUtils.ts";
 import RightPanelStore from "../../../../stores/right-panel/RightPanelStore.ts";
 import { VideoRoomChatButton } from "./VideoRoomChatButton.tsx";
 import { RoomKnocksBar } from "../RoomKnocksBar.tsx";
 import { isVideoRoom as calcIsVideoRoom } from "../../../../utils/video-rooms.ts";
 import { notificationLevelToIndicator } from "../../../../utils/notifications.ts";
 import { CallGuestLinkButton } from "./CallGuestLinkButton.tsx";
-import { type ButtonEvent } from "../../elements/AccessibleButton.tsx";
 import WithPresenceIndicator, { useDmMember } from "../../avatars/WithPresenceIndicator.tsx";
 import { type IOOBData } from "../../../../stores/ThreepidInviteStore.ts";
 import { MainSplitContentType } from "../../../structures/RoomView.tsx";
@@ -54,6 +50,10 @@ import { ToggleableIcon } from "./toggle/ToggleableIcon.tsx";
 import { CurrentRightPanelPhaseContextProvider } from "../../../../contexts/CurrentRightPanelPhaseContext.tsx";
 import { LocalRoom } from "../../../../models/LocalRoom.ts";
 import { useIsEncrypted } from "../../../../hooks/useIsEncrypted.ts";
+import { usePinnedEvents, useSortedFetchedPinnedEvents } from "../../../../hooks/usePinnedEvents.ts";
+import { isSessionSummaryEvent } from "../../../../utils/sessionSummary.ts";
+import Modal from "../../../../Modal.tsx";
+import { SessionSummaryDialog } from "../../dialogs/SessionSummaryDialog.tsx";
 
 function RoomHeaderButtons({
     room,
@@ -62,9 +62,6 @@ function RoomHeaderButtons({
     room: Room;
     additionalButtons?: ViewRoomOpts["buttons"];
 }): JSX.Element {
-    const members = useRoomMembers(room, 2500);
-    const memberCount = useRoomMemberCount(room, { throttleWait: 2500, includeInvited: true });
-
     const {
         voiceCallDisabledReason,
         voiceCallClick,
@@ -79,9 +76,6 @@ function RoomHeaderButtons({
         showVideoCallButton,
     } = useRoomCall(room);
     const globalNotificationState = useGlobalNotificationState();
-
-    const dmMember = useDmMember(room);
-    const isDirectMessage = !!dmMember;
 
     const notificationsEnabled = useFeatureEnabled("feature_notifications");
 
@@ -350,27 +344,26 @@ function RoomHeaderButtons({
                     <ToggleableIcon Icon={RoomInfoIcon} phase={RightPanelPhases.RoomSummary} />
                 </IconButton>
             </Tooltip>
-
-            {!isDirectMessage && (
-                <Text as="div" size="sm" weight="medium">
-                    <FacePile
-                        className="mx_RoomHeader_members"
-                        members={members.slice(0, 3)}
-                        size="20px"
-                        overflow={false}
-                        viewUserOnClick={false}
-                        tooltipLabel={_t("room|header_face_pile_tooltip")}
-                        onClick={(e: ButtonEvent) => {
-                            RightPanelStore.instance.showOrHidePhase(RightPanelPhases.MemberList);
-                            e.stopPropagation();
-                        }}
-                        aria-label={_t("common|n_members", { count: memberCount })}
-                    >
-                        {formatCount(memberCount)}
-                    </FacePile>
-                </Text>
-            )}
         </>
+    );
+}
+
+function SessionSummaryButton({ room }: { room: Room }): JSX.Element | null {
+    const pinnedEventIds = usePinnedEvents(room);
+    const pinnedEvents = useSortedFetchedPinnedEvents(room, pinnedEventIds);
+    const summaryEvent = pinnedEvents.find(isSessionSummaryEvent);
+
+    if (!summaryEvent) return null;
+
+    return (
+        <Button
+            className="mx_RoomHeader_viewSummaryButton"
+            kind="secondary"
+            size="sm"
+            onClick={() => Modal.createDialog(SessionSummaryDialog, { mxEvent: summaryEvent })}
+        >
+            View summary
+        </Button>
     );
 }
 
@@ -512,6 +505,7 @@ export default function RoomHeader({
                         </Box>
                     </button>
                     {/* If the room is local-only then we don't want to show any additional buttons, as it won't work */}
+                    {room instanceof LocalRoom === false && <SessionSummaryButton room={room} />}
                     {room instanceof LocalRoom === false && (
                         <RoomHeaderButtons room={room} additionalButtons={additionalButtons} />
                     )}
