@@ -1,6 +1,6 @@
 // packages/matron-live-output/src/LiveOutputTile.tsx
 import React, { useEffect, useState } from "react";
-import type { MatrixEvent } from "matrix-js-sdk";
+import type { MatrixEvent } from "@element-hq/element-web-module-api";
 import "./LiveOutputTile.css";
 
 interface LiveOutputContent {
@@ -15,7 +15,11 @@ interface Props {
 }
 
 export function LiveOutputTile({ mxEvent }: Props): React.JSX.Element {
-    const content = mxEvent.getContent()["com.matron.live_output"] as LiveOutputContent | undefined;
+    // The module-api MatrixEvent exposes `content` as a plain Record (already
+    // decrypted by the host) — no `getContent()` method. See
+    // node_modules/@element-hq/element-web-module-api/lib/element-web-module-api-alpha.d.ts
+    // (interface MatrixEvent).
+    const content = mxEvent.content["com.matron.live_output"] as LiveOutputContent | undefined;
     const [expanded, setExpanded] = useState(false);
     const [expired, setExpired] = useState(false);
 
