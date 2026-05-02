@@ -22,8 +22,22 @@ import React from "react";
 import type { Api, Module } from "@element-hq/element-web-module-api";
 
 import { LiveOutputTile } from "./LiveOutputTile";
+// Inline the CSS as a string at build time and inject it as a <style> tag when
+// the plugin loads. Vite's lib mode would otherwise emit the CSS as a separate
+// file (`dist/live-output.css`) which the host has no way to load — the plugin
+// is dynamic-imported as a single ESM URL, so the bundle must be self-contained.
+import liveOutputCss from "./LiveOutputTile.css?inline";
 
 const LIVE_OUTPUT_EVENT_TYPE = "com.matron.live_output.v1";
+
+function injectStyles(css: string, id: string): void {
+    if (typeof document === "undefined") return;
+    if (document.getElementById(id)) return;
+    const style = document.createElement("style");
+    style.id = id;
+    style.textContent = css;
+    document.head.appendChild(style);
+}
 
 class LiveOutputModule implements Module {
     public static readonly moduleApiVersion = "^1.9.0";
@@ -31,6 +45,7 @@ class LiveOutputModule implements Module {
     public constructor(private readonly api: Api) {}
 
     public async load(): Promise<void> {
+        injectStyles(liveOutputCss, "matron-live-output-styles");
         this.api.customComponents.registerMessageRenderer(LIVE_OUTPUT_EVENT_TYPE, (props) => {
             return <LiveOutputTile mxEvent={props.mxEvent} />;
         });

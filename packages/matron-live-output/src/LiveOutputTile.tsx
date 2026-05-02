@@ -1,7 +1,8 @@
 // packages/matron-live-output/src/LiveOutputTile.tsx
 import React, { useEffect, useState } from "react";
 import type { MatrixEvent } from "@element-hq/element-web-module-api";
-import "./LiveOutputTile.css";
+// CSS is imported and injected in `index.tsx` (via `?inline`) so the plugin
+// bundle stays self-contained when loaded via dynamic `import()`.
 
 interface LiveOutputContent {
     tool_use_id: string;

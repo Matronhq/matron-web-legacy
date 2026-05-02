@@ -40,6 +40,9 @@ storybook-static
 /packages/shared-components/dist
 /packages/shared-components/src/i18nKeys.d.ts
 
+/packages/matron-live-output/node_modules
+/packages/matron-live-output/dist
+
 # TSC incremental compilation information
 *.tsbuildinfo
 
