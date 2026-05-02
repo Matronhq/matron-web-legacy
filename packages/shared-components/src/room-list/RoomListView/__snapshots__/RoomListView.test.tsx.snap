@@ -24,7 +24,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="0"
             data-item-index="0"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -173,7 +173,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="1"
             data-item-index="1"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -295,7 +295,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="2"
             data-item-index="2"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -423,7 +423,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="3"
             data-item-index="3"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -545,7 +545,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="4"
             data-item-index="4"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -673,7 +673,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="5"
             data-item-index="5"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -818,7 +818,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="6"
             data-item-index="6"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -946,7 +946,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="7"
             data-item-index="7"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1068,7 +1068,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="8"
             data-item-index="8"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1196,7 +1196,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="9"
             data-item-index="9"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1318,7 +1318,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="10"
             data-item-index="10"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1469,7 +1469,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="11"
             data-item-index="11"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1591,7 +1591,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="12"
             data-item-index="12"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1719,7 +1719,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="13"
             data-item-index="13"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1841,7 +1841,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="14"
             data-item-index="14"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -1969,7 +1969,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="15"
             data-item-index="15"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -2114,7 +2114,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="16"
             data-item-index="16"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -2242,7 +2242,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="17"
             data-item-index="17"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -2364,7 +2364,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="18"
             data-item-index="18"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -2492,7 +2492,7 @@ exports[`<RoomListView /> > renders Default story 1`] = `
           <div
             data-index="19"
             data-item-index="19"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -2951,12 +2951,12 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
       >
         <div
           data-testid="virtuoso-item-list"
-          style="box-sizing: border-box; margin-top: 0px; padding-bottom: 3276px; padding-top: 0px;"
+          style="box-sizing: border-box; margin-top: 0px; padding-bottom: 3900px; padding-top: 0px;"
         >
           <div
             data-index="0"
             data-item-index="0"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3105,7 +3105,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="1"
             data-item-index="1"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3227,7 +3227,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="2"
             data-item-index="2"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3355,7 +3355,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="3"
             data-item-index="3"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3477,7 +3477,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="4"
             data-item-index="4"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3605,7 +3605,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="5"
             data-item-index="5"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3750,7 +3750,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="6"
             data-item-index="6"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -3878,7 +3878,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="7"
             data-item-index="7"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4000,7 +4000,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="8"
             data-item-index="8"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4128,7 +4128,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="9"
             data-item-index="9"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4250,7 +4250,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="10"
             data-item-index="10"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4401,7 +4401,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="11"
             data-item-index="11"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4523,7 +4523,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="12"
             data-item-index="12"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4651,7 +4651,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="13"
             data-item-index="13"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4773,7 +4773,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="14"
             data-item-index="14"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -4901,7 +4901,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="15"
             data-item-index="15"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5046,7 +5046,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="16"
             data-item-index="16"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5174,7 +5174,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="17"
             data-item-index="17"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5296,7 +5296,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="18"
             data-item-index="18"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5424,7 +5424,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="19"
             data-item-index="19"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5546,7 +5546,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="20"
             data-item-index="20"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5697,7 +5697,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="21"
             data-item-index="21"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5819,7 +5819,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="22"
             data-item-index="22"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -5947,7 +5947,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="23"
             data-item-index="23"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6069,7 +6069,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="24"
             data-item-index="24"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6197,7 +6197,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="25"
             data-item-index="25"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6342,7 +6342,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="26"
             data-item-index="26"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6470,7 +6470,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="27"
             data-item-index="27"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6592,7 +6592,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="28"
             data-item-index="28"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6720,7 +6720,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="29"
             data-item-index="29"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6842,7 +6842,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="30"
             data-item-index="30"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -6993,7 +6993,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="31"
             data-item-index="31"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -7115,7 +7115,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="32"
             data-item-index="32"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -7243,7 +7243,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="33"
             data-item-index="33"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -7365,7 +7365,7 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
           <div
             data-index="34"
             data-item-index="34"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -7490,279 +7490,6 @@ exports[`<RoomListView /> > renders LargeList story 1`] = `
               </div>
             </button>
           </div>
-          <div
-            data-index="35"
-            data-item-index="35"
-            data-known-size="52"
-            style="overflow-anchor: none;"
-          >
-            <button
-              aria-haspopup="menu"
-              aria-label="Open room Feedback with 35 unread mentions."
-              aria-posinset="36"
-              aria-selected="false"
-              aria-setsize="100"
-              class="flex roomListItem mx_RoomListItemView"
-              data-state="closed"
-              role="option"
-              style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: stretch; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
-              tabindex="-1"
-              type="button"
-            >
-              <div
-                class="flex container"
-                style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
-              >
-                <div
-                  aria-label="Feedback avatar"
-                  role="img"
-                  style="width: 32px; height: 32px; border-radius: 50%; background-color: rgb(11, 127, 103); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;"
-                >
-                  FE
-                </div>
-                <div
-                  class="flex content"
-                  style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
-                >
-                  <div
-                    class="ellipsis"
-                  >
-                    <div
-                      class="roomName"
-                      data-testid="room-name"
-                      title="Feedback"
-                    >
-                      Feedback
-                    </div>
-                  </div>
-                  <div
-                    class="flex hoverMenu"
-                    style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-1x); --mx-flex-wrap: nowrap;"
-                  >
-                    <button
-                      aria-disabled="false"
-                      aria-expanded="false"
-                      aria-haspopup="menu"
-                      aria-label="More Options"
-                      aria-labelledby="_r_15s_"
-                      class="_icon-button_1215g_8"
-                      data-kind="primary"
-                      data-state="closed"
-                      id="radix-_r_15q_"
-                      role="button"
-                      style="--cpd-icon-button-size: 24px; padding: 2px;"
-                      tabindex="0"
-                      type="button"
-                    >
-                      <div
-                        class="_indicator-icon_147l5_17"
-                        style="--cpd-icon-button-size: 100%;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                    <button
-                      aria-disabled="false"
-                      aria-expanded="false"
-                      aria-haspopup="menu"
-                      aria-label="Notification options"
-                      aria-labelledby="_r_163_"
-                      class="_icon-button_1215g_8"
-                      data-kind="primary"
-                      data-state="closed"
-                      id="radix-_r_161_"
-                      role="button"
-                      style="--cpd-icon-button-size: 24px; padding: 2px;"
-                      tabindex="0"
-                      type="button"
-                    >
-                      <div
-                        class="_indicator-icon_147l5_17"
-                        style="--cpd-icon-button-size: 100%;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M20.293 17.293c.63.63.184 1.707-.707 1.707H4.414c-.89 0-1.337-1.077-.707-1.707L5 16v-6s0-7 7-7 7 7 7 7v6zM12 22a2 2 0 0 1-2-2h4a2 2 0 0 1-2 2"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    class="notificationDecoration"
-                  >
-                    <div
-                      class="flex"
-                      data-testid="notification-decoration"
-                      style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: center; --mx-flex-gap: var(--cpd-space-1x); --mx-flex-wrap: nowrap;"
-                    >
-                      <svg
-                        fill="var(--cpd-color-icon-accent-primary)"
-                        height="20px"
-                        viewBox="0 0 24 24"
-                        width="20px"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 4a8 8 0 1 0 0 16 1 1 0 1 1 0 2C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10v1.5a3.5 3.5 0 0 1-6.396 1.966A5 5 0 1 1 17 12v1.5a1.5 1.5 0 0 0 3 0V12a8 8 0 0 0-8-8m3 8a3 3 0 1 0-6 0 3 3 0 0 0 6 0"
-                        />
-                      </svg>
-                      <span
-                        class="_unread-counter_1147r_8"
-                      >
-                        35
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </button>
-          </div>
-          <div
-            data-index="36"
-            data-item-index="36"
-            data-known-size="52"
-            style="overflow-anchor: none;"
-          >
-            <button
-              aria-haspopup="menu"
-              aria-label="Open room Ideas"
-              aria-posinset="37"
-              aria-selected="false"
-              aria-setsize="100"
-              class="flex roomListItem mx_RoomListItemView bold"
-              data-state="closed"
-              role="option"
-              style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: stretch; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
-              tabindex="-1"
-              type="button"
-            >
-              <div
-                class="flex container"
-                style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-3x); --mx-flex-wrap: nowrap;"
-              >
-                <div
-                  aria-label="Ideas avatar"
-                  role="img"
-                  style="width: 32px; height: 32px; border-radius: 50%; background-color: rgb(11, 127, 103); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;"
-                >
-                  ID
-                </div>
-                <div
-                  class="flex content"
-                  style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: space-between; --mx-flex-gap: var(--cpd-space-2x); --mx-flex-wrap: nowrap;"
-                >
-                  <div
-                    class="ellipsis"
-                  >
-                    <div
-                      class="roomName"
-                      data-testid="room-name"
-                      title="Ideas"
-                    >
-                      Ideas
-                    </div>
-                    <div
-                      class="_typography_6v6n8_153 _font-body-sm-regular_6v6n8_31 ellipsis"
-                      title="Last message in Ideas"
-                    >
-                      Last message in Ideas
-                    </div>
-                  </div>
-                  <div
-                    class="flex hoverMenu"
-                    style="--mx-flex-display: flex; --mx-flex-direction: row; --mx-flex-align: center; --mx-flex-justify: start; --mx-flex-gap: var(--cpd-space-1x); --mx-flex-wrap: nowrap;"
-                  >
-                    <button
-                      aria-disabled="false"
-                      aria-expanded="false"
-                      aria-haspopup="menu"
-                      aria-label="More Options"
-                      aria-labelledby="_r_16a_"
-                      class="_icon-button_1215g_8"
-                      data-kind="primary"
-                      data-state="closed"
-                      id="radix-_r_168_"
-                      role="button"
-                      style="--cpd-icon-button-size: 24px; padding: 2px;"
-                      tabindex="0"
-                      type="button"
-                    >
-                      <div
-                        class="_indicator-icon_147l5_17"
-                        style="--cpd-icon-button-size: 100%;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M6 14q-.824 0-1.412-.588A1.93 1.93 0 0 1 4 12q0-.825.588-1.412A1.93 1.93 0 0 1 6 10q.824 0 1.412.588Q8 11.175 8 12t-.588 1.412A1.93 1.93 0 0 1 6 14m6 0q-.825 0-1.412-.588A1.93 1.93 0 0 1 10 12q0-.825.588-1.412A1.93 1.93 0 0 1 12 10q.825 0 1.412.588Q14 11.175 14 12t-.588 1.412A1.93 1.93 0 0 1 12 14m6 0q-.824 0-1.413-.588A1.93 1.93 0 0 1 16 12q0-.825.587-1.412A1.93 1.93 0 0 1 18 10q.824 0 1.413.588Q20 11.175 20 12t-.587 1.412A1.93 1.93 0 0 1 18 14"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                    <button
-                      aria-disabled="false"
-                      aria-expanded="false"
-                      aria-haspopup="menu"
-                      aria-label="Notification options"
-                      aria-labelledby="_r_16h_"
-                      class="_icon-button_1215g_8"
-                      data-kind="primary"
-                      data-state="closed"
-                      id="radix-_r_16f_"
-                      role="button"
-                      style="--cpd-icon-button-size: 24px; padding: 2px;"
-                      tabindex="0"
-                      type="button"
-                    >
-                      <div
-                        class="_indicator-icon_147l5_17"
-                        style="--cpd-icon-button-size: 100%;"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="1em"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M20.293 17.293c.63.63.184 1.707-.707 1.707H4.414c-.89 0-1.337-1.077-.707-1.707L5 16v-6s0-7 7-7 7 7 7 7v6zM12 22a2 2 0 0 1-2-2h4a2 2 0 0 1-2 2"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
-                  <div
-                    aria-hidden="true"
-                    class="notificationDecoration"
-                  />
-                </div>
-              </div>
-            </button>
-          </div>
         </div>
       </div>
     </div>
@@ -7806,7 +7533,7 @@ exports[`<RoomListView /> > renders SmallList story 1`] = `
           <div
             data-index="0"
             data-item-index="0"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -7955,7 +7682,7 @@ exports[`<RoomListView /> > renders SmallList story 1`] = `
           <div
             data-index="1"
             data-item-index="1"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8077,7 +7804,7 @@ exports[`<RoomListView /> > renders SmallList story 1`] = `
           <div
             data-index="2"
             data-item-index="2"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8205,7 +7932,7 @@ exports[`<RoomListView /> > renders SmallList story 1`] = `
           <div
             data-index="3"
             data-item-index="3"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8327,7 +8054,7 @@ exports[`<RoomListView /> > renders SmallList story 1`] = `
           <div
             data-index="4"
             data-item-index="4"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8483,7 +8210,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="0"
             data-item-index="0"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8632,7 +8359,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="1"
             data-item-index="1"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8754,7 +8481,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="2"
             data-item-index="2"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -8882,7 +8609,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="3"
             data-item-index="3"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9004,7 +8731,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="4"
             data-item-index="4"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9132,7 +8859,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="5"
             data-item-index="5"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9277,7 +9004,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="6"
             data-item-index="6"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9405,7 +9132,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="7"
             data-item-index="7"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9527,7 +9254,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="8"
             data-item-index="8"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9655,7 +9382,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="9"
             data-item-index="9"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9777,7 +9504,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="10"
             data-item-index="10"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -9928,7 +9655,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="11"
             data-item-index="11"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10050,7 +9777,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="12"
             data-item-index="12"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10178,7 +9905,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="13"
             data-item-index="13"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10300,7 +10027,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="14"
             data-item-index="14"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10428,7 +10155,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="15"
             data-item-index="15"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10573,7 +10300,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="16"
             data-item-index="16"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10701,7 +10428,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="17"
             data-item-index="17"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10823,7 +10550,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="18"
             data-item-index="18"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button
@@ -10951,7 +10678,7 @@ exports[`<RoomListView /> > renders WithActiveFilter story 1`] = `
           <div
             data-index="19"
             data-item-index="19"
-            data-known-size="52"
+            data-known-size="60"
             style="overflow-anchor: none;"
           >
             <button

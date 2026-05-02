@@ -17,6 +17,10 @@ Please see LICENSE files in the repository root for full details.
     backdrop-filter: blur(6px);
 }
 
+.mx_ResizeHandle.mx_ResizeHandle--horizontal {
+    margin: 0 -6px 0 -5px;
+}
+
 .mx_AuthPage_modal {
     overflow: hidden;
     border-radius: 10px;
@@ -275,7 +279,11 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_RoomListItemView {
-    margin-bottom: 2px;
+    margin-bottom: var(--cpd-space-1x);
+}
+
+[data-testid="room-list"] [data-testid="virtuoso-item-list"] {
+    padding-top: 8px !important;
 }
 
 .mx_RoomListItemView > div {
@@ -292,8 +300,8 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_RoomView_body[data-layout="bubble"] {
-    --matron-room-timeline-background: #f3eee8;
-    --matron-room-timeline-background-bottom: #e8dfd4;
+    --matron-room-timeline-background: #f2f0ea;
+    --matron-room-timeline-background-bottom: #e8e5dc;
     background:
         linear-gradient(
             180deg,
@@ -390,11 +398,11 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_EventTile[data-layout="bubble"][data-self="true"] {
-    --backgroundColor: #e4f8ea;
+    --backgroundColor: #d5f6df;
 }
 
 .mx_EventTile[data-layout="bubble"][data-self="true"] .mx_MediaBody {
-    background: #e4f8ea;
+    background: #d5f6df;
 }
 
 .mx_EventTile.mx_EventTile_info[data-layout="bubble"],
@@ -416,6 +424,10 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_EventTile[data-layout="bubble"] .mx_EventTile_avatar {
     display: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_WhoIsTypingTile_avatars {
+    flex-basis: 40px;
 }
 
 .mx_EventTile[data-layout="bubble"]:hover::before,

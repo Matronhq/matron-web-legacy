@@ -53,8 +53,8 @@ export interface VirtualizedRoomListViewProps {
     onKeyDown?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
-/** Height of a single room list item in pixels (44px item + 8px margin bottom) */
-const ROOM_LIST_ITEM_HEIGHT = 52;
+/** Height of a single room list item in pixels (56px item + 4px margin bottom) */
+const ROOM_LIST_ITEM_HEIGHT = 60;
 
 /**
  * Type for context used in ListView

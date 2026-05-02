@@ -15,10 +15,10 @@
     /* Needed to position the selected marker */
     position: relative;
     cursor: pointer;
-    min-height: 44px;
+    min-height: 56px;
     width: 100%;
     /* Gap between items, accounted for in ROOM_LIST_ITEM_HEIGHT */
-    margin-bottom: var(--cpd-space-2x);
+    margin-bottom: var(--cpd-space-1x);
 
     font: var(--cpd-font-body-md-regular);
     letter-spacing: var(--cpd-font-letter-spacing-body-md);
@@ -93,9 +93,9 @@
     .container::before {
         content: "";
         position: absolute;
-        /* Marker height is 34px, room list item height is 44px. So position is at 5px and top and bottom */
-        top: 5px;
-        bottom: 5px;
+        /* Marker height is 34px, room list item height is 56px. So position is at 11px and top and bottom */
+        top: 11px;
+        bottom: 11px;
         left: 0;
         width: 4px;
         background-color: var(--cpd-color-bg-accent-rest);
