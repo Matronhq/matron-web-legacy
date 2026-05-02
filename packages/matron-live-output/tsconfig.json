@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "allowImportingTsExtensions": true,
+        "experimentalDecorators": false,
+        "emitDecoratorMetadata": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "useDefineForClassFields": true,
+        "module": "es2022",
+        "moduleResolution": "bundler",
+        "target": "es2022",
+        "noUnusedLocals": true,
+        "sourceMap": false,
+        "declaration": true,
+        "jsx": "react",
+        "lib": ["es2022", "es2024.promise", "dom", "dom.iterable"],
+        "types": [],
+        "strict": true,
+        "noEmit": true
+    },
+    "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+}

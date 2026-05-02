@@ -1,0 +1,6 @@
+{
+    "name": "@matron/live-output",
+    "version": "0.1.0",
+    "main": "src/index.tsx",
+    "private": true
+}
