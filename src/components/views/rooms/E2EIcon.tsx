@@ -65,13 +65,19 @@ const E2EIcon: React.FC<Props> = ({ isUser, status, className, size, onClick, hi
     let content: JSX.Element;
     if (onClick) {
         content = (
-            <AccessibleButton onClick={onClick} className={classes} style={style} data-testid="e2e-icon">
+            <AccessibleButton
+                onClick={onClick}
+                className={classes}
+                style={style}
+                data-testid="e2e-icon"
+                aria-label={label || undefined}
+            >
                 {icon}
             </AccessibleButton>
         );
     } else {
         content = (
-            <div className={classes} style={style} data-testid="e2e-icon">
+            <div className={classes} style={style} data-testid="e2e-icon" aria-label={label || undefined}>
                 {icon}
             </div>
         );

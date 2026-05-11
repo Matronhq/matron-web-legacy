@@ -63,6 +63,7 @@ export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => 
         () => new RoomListHeaderViewModel({ matrixClient, spaceStore: SpaceStore.instance }),
     );
     const roomListVm = useCreateAutoDisposedViewModel(() => new RoomListViewViewModel({ client: matrixClient }));
+    const isDesktop = Boolean(window.electron);
 
     return (
         <Flex
@@ -75,8 +76,17 @@ export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => 
             onBlur={onBlur}
             onKeyDown={onKeyDown}
         >
-            <RoomListHeaderView vm={headerVm} />
-            <RoomListSearch activeSpace={activeSpace} onSearchQueryChange={roomListVm.setSearchQuery} />
+            {isDesktop ? (
+                <>
+                    <RoomListHeaderView vm={headerVm} />
+                    <RoomListSearch activeSpace={activeSpace} onSearchQueryChange={roomListVm.setSearchQuery} />
+                </>
+            ) : (
+                <Flex className="mx_RoomListPanel_webControls" align="center" gap="var(--cpd-space-2x)">
+                    <RoomListSearch activeSpace={activeSpace} onSearchQueryChange={roomListVm.setSearchQuery} />
+                    <RoomListHeaderView vm={headerVm} hideTitle />
+                </Flex>
+            )}
             <RoomListView vm={roomListVm} />
         </Flex>
     );

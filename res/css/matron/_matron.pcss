@@ -220,6 +220,10 @@ Please see LICENSE files in the repository root for full details.
     font: var(--cpd-font-body-sm-medium);
 }
 
+.mx_RoomHeader_e2eIcon {
+    margin: 0;
+}
+
 .mx_RoomListPanel [data-testid="room-list-header"] {
     height: 46px;
     min-height: 46px;
@@ -228,6 +232,39 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_RoomListPanel [data-testid="room-list-header"] > div {
     padding-bottom: var(--cpd-space-1x);
+}
+
+.mx_RoomListPanel_webControls {
+    align-self: stretch;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 56px;
+    border-bottom: var(--cpd-border-width-1) solid var(--cpd-color-bg-subtle-primary);
+    padding: 0 var(--cpd-space-3x);
+}
+
+.mx_RoomListPanel_webControls .mx_RoomListSearch {
+    flex: 1;
+    min-width: 0;
+    min-height: auto;
+    border-bottom: 0 !important;
+    padding: 0;
+}
+
+.mx_RoomListPanel_webControls [data-testid="room-list-header"] {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: auto;
+    padding: 0;
+}
+
+.mx_RoomListPanel_webControls [data-testid="room-list-header"] > div {
+    flex: 0 0 auto;
+    padding-bottom: 0;
+}
+
+.mx_RoomListPanel_webControls [data-testid="room-list-header"] h1 {
+    display: none;
 }
 
 .mx_RoomListSearch {
@@ -300,6 +337,7 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_RoomView_body[data-layout="bubble"] {
+    --RoomView_MessageList-padding: 6px;
     --matron-room-timeline-background: #f2f0ea;
     --matron-room-timeline-background-bottom: #e8e5dc;
     background:
@@ -336,6 +374,7 @@ Please see LICENSE files in the repository root for full details.
 .mx_RoomView_body[data-layout="bubble"] .mx_MessageComposer_wrapper {
     border-top-color: var(--cpd-color-gray-200);
     background-color: var(--matron-room-timeline-background);
+    padding-left: 16px;
 }
 
 .mx_RoomView_body[data-layout="bubble"] .mx_MessageComposer {
@@ -398,11 +437,11 @@ Please see LICENSE files in the repository root for full details.
 }
 
 .mx_EventTile[data-layout="bubble"][data-self="true"] {
-    --backgroundColor: #d5f6df;
+    --backgroundColor: #c4f5fb;
 }
 
 .mx_EventTile[data-layout="bubble"][data-self="true"] .mx_MediaBody {
-    background: #d5f6df;
+    background: #c4f5fb;
 }
 
 .mx_EventTile.mx_EventTile_info[data-layout="bubble"],
@@ -418,6 +457,7 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_EventTile[data-layout="bubble"],
 .mx_GenericEventListSummary[data-layout="bubble"] {
+    --cornerRadius: 6px;
     --EventTile_bubble-margin-inline-start: var(--cpd-space-5x);
     --EventTile_bubble-margin-inline-end: var(--cpd-space-5x);
 }
@@ -428,6 +468,34 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_RoomView_body[data-layout="bubble"] .mx_WhoIsTypingTile_avatars {
     flex-basis: 40px;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_WhoIsTypingTile {
+    margin-left: 6px;
+    margin-bottom: var(--cpd-space-2x);
+    padding-top: var(--cpd-space-2x);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_line,
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info)
+    .mx_MImageBody
+    .mx_MImageBody_thumbnail_container,
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info)
+    .mx_MVideoBody
+    .mx_MVideoBody_container,
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info)
+    .mx_MImageBody::before,
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_MediaBody,
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_MLocationBody_map,
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_MBeaconBody {
+    border-radius: var(--cornerRadius) !important;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_line {
+    box-shadow: 0 1px 2px rgb(18, 16, 14, 0.08);
 }
 
 .mx_EventTile[data-layout="bubble"]:hover::before,
