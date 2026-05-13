@@ -50,6 +50,18 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("running…")).toBeInTheDocument();
     });
 
+    it("appends streamed data chunks into the pre", () => {
+        const { getByText, container } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "data", chunk: "hello\n" }));
+        act(() => ws._message({ type: "data", chunk: "world\n" }));
+        const pre = container.querySelector(".mx_MLiveOutputBody_output");
+        expect(pre?.textContent).toContain("hello");
+        expect(pre?.textContent).toContain("world");
+        expect(getByText("running…")).toBeInTheDocument();
+    });
+
     it("renders the command in the header", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         expect(getByText("$ ls -la")).toBeInTheDocument();
