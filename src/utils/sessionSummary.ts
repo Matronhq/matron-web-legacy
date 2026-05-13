@@ -7,7 +7,7 @@ Please see LICENSE files in the repository root for full details.
 
 import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
 
-export const SESSION_SUMMARY_CONTENT_KEY = "com.matron.session_summary";
+export const SESSION_SUMMARY_CONTENT_KEY = "chat.matron.session_summary";
 
 export function isSessionSummaryEvent(event: MatrixEvent | null | undefined): event is MatrixEvent {
     if (!event) return false;
