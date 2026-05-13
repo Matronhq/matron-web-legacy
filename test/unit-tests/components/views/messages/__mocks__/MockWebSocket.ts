@@ -6,6 +6,11 @@ Please see LICENSE files in the repository root for full details.
 */
 
 export class MockWebSocket {
+    public static readonly CONNECTING = 0;
+    public static readonly OPEN = 1;
+    public static readonly CLOSING = 2;
+    public static readonly CLOSED = 3;
+
     public static instances: MockWebSocket[] = [];
     public static last(): MockWebSocket {
         return MockWebSocket.instances[MockWebSocket.instances.length - 1];
@@ -14,7 +19,7 @@ export class MockWebSocket {
         MockWebSocket.instances = [];
     }
 
-    public readyState: number = WebSocket.CONNECTING;
+    public readyState: number = MockWebSocket.CONNECTING;
     public url: string;
     public onopen: ((ev: Event) => void) | null = null;
     public onmessage: ((ev: MessageEvent) => void) | null = null;
@@ -27,8 +32,9 @@ export class MockWebSocket {
     }
 
     public close(code?: number, reason?: string): void {
-        this.readyState = WebSocket.CLOSED;
-        this.onclose?.({ code: code ?? 1000, reason: reason ?? "", wasClean: true } as CloseEvent);
+        this.readyState = MockWebSocket.CLOSED;
+        const c = code ?? 1000;
+        this.onclose?.({ code: c, reason: reason ?? "", wasClean: c === 1000 } as CloseEvent);
     }
 
     public send(_data: string): void {
@@ -37,7 +43,7 @@ export class MockWebSocket {
 
     // Test helpers (driven from the test body)
     public _open(): void {
-        this.readyState = WebSocket.OPEN;
+        this.readyState = MockWebSocket.OPEN;
         this.onopen?.({} as Event);
     }
     public _message(data: unknown): void {
@@ -45,7 +51,7 @@ export class MockWebSocket {
         this.onmessage?.({ data: payload } as MessageEvent);
     }
     public _close(code = 1000, reason = ""): void {
-        this.readyState = WebSocket.CLOSED;
+        this.readyState = MockWebSocket.CLOSED;
         this.onclose?.({ code, reason, wasClean: code === 1000 } as CloseEvent);
     }
     public _error(): void {

@@ -112,6 +112,14 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("✓ exit 0")).toBeInTheDocument();
     });
 
+    it("transitions to ⚠ disconnected on a WebSocket error before complete", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._error());
+        expect(getByText("⚠ disconnected")).toBeInTheDocument();
+    });
+
     it("renders the command in the header", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         expect(getByText("$ ls -la")).toBeInTheDocument();

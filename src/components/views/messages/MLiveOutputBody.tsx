@@ -7,6 +7,7 @@ Please see LICENSE files in the repository root for full details.
 
 import React, { useEffect, useState } from "react";
 import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MATRON_LIVE_OUTPUT_CONTENT_KEY } from "../../../matron/EventTypes";
 
@@ -57,7 +58,7 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
         ws.onmessage = (ev: MessageEvent) => {
             let frame: any;
             try { frame = JSON.parse(ev.data); }
-            catch { console.warn("MLiveOutputBody: malformed frame", ev.data); return; }
+            catch { logger.warn("MLiveOutputBody: malformed frame", ev.data); return; }
             if (frame.type === "data" && typeof frame.chunk === "string") {
                 setOutput(o => o + frame.chunk);
             } else if (frame.type === "complete") {
