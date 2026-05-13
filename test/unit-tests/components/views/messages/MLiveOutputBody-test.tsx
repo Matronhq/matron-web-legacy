@@ -125,6 +125,16 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("$ ls -la")).toBeInTheDocument();
     });
 
+    it("renders 'expired' and skips WS connect when expires_at is in the past at mount", () => {
+        const past = Math.floor(Date.now() / 1000) - 60;
+        const { getByText } = render(
+            <MLiveOutputBody mxEvent={makeLiveOutputEvent({ expires_at: past })} />,
+        );
+        expect(MockWebSocket.instances).toHaveLength(0);
+        expect(getByText("expired")).toBeInTheDocument();
+        expect(getByText("Output expired")).toBeInTheDocument();
+    });
+
     it("renders nothing when the live-output content key is missing", () => {
         const event = new MatrixEvent({
             type: MATRON_LIVE_OUTPUT_EVENT_TYPE,

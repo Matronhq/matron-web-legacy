@@ -45,13 +45,16 @@ function statusLabel(status: Status, exitCode: number | null, truncated: boolean
 
 const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
     const content = mxEvent.getContent()[MATRON_LIVE_OUTPUT_CONTENT_KEY] as LiveOutputContent | undefined;
-    const [status, setStatus] = useState<Status>("connecting");
+    const initialStatus: Status =
+        content && Date.now() >= content.expires_at * 1000 ? "expired" : "connecting";
+    const [status, setStatus] = useState<Status>(initialStatus);
     const [exitCode, setExitCode] = useState<number | null>(null);
     const [truncated, setTruncated] = useState(false);
     const [output, setOutput] = useState<string>("");
 
     useEffect(() => {
         if (!content) return;
+        if (Date.now() >= content.expires_at * 1000) return;
         let terminal = false;
         const ws = new WebSocket(viewerUrlToWsUrl(content.viewer_url));
         ws.onopen = () => setStatus(s => (s === "connecting" ? "running" : s));
@@ -95,6 +98,9 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
             )}
             {status === "denied" && (
                 <p className="mx_MLiveOutputBody_placeholder">Command not executed</p>
+            )}
+            {status === "expired" && (
+                <p className="mx_MLiveOutputBody_placeholder">Output expired</p>
             )}
         </div>
     );
