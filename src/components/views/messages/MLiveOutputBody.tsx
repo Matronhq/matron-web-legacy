@@ -125,7 +125,10 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
                 </button>
             </header>
             {status !== "expired" && status !== "denied" && (
-                <pre ref={preRef} className="mx_MLiveOutputBody_output" onScroll={onScroll}>{output}</pre>
+                <pre ref={preRef} className="mx_MLiveOutputBody_output" onScroll={onScroll}>
+                    {output}
+                    {truncated && "\n[output truncated]\n"}
+                </pre>
             )}
             {status === "denied" && (
                 <p className="mx_MLiveOutputBody_placeholder">Command not executed</p>

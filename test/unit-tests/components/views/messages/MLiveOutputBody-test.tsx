@@ -223,4 +223,14 @@ describe("<MLiveOutputBody/>", () => {
         act(() => collapseBtn.click());
         expect(root.getAttribute("data-expanded")).toBe("false");
     });
+
+    it("renders an inline truncation marker in the pre when complete is truncated", () => {
+        const { container } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "data", chunk: "lots of output\n" }));
+        act(() => ws._message({ type: "complete", exitCode: 0, denied: false, truncated: true }));
+        const pre = container.querySelector(".mx_MLiveOutputBody_output");
+        expect(pre?.textContent).toContain("output truncated");
+    });
 });
