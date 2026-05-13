@@ -27,16 +27,17 @@ type Status = "connecting" | "running" | "complete" | "expired" | "denied" | "er
 function viewerUrlToWsUrl(viewerUrl: string): string {
     // http(s)://host/live?token=… -> ws(s)://host/live/ws?token=…
     const wsScheme = viewerUrl.replace(/^http/, "ws");
-    return wsScheme.replace(/\/live(\?|$)/, "/live/ws$1");
+    return wsScheme.replace(/\/live(?=\?|$)/, "/live/ws");
 }
 
 function statusLabel(status: Status, exitCode: number | null, truncated: boolean): string {
     switch (status) {
         case "connecting": return "connecting…";
         case "running":    return "running…";
-        case "complete":
-            if (exitCode === 0) return truncated ? "✓ exit 0 · truncated" : "✓ exit 0";
-            return `✗ exit ${exitCode ?? "?"}`;
+        case "complete": {
+            const base = exitCode === 0 ? "✓ exit 0" : `✗ exit ${exitCode ?? "?"}`;
+            return truncated ? `${base} · truncated` : base;
+        }
         case "denied":     return "not executed";
         case "expired":    return "expired";
         case "error":      return "⚠ disconnected";
@@ -114,7 +115,9 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
         <div className="mx_MLiveOutputBody" data-status={status} data-expanded={expanded}>
             <header className="mx_MLiveOutputBody_header">
                 <code className="mx_MLiveOutputBody_cmd">$ {content.command}</code>
-                <span className="mx_MLiveOutputBody_status">{statusLabel(status, exitCode, truncated)}</span>
+                <span className="mx_MLiveOutputBody_status" aria-live="polite">
+                    {statusLabel(status, exitCode, truncated)}
+                </span>
                 <button
                     type="button"
                     className="mx_MLiveOutputBody_toggle"

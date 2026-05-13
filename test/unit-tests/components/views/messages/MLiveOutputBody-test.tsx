@@ -86,6 +86,14 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("✓ exit 0 · truncated")).toBeInTheDocument();
     });
 
+    it("appends '· truncated' to ✗ exit N when complete frame is truncated", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "complete", exitCode: 1, denied: false, truncated: true }));
+        expect(getByText("✗ exit 1 · truncated")).toBeInTheDocument();
+    });
+
     it("transitions to 'not executed' on denied", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         const ws = MockWebSocket.last();
