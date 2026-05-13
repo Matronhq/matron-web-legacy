@@ -17,6 +17,10 @@ import SettingsStore from "../../../../../src/settings/SettingsStore";
 import { mkEvent, mkRoom, stubClient } from "../../../../test-utils";
 import MessageEvent from "../../../../../src/components/views/messages/MessageEvent";
 import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permalinks";
+import {
+    MATRON_LIVE_OUTPUT_EVENT_TYPE,
+    MATRON_LIVE_OUTPUT_CONTENT_KEY,
+} from "../../../../../src/matron/EventTypes";
 
 jest.mock("../../../../../src/components/views/messages/UnknownBody", () => ({
     __esModule: true,
@@ -142,13 +146,13 @@ describe("MessageEvent", () => {
     it("dispatches to MLiveOutputBody when content has the live-output key", () => {
         event = mkEvent({
             event: true,
-            type: "chat.matron.live_output.v1",
+            type: MATRON_LIVE_OUTPUT_EVENT_TYPE,
             user: "@user:server",
             room: "!room:server",
             content: {
                 msgtype: "m.text",
                 body: "$ ls\n[live output: https://example/live?token=x]",
-                "chat.matron.live_output": {
+                [MATRON_LIVE_OUTPUT_CONTENT_KEY]: {
                     tool_use_id: "toolu_1",
                     command: "ls",
                     viewer_url: "https://example/live?token=x",

@@ -41,4 +41,20 @@ describe("<MLiveOutputBody/>", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         expect(getByText("$ ls -la")).toBeInTheDocument();
     });
+
+    it("renders nothing when the live-output content key is missing", () => {
+        const event = new MatrixEvent({
+            type: MATRON_LIVE_OUTPUT_EVENT_TYPE,
+            sender: "@user:server",
+            room_id: "!room:server",
+            event_id: "$evt-no-content",
+            origin_server_ts: Date.now(),
+            content: {
+                msgtype: "m.text",
+                body: "no live output content here",
+            },
+        });
+        const { container } = render(<MLiveOutputBody mxEvent={event} />);
+        expect(container.firstChild).toBeNull();
+    });
 });
