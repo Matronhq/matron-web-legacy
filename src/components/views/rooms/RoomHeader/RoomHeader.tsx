@@ -14,8 +14,6 @@ import VoiceCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/vo
 import CloseCallIcon from "@vector-im/compound-design-tokens/assets/web/icons/close";
 import RoomInfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info-solid";
 import NotificationsIcon from "@vector-im/compound-design-tokens/assets/web/icons/notifications-solid";
-import VerifiedIcon from "@vector-im/compound-design-tokens/assets/web/icons/verified";
-import ErrorIcon from "@vector-im/compound-design-tokens/assets/web/icons/error-solid";
 import PublicIcon from "@vector-im/compound-design-tokens/assets/web/icons/public";
 import { HistoryVisibility, JoinRule, type Room } from "matrix-js-sdk/src/matrix";
 import { type ViewRoomOpts } from "@matrix-org/react-sdk-module-api/lib/lifecycles/RoomViewLifecycle";
@@ -31,7 +29,6 @@ import { getPlatformCallTypeProps, useRoomCall } from "../../../../hooks/room/us
 import { useGlobalNotificationState } from "../../../../hooks/useGlobalNotificationState.ts";
 import { useFeatureEnabled } from "../../../../hooks/useSettings.ts";
 import { useEncryptionStatus } from "../../../../hooks/useEncryptionStatus.ts";
-import { E2EStatus } from "../../../../utils/ShieldUtils.ts";
 import { useRoomState } from "../../../../hooks/useRoomState.ts";
 import RoomAvatar from "../../avatars/RoomAvatar.tsx";
 import RightPanelStore from "../../../../stores/right-panel/RightPanelStore.ts";
@@ -54,6 +51,7 @@ import { usePinnedEvents, useSortedFetchedPinnedEvents } from "../../../../hooks
 import { isSessionSummaryEvent } from "../../../../utils/sessionSummary.ts";
 import Modal from "../../../../Modal.tsx";
 import { SessionSummaryDialog } from "../../dialogs/SessionSummaryDialog.tsx";
+import E2EIcon from "../E2EIcon.tsx";
 
 function RoomHeaderButtons({
     room,
@@ -478,26 +476,13 @@ export default function RoomHeader({
                                     </Tooltip>
                                 )}
 
-                                {isDirectMessage && e2eStatus === E2EStatus.Verified && (
-                                    <Tooltip label={_t("common|verified")} placement="right">
-                                        <VerifiedIcon
-                                            width="16px"
-                                            height="16px"
-                                            className="mx_RoomHeader_icon mx_Verified"
-                                            aria-label={_t("common|verified")}
-                                        />
-                                    </Tooltip>
-                                )}
-
-                                {isDirectMessage && e2eStatus === E2EStatus.Warning && (
-                                    <Tooltip label={_t("room|header_untrusted_label")} placement="right">
-                                        <ErrorIcon
-                                            width="16px"
-                                            height="16px"
-                                            className="mx_RoomHeader_icon mx_Untrusted"
-                                            aria-label={_t("room|header_untrusted_label")}
-                                        />
-                                    </Tooltip>
+                                {isRoomEncrypted && e2eStatus && (
+                                    <E2EIcon
+                                        status={e2eStatus}
+                                        className="mx_RoomHeader_icon mx_RoomHeader_e2eIcon"
+                                        size={16}
+                                        tooltipPlacement="right"
+                                    />
                                 )}
 
                                 {isRoomEncrypted && historySharingEnabled && historyVisibilityIcon(historyVisibility)}

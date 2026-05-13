@@ -759,9 +759,10 @@ describe("RoomHeader", () => {
         });
 
         it.each([
-            [ShieldUtils.E2EStatus.Verified, "Verified"],
-            [ShieldUtils.E2EStatus.Warning, "Untrusted"],
+            [ShieldUtils.E2EStatus.Verified, "Everyone in this room is verified"],
+            [ShieldUtils.E2EStatus.Warning, "Someone is using an unknown session"],
         ])("shows the %s icon", async (value: ShieldUtils.E2EStatus, expectedLabel: string) => {
+            mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(value);
 
             render(<RoomHeader room={room} />, getWrapper());
@@ -781,10 +782,14 @@ describe("RoomHeader", () => {
         });
 
         it("updates the icon when the encryption status changes", async () => {
+            mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
+
             // The room starts verified
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Verified);
             render(<RoomHeader room={room} />, getWrapper());
-            await waitFor(() => expect(getByLabelText(document.body, "Verified")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Everyone in this room is verified")).toBeInTheDocument(),
+            );
 
             // A new member joins, and the room becomes unverified
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Warning);
@@ -805,7 +810,9 @@ describe("RoomHeader", () => {
                     new RoomMember(room.roomId, "@alice:example.org"),
                 );
             });
-            await waitFor(() => expect(getByLabelText(document.body, "Untrusted")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Someone is using an unknown session")).toBeInTheDocument(),
+            );
 
             // The user becomes verified
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Verified);
@@ -816,14 +823,18 @@ describe("RoomHeader", () => {
                     new UserVerificationStatus(true, true, true, false),
                 );
             });
-            await waitFor(() => expect(getByLabelText(document.body, "Verified")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Everyone in this room is verified")).toBeInTheDocument(),
+            );
 
             // An unverified device is added
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Warning);
             act(() => {
                 MatrixClientPeg.get()!.emit(CryptoEvent.DevicesUpdated, ["@alice:example.org"], false);
             });
-            await waitFor(() => expect(getByLabelText(document.body, "Untrusted")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Someone is using an unknown session")).toBeInTheDocument(),
+            );
         });
     });
 

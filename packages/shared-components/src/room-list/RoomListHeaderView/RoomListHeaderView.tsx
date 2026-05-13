@@ -115,6 +115,10 @@ interface RoomListHeaderViewProps {
      * The view model for the room list header component.
      */
     vm: RoomListHeaderViewModel;
+    /**
+     * Whether to hide the space title and only render header actions.
+     */
+    hideTitle?: boolean;
 }
 
 /**
@@ -126,7 +130,7 @@ interface RoomListHeaderViewProps {
  * <RoomListHeaderView vm={roomListHeaderViewModel} />
  * ```
  */
-export function RoomListHeaderView({ vm }: Readonly<RoomListHeaderViewProps>): JSX.Element {
+export function RoomListHeaderView({ vm, hideTitle = false }: Readonly<RoomListHeaderViewProps>): JSX.Element {
     const { translate: _t } = useI18n();
     const { title, displaySpaceMenu, displayComposeMenu } = useViewModel(vm);
 
@@ -139,12 +143,14 @@ export function RoomListHeaderView({ vm }: Readonly<RoomListHeaderViewProps>): J
             data-testid="room-list-header"
         >
             <Flex className={styles.container} justify="space-between" align="center" gap="var(--cpd-space-3x)">
-                <Flex className={styles.title} align="center" gap="var(--cpd-space-1x)">
-                    <H1 size="sm" title={title}>
-                        {title}
-                    </H1>
-                    {displaySpaceMenu && <SpaceMenuView vm={vm} />}
-                </Flex>
+                {!hideTitle && (
+                    <Flex className={styles.title} align="center" gap="var(--cpd-space-1x)">
+                        <H1 size="sm" title={title}>
+                            {title}
+                        </H1>
+                        {displaySpaceMenu && <SpaceMenuView vm={vm} />}
+                    </Flex>
+                )}
                 <Flex align="center" gap="var(--cpd-space-2x)">
                     <IconButton
                         size="28px"
