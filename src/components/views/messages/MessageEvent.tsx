@@ -41,7 +41,8 @@ import MBeaconBody from "./MBeaconBody";
 import { type GetRelationsForEvent, type IEventTileOps } from "../rooms/EventTile";
 import { DecryptionFailureBodyViewModel } from "../../../viewmodels/message-body/DecryptionFailureBodyViewModel";
 import MButtonGroupBody from "./MButtonGroupBody";
-import { MATRON_BUTTONS } from "../../../matron/EventTypes";
+import MLiveOutputBody from "./MLiveOutputBody";
+import { MATRON_BUTTONS, MATRON_LIVE_OUTPUT_CONTENT_KEY } from "../../../matron/EventTypes";
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -252,6 +253,9 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             return (
                 <MButtonGroupBody mxEvent={this.props.mxEvent} getRelationsForEvent={this.props.getRelationsForEvent} />
             );
+        }
+        if (!this.props.mxEvent.isRedacted() && content[MATRON_LIVE_OUTPUT_CONTENT_KEY]) {
+            return <MLiveOutputBody mxEvent={this.props.mxEvent} />;
         }
 
         let BodyType: React.ComponentType<IBodyProps> = RedactedBody;

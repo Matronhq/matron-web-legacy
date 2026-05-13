@@ -53,6 +53,11 @@ jest.mock("../../../../../src/components/views/messages/TextualBody.tsx", () => 
     default: () => <div data-testid="textual-body" />,
 }));
 
+jest.mock("../../../../../src/components/views/messages/MLiveOutputBody", () => ({
+    __esModule: true,
+    default: () => <div data-testid="live-output-body" />,
+}));
+
 describe("MessageEvent", () => {
     let room: Room;
     let client: MatrixClient;
@@ -132,5 +137,26 @@ describe("MessageEvent", () => {
             result.getByTestId("file-body");
             result.getByTestId("textual-body");
         });
+    });
+
+    it("dispatches to MLiveOutputBody when content has the live-output key", () => {
+        event = mkEvent({
+            event: true,
+            type: "chat.matron.live_output.v1",
+            user: "@user:server",
+            room: "!room:server",
+            content: {
+                msgtype: "m.text",
+                body: "$ ls\n[live output: https://example/live?token=x]",
+                "chat.matron.live_output": {
+                    tool_use_id: "toolu_1",
+                    command: "ls",
+                    viewer_url: "https://example/live?token=x",
+                    expires_at: Math.floor(Date.now() / 1000) + 600,
+                },
+            },
+        });
+        const { getByTestId } = render(<MessageEvent mxEvent={event} permalinkCreator={new RoomPermalinkCreator(room)} />);
+        expect(getByTestId("live-output-body")).toBeInTheDocument();
     });
 });
