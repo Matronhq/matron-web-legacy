@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import { MATRON_LIVE_OUTPUT_CONTENT_KEY } from "../../../matron/EventTypes";
@@ -21,14 +21,80 @@ interface LiveOutputContent {
     expires_at: number;
 }
 
+type Status = "connecting" | "running" | "complete" | "expired" | "denied" | "error";
+
+function viewerUrlToWsUrl(viewerUrl: string): string {
+    // http(s)://host/live?token=… -> ws(s)://host/live/ws?token=…
+    const wsScheme = viewerUrl.replace(/^http/, "ws");
+    return wsScheme.replace(/\/live(\?|$)/, "/live/ws$1");
+}
+
+function statusLabel(status: Status, exitCode: number | null, truncated: boolean): string {
+    switch (status) {
+        case "connecting": return "connecting…";
+        case "running":    return "running…";
+        case "complete":
+            if (exitCode === 0) return truncated ? "✓ exit 0 · truncated" : "✓ exit 0";
+            return `✗ exit ${exitCode ?? "?"}`;
+        case "denied":     return "not executed";
+        case "expired":    return "expired";
+        case "error":      return "⚠ disconnected";
+    }
+}
+
 const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
     const content = mxEvent.getContent()[MATRON_LIVE_OUTPUT_CONTENT_KEY] as LiveOutputContent | undefined;
+    const [status, setStatus] = useState<Status>("connecting");
+    const [exitCode, setExitCode] = useState<number | null>(null);
+    const [truncated, setTruncated] = useState(false);
+    const [output, setOutput] = useState<string>("");
+
+    useEffect(() => {
+        if (!content) return;
+        let terminal = false;
+        const ws = new WebSocket(viewerUrlToWsUrl(content.viewer_url));
+        ws.onopen = () => setStatus(s => (s === "connecting" ? "running" : s));
+        ws.onmessage = (ev: MessageEvent) => {
+            let frame: any;
+            try { frame = JSON.parse(ev.data); }
+            catch { console.warn("MLiveOutputBody: malformed frame", ev.data); return; }
+            if (frame.type === "data" && typeof frame.chunk === "string") {
+                setOutput(o => o + frame.chunk);
+            } else if (frame.type === "complete") {
+                terminal = true;
+                setExitCode(frame.exitCode ?? null);
+                setTruncated(!!frame.truncated);
+                setStatus(frame.denied ? "denied" : "complete");
+            }
+        };
+        ws.onclose = (ev: CloseEvent) => {
+            if (terminal) return;
+            if (ev.code === 1000) return;
+            setStatus("error");
+        };
+        ws.onerror = () => {
+            if (terminal) return;
+            setStatus("error");
+        };
+        return () => {
+            try { ws.close(); } catch { /* noop */ }
+        };
+    }, [content?.viewer_url]);
+
     if (!content) return null;
+
     return (
-        <div className="mx_MLiveOutputBody">
+        <div className="mx_MLiveOutputBody" data-status={status}>
             <header className="mx_MLiveOutputBody_header">
                 <code className="mx_MLiveOutputBody_cmd">$ {content.command}</code>
+                <span className="mx_MLiveOutputBody_status">{statusLabel(status, exitCode, truncated)}</span>
             </header>
+            {status !== "expired" && status !== "denied" && (
+                <pre className="mx_MLiveOutputBody_output">{output}</pre>
+            )}
+            {status === "denied" && (
+                <p className="mx_MLiveOutputBody_placeholder">Command not executed</p>
+            )}
         </div>
     );
 };

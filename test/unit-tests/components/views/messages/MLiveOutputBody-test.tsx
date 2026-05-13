@@ -6,7 +6,7 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React from "react";
-import { render } from "jest-matrix-react";
+import { act, render } from "jest-matrix-react";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
 import MLiveOutputBody from "../../../../../src/components/views/messages/MLiveOutputBody";
@@ -14,6 +14,7 @@ import {
     MATRON_LIVE_OUTPUT_EVENT_TYPE,
     MATRON_LIVE_OUTPUT_CONTENT_KEY,
 } from "../../../../../src/matron/EventTypes";
+import { MockWebSocket, installMockWebSocket, restoreWebSocket } from "./__mocks__/MockWebSocket";
 
 function makeLiveOutputEvent(overrides: Record<string, any> = {}) {
     const expires_at = overrides.expires_at ?? Math.floor(Date.now() / 1000) + 3600;
@@ -37,6 +38,18 @@ function makeLiveOutputEvent(overrides: Record<string, any> = {}) {
 }
 
 describe("<MLiveOutputBody/>", () => {
+    const realWebSocket = globalThis.WebSocket;
+    beforeEach(() => installMockWebSocket());
+    afterEach(() => restoreWebSocket(realWebSocket));
+
+    it("opens a WebSocket to the live-output endpoint and shows 'running…' once open", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        expect(ws.url).toBe("wss://viewer.example/live/ws?token=abc");
+        act(() => ws._open());
+        expect(getByText("running…")).toBeInTheDocument();
+    });
+
     it("renders the command in the header", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         expect(getByText("$ ls -la")).toBeInTheDocument();
