@@ -168,4 +168,47 @@ describe("<MLiveOutputBody/>", () => {
         const { container } = render(<MLiveOutputBody mxEvent={event} />);
         expect(container.firstChild).toBeNull();
     });
+
+    it("auto-scrolls to bottom when streaming while sticky-bottom is engaged", () => {
+        const { container } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        const pre = container.querySelector(".mx_MLiveOutputBody_output") as HTMLPreElement;
+        // jsdom doesn't implement layout, so stub scroll properties
+        Object.defineProperty(pre, "scrollHeight", { configurable: true, get: () => 1000 });
+        Object.defineProperty(pre, "clientHeight", { configurable: true, get: () => 200 });
+        let observedScrollTop = 0;
+        Object.defineProperty(pre, "scrollTop", {
+            configurable: true,
+            get: () => observedScrollTop,
+            set: (v: number) => { observedScrollTop = v; },
+        });
+        act(() => ws._message({ type: "data", chunk: "line\n" }));
+        expect(observedScrollTop).toBe(1000); // pinned to bottom
+    });
+
+    it("disengages sticky-bottom when the user scrolls up, re-engages near bottom", () => {
+        const { container } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        const pre = container.querySelector(".mx_MLiveOutputBody_output") as HTMLPreElement;
+        let scrollTop = 100;
+        Object.defineProperty(pre, "scrollHeight", { configurable: true, get: () => 1000 });
+        Object.defineProperty(pre, "clientHeight", { configurable: true, get: () => 200 });
+        Object.defineProperty(pre, "scrollTop", {
+            configurable: true,
+            get: () => scrollTop,
+            set: (v: number) => { scrollTop = v; },
+        });
+        // User scrolled up: dispatch scroll event
+        act(() => { pre.dispatchEvent(new Event("scroll")); });
+        act(() => ws._message({ type: "data", chunk: "more\n" }));
+        expect(scrollTop).toBe(100); // unchanged — sticky disengaged
+
+        // User scrolls back near bottom (clientHeight + scrollTop >= scrollHeight - 8)
+        scrollTop = 800; // 800 + 200 = 1000 >= 1000 - 8 ✓
+        act(() => { pre.dispatchEvent(new Event("scroll")); });
+        act(() => ws._message({ type: "data", chunk: "and more\n" }));
+        expect(scrollTop).toBe(1000); // re-engaged → pinned to bottom
+    });
 });

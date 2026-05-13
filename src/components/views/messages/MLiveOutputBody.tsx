@@ -5,7 +5,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { type MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -51,6 +51,21 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
     const [exitCode, setExitCode] = useState<number | null>(null);
     const [truncated, setTruncated] = useState(false);
     const [output, setOutput] = useState<string>("");
+    const [stickyBottom, setStickyBottom] = useState(true);
+    const preRef = useRef<HTMLPreElement | null>(null);
+
+    useEffect(() => {
+        if (!stickyBottom) return;
+        const pre = preRef.current;
+        if (!pre) return;
+        pre.scrollTop = pre.scrollHeight;
+    }, [output, stickyBottom]);
+
+    const onScroll: React.UIEventHandler<HTMLPreElement> = (e) => {
+        const pre = e.currentTarget;
+        const nearBottom = pre.scrollTop + pre.clientHeight >= pre.scrollHeight - 8;
+        setStickyBottom(nearBottom);
+    };
 
     useEffect(() => {
         if (!content) return;
@@ -101,7 +116,7 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
                 <span className="mx_MLiveOutputBody_status">{statusLabel(status, exitCode, truncated)}</span>
             </header>
             {status !== "expired" && status !== "denied" && (
-                <pre className="mx_MLiveOutputBody_output">{output}</pre>
+                <pre ref={preRef} className="mx_MLiveOutputBody_output" onScroll={onScroll}>{output}</pre>
             )}
             {status === "denied" && (
                 <p className="mx_MLiveOutputBody_placeholder">Command not executed</p>
