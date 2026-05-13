@@ -52,6 +52,7 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
     const [truncated, setTruncated] = useState(false);
     const [output, setOutput] = useState<string>("");
     const [stickyBottom, setStickyBottom] = useState(true);
+    const [expanded, setExpanded] = useState(false);
     const preRef = useRef<HTMLPreElement | null>(null);
 
     useEffect(() => {
@@ -110,10 +111,18 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
     if (!content) return null;
 
     return (
-        <div className="mx_MLiveOutputBody" data-status={status}>
+        <div className="mx_MLiveOutputBody" data-status={status} data-expanded={expanded}>
             <header className="mx_MLiveOutputBody_header">
                 <code className="mx_MLiveOutputBody_cmd">$ {content.command}</code>
                 <span className="mx_MLiveOutputBody_status">{statusLabel(status, exitCode, truncated)}</span>
+                <button
+                    type="button"
+                    className="mx_MLiveOutputBody_toggle"
+                    aria-label={expanded ? "Collapse" : "Expand"}
+                    onClick={() => setExpanded(e => !e)}
+                >
+                    {expanded ? "−" : "+"}
+                </button>
             </header>
             {status !== "expired" && status !== "denied" && (
                 <pre ref={preRef} className="mx_MLiveOutputBody_output" onScroll={onScroll}>{output}</pre>

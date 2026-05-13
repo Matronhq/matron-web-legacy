@@ -211,4 +211,16 @@ describe("<MLiveOutputBody/>", () => {
         act(() => ws._message({ type: "data", chunk: "and more\n" }));
         expect(scrollTop).toBe(1000); // re-engaged → pinned to bottom
     });
+
+    it("starts collapsed (data-expanded=false) and toggles via the expand button", () => {
+        const { container, getByRole } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const root = container.querySelector(".mx_MLiveOutputBody")!;
+        expect(root.getAttribute("data-expanded")).toBe("false");
+        const toggle = getByRole("button", { name: /expand/i });
+        act(() => toggle.click());
+        expect(root.getAttribute("data-expanded")).toBe("true");
+        const collapseBtn = getByRole("button", { name: /collapse/i });
+        act(() => collapseBtn.click());
+        expect(root.getAttribute("data-expanded")).toBe("false");
+    });
 });
