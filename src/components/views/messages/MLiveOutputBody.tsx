@@ -80,7 +80,14 @@ const MLiveOutputBody: React.FC<IProps> = ({ mxEvent }) => {
             if (terminal) return;
             setStatus("error");
         };
+        const msUntilExpiry = content.expires_at * 1000 - Date.now();
+        const expiryTimer = setTimeout(() => {
+            terminal = true;
+            setStatus("expired");
+            try { ws.close(); } catch { /* noop */ }
+        }, msUntilExpiry);
         return () => {
+            clearTimeout(expiryTimer);
             try { ws.close(); } catch { /* noop */ }
         };
     }, [content?.viewer_url]);

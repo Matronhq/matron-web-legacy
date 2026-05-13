@@ -125,6 +125,24 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("$ ls -la")).toBeInTheDocument();
     });
 
+    it("flips to 'expired' when the expiry timer fires while mounted", () => {
+        jest.useFakeTimers();
+        try {
+            const expires_at = Math.floor(Date.now() / 1000) + 2;
+            const { getByText } = render(
+                <MLiveOutputBody mxEvent={makeLiveOutputEvent({ expires_at })} />,
+            );
+            const ws = MockWebSocket.last();
+            act(() => ws._open());
+            expect(getByText("running…")).toBeInTheDocument();
+            act(() => { jest.advanceTimersByTime(2500); });
+            expect(getByText("expired")).toBeInTheDocument();
+            expect(ws.readyState).toBe(3); // CLOSED
+        } finally {
+            jest.useRealTimers();
+        }
+    });
+
     it("renders 'expired' and skips WS connect when expires_at is in the past at mount", () => {
         const past = Math.floor(Date.now() / 1000) - 60;
         const { getByText } = render(
