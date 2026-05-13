@@ -9,3 +9,5 @@ export const MATRON_BUTTONS = "chat.matron.buttons";
 export const MATRON_BUTTON_RESPONSE = "chat.matron.button_response";
 export const MATRON_BUTTON_ANSWER = "chat.matron.button_answer";
 export const MATRON_COMMANDS = "chat.matron.commands";
+export const MATRON_LIVE_OUTPUT_EVENT_TYPE = "chat.matron.live_output.v1";
+export const MATRON_LIVE_OUTPUT_CONTENT_KEY = "chat.matron.live_output";
