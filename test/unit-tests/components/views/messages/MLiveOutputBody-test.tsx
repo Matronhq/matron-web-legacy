@@ -62,6 +62,39 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("running…")).toBeInTheDocument();
     });
 
+    it("transitions to ✓ exit 0 on a complete frame with exitCode 0", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "complete", exitCode: 0, denied: false, truncated: false }));
+        expect(getByText("✓ exit 0")).toBeInTheDocument();
+    });
+
+    it("transitions to ✗ exit N for non-zero exit codes", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "complete", exitCode: 1, denied: false, truncated: false }));
+        expect(getByText("✗ exit 1")).toBeInTheDocument();
+    });
+
+    it("appends '· truncated' to ✓ exit 0 when complete frame is truncated", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "complete", exitCode: 0, denied: false, truncated: true }));
+        expect(getByText("✓ exit 0 · truncated")).toBeInTheDocument();
+    });
+
+    it("transitions to 'not executed' on denied", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "complete", exitCode: null, denied: true, truncated: false }));
+        expect(getByText("not executed")).toBeInTheDocument();
+        expect(getByText("Command not executed")).toBeInTheDocument();
+    });
+
     it("renders the command in the header", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         expect(getByText("$ ls -la")).toBeInTheDocument();
