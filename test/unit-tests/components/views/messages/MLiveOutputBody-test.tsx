@@ -95,6 +95,23 @@ describe("<MLiveOutputBody/>", () => {
         expect(getByText("Command not executed")).toBeInTheDocument();
     });
 
+    it("transitions to ⚠ disconnected when WS closes abnormally before complete", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._close(1006, "abnormal"));
+        expect(getByText("⚠ disconnected")).toBeInTheDocument();
+    });
+
+    it("stays on ✓ exit 0 when WS closes normally after complete", () => {
+        const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
+        const ws = MockWebSocket.last();
+        act(() => ws._open());
+        act(() => ws._message({ type: "complete", exitCode: 0, denied: false, truncated: false }));
+        act(() => ws._close(1000, "done"));
+        expect(getByText("✓ exit 0")).toBeInTheDocument();
+    });
+
     it("renders the command in the header", () => {
         const { getByText } = render(<MLiveOutputBody mxEvent={makeLiveOutputEvent()} />);
         expect(getByText("$ ls -la")).toBeInTheDocument();
