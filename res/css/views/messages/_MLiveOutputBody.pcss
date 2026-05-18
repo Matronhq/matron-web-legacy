@@ -55,15 +55,21 @@ Please see LICENSE files in the repository root for full details.
     background-color: var(--cpd-color-bg-subtle-primary);
 }
 
+/* The output area is intentionally pinned to a dark terminal palette regardless
+   of the app theme — bot output is rendered with ANSI colors tuned for this
+   background, and a light backdrop would wash out dim/bright variants. */
 .mx_MLiveOutputBody_output {
     margin: 0;
     padding: 8px 10px;
-    max-height: 240px;
+    /* ~3 lines of output before the user has to expand: 3 × line-height (1.4em)
+       at the local 12px font-size, plus the 8px top+bottom padding. */
+    max-height: calc(3 * 1.4em + 16px);
     overflow-y: auto;
     font-size: 12px;
     line-height: 1.4;
-    color: var(--cpd-color-text-primary);
-    background-color: var(--cpd-color-bg-canvas-default);
+    color: #dcdcdc;
+    background-color: #1e1e1e;
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
     white-space: pre-wrap;
     word-break: break-all;
 }
