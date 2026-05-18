@@ -27,6 +27,7 @@ export interface CachedEntry {
 }
 
 let dbPromise: Promise<IDBDatabase> | null = null;
+let gcScheduled = false;
 
 function openDb(): Promise<IDBDatabase> {
     if (dbPromise) return dbPromise;
@@ -43,6 +44,14 @@ function openDb(): Promise<IDBDatabase> {
             }
         };
     });
+    // Sweep expired entries once per process the first time the cache is opened.
+    // Entries that never get re-read (e.g. tiles the user scrolled past and
+    // never came back to) would otherwise accumulate forever. The sweep is
+    // queued as a microtask so it doesn't block the caller's await.
+    if (!gcScheduled) {
+        gcScheduled = true;
+        void dbPromise.then(() => gc()).catch(() => undefined);
+    }
     return dbPromise;
 }
 
@@ -119,4 +128,5 @@ export async function gc(): Promise<void> {
 // Hook for tests: drop the cached connection so the next call reopens with a fresh factory.
 export function resetForTesting(): void {
     dbPromise = null;
+    gcScheduled = false;
 }
