@@ -349,6 +349,19 @@ Please see LICENSE files in the repository root for full details.
         var(--matron-room-timeline-background);
 }
 
+/*
+ * Dark-theme variant for the timeline surface. The light values above are
+ * hardcoded cream and don't adapt to the theme, so in dark mode the session
+ * window stayed light while Element switched message text to white -> white
+ * text on a near-white background. Re-point the custom props at Element's
+ * theme-aware canvas tokens for dark mode; light mode keeps the cream look.
+ * (The composer background and avatar rings reuse these vars, so they follow.)
+ */
+.cpd-theme-dark .mx_RoomView_body[data-layout="bubble"] {
+    --matron-room-timeline-background: var(--cpd-color-bg-canvas-default);
+    --matron-room-timeline-background-bottom: var(--cpd-color-bg-subtle-primary);
+}
+
 .mx_RoomView_body[data-layout="bubble"] .mx_RoomView_timeline,
 .mx_RoomView_body[data-layout="bubble"] .mx_RoomView_messagePanel {
     background: transparent;
@@ -526,4 +539,35 @@ Please see LICENSE files in the repository root for full details.
 .mx_RoomView .mx_NewRoomIntro,
 .mx_RoomView [data-testid="matron-room-creation-summary"] {
     display: none;
+}
+
+/*
+ * Dark-theme corrections for Matron surfaces that hardcode light colors above.
+ * Each rule re-points the value under .cpd-theme-dark only, so the light theme
+ * keeps its intended warm look while dark mode stops rendering light-on-light.
+ */
+
+/* Auth / login screens (light value above is #fffefa). */
+.cpd-theme-dark .mx_AuthPage_modal,
+.cpd-theme-dark .mx_AuthPage_modal .mx_AuthPage_modalContent,
+.cpd-theme-dark .mx_AuthPage_modal.mx_AuthPage_modal_withBlur .mx_AuthPage_modalContent,
+.cpd-theme-dark .mx_AuthBody {
+    background-color: var(--cpd-color-bg-canvas-default);
+}
+
+/* Modal dialogs (light value above is #fffefa). */
+.cpd-theme-dark .mx_Dialog {
+    background-color: var(--cpd-color-bg-canvas-default);
+}
+
+/*
+ * Own-message bubbles: light cyan (#c4f5fb) -> dark teal that keeps the accent
+ * identity and pairs with the light bubble text Element uses in dark mode.
+ */
+.cpd-theme-dark .mx_EventTile[data-layout="bubble"][data-self="true"] {
+    --backgroundColor: #0e3940;
+}
+
+.cpd-theme-dark .mx_EventTile[data-layout="bubble"][data-self="true"] .mx_MediaBody {
+    background: #0e3940;
 }
