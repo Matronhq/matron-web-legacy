@@ -28,6 +28,19 @@ Create a `config.json` (see `config.sample.json`) and place it in the root direc
 
 > **Security note:** Matron Web should be served on its own domain, separate from your homeserver, to prevent XSS attacks from gaining homeserver access. Set appropriate `Content-Security-Policy`, `X-Content-Type-Options`, and `X-Frame-Options` headers.
 
+### Prerequisites
+
+Building or developing Matron Web requires:
+
+- **Node.js ≥ 22.18** — check with `node --version`.
+- **pnpm** — the repo pins its exact version via the `packageManager` field. The simplest way to match it is to let [Corepack](https://nodejs.org/api/corepack.html) (bundled with Node) manage pnpm for you:
+
+  ```bash
+  corepack enable
+  ```
+
+  Any `pnpm` command run inside the repo then uses the pinned version automatically. (You can install pnpm 10.x manually instead if you prefer.)
+
 ### Building from source
 
 ```bash
@@ -36,7 +49,7 @@ cp config.sample.json config.json  # edit as needed
 pnpm run build
 ```
 
-The built app will be in the `webapp/` directory.
+The built app will be in the `webapp/` directory — serve its contents with any static web server.
 
 ### Development
 
