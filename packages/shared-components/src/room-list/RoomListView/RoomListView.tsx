@@ -8,7 +8,7 @@
 import React, { type JSX, type ReactNode } from "react";
 
 import { useViewModel, type ViewModel } from "../../viewmodel";
-import { RoomListPrimaryFilters, type FilterId } from "../RoomListPrimaryFilters";
+import { type FilterId } from "../RoomListPrimaryFilters";
 import { RoomListLoadingSkeleton } from "./RoomListLoadingSkeleton";
 import { RoomListEmptyStateView } from "./RoomListEmptyStateView";
 import { VirtualizedRoomListView, type RoomListViewState } from "../VirtualizedRoomListView";
@@ -86,16 +86,5 @@ export const RoomListView: React.FC<RoomListViewProps> = ({ vm, renderAvatar, on
         listBody = <VirtualizedRoomListView vm={vm} renderAvatar={renderAvatar} onKeyDown={onKeyDown} />;
     }
 
-    return (
-        <>
-            <div>
-                <RoomListPrimaryFilters
-                    filterIds={snapshot.filterIds}
-                    activeFilterId={snapshot.activeFilterId}
-                    onToggleFilter={vm.onToggleFilter}
-                />
-            </div>
-            {listBody}
-        </>
-    );
+    return <>{listBody}</>;
 };

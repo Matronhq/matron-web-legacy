@@ -17,6 +17,7 @@ export class MockedViewModel extends MockViewModel<RoomListHeaderViewSnapshot> i
     public createChatRoom = vi.fn<() => void>();
     public createRoom = vi.fn<() => void>();
     public createVideoRoom = vi.fn<() => void>();
+    public openUserSettings = vi.fn<() => void>();
     public openSpaceHome = vi.fn<() => void>();
     public openSpaceSettings = vi.fn<() => void>();
     public inviteInSpace = vi.fn<() => void>();

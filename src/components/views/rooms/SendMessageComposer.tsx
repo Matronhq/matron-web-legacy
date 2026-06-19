@@ -50,7 +50,7 @@ import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTime
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { getSlashCommand, isSlashCommand, runSlashCommand } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from "../../../utils/Reply";
@@ -60,6 +60,7 @@ import { type IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
 import { EMOJI_REGEX } from "../../../HtmlUtils";
 import { attachMentions, attachRelation } from "../../../utils/messages";
+import { isMatronCommand } from "../../../matron/commands";
 
 // The prefix used when persisting editor drafts to localstorage.
 export const EDITOR_STATE_STORAGE_PREFIX = "mx_cider_state_";
@@ -356,45 +357,45 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         let content: RoomMessageEventContent | null = null;
 
         if (!containsEmote(model) && isSlashCommand(this.model)) {
-            const [cmd, args, commandText] = getSlashCommand(this.props.room.roomId, this.model);
-            if (cmd) {
-                const threadId =
-                    this.props.relation?.rel_type === THREAD_RELATION_TYPE.name ? this.props.relation?.event_id : null;
+            const firstPartText = this.model.parts[0]?.text || "";
+            const cmdName = firstPartText.split(/\s+/)[0]?.slice(1);
 
-                let commandSuccessful: boolean;
-                [content, commandSuccessful] = await runSlashCommand(
-                    MatrixClientPeg.safeGet(),
-                    cmd,
-                    args,
-                    this.props.room.roomId,
-                    threadId ?? null,
-                );
-                if (!commandSuccessful) {
-                    return; // errored
-                }
+            if (!isMatronCommand(this.props.room, cmdName)) {
+                const [cmd, args] = getSlashCommand(this.props.room.roomId, this.model);
+                if (cmd) {
+                    const threadId =
+                        this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
+                            ? this.props.relation?.event_id
+                            : null;
 
-                if (
-                    content &&
-                    [CommandCategories.messages as string, CommandCategories.effects as string].includes(cmd.category)
-                ) {
-                    // Attach any mentions which might be contained in the command content.
-                    attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
-                    attachRelation(content, this.props.relation);
-                    if (replyToEvent) {
-                        addReplyToMessageContent(content, replyToEvent);
+                    let commandSuccessful: boolean;
+                    [content, commandSuccessful] = await runSlashCommand(
+                        MatrixClientPeg.safeGet(),
+                        cmd,
+                        args,
+                        this.props.room.roomId,
+                        threadId ?? null,
+                    );
+                    if (!commandSuccessful) {
+                        return; // errored
                     }
-                } else {
-                    shouldSend = false;
+
+                    if (
+                        content &&
+                        [CommandCategories.messages as string, CommandCategories.effects as string].includes(
+                            cmd.category,
+                        )
+                    ) {
+                        // Attach any mentions which might be contained in the command content.
+                        attachMentions(this.props.mxClient.getSafeUserId(), content, model, replyToEvent);
+                        attachRelation(content, this.props.relation);
+                        if (replyToEvent) {
+                            addReplyToMessageContent(content, replyToEvent);
+                        }
+                    } else {
+                        shouldSend = false;
+                    }
                 }
-            } else {
-                const sendAnyway = await shouldSendAnyway(commandText);
-                // re-focus the composer after QuestionDialog is closed
-                dis.dispatch({
-                    action: Action.FocusAComposer,
-                    context: this.context.timelineRenderingType,
-                });
-                // if !sendAnyway bail to let the user edit the composer and try again
-                if (!sendAnyway) return;
             }
         }
 

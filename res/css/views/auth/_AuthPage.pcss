@@ -17,9 +17,10 @@ Please see LICENSE files in the repository root for full details.
 
 .mx_AuthPage_modal {
     display: flex;
-    margin: 100px auto auto;
+    margin: auto;
     border-radius: var(--cpd-space-6x);
     background-color: $authpage-modal-bg-color;
+    box-shadow: 0 24px 80px rgb(15, 23, 42, 0.12);
 
     @media only screen and (max-height: 768px) {
         margin-top: 50px;
@@ -31,11 +32,14 @@ Please see LICENSE files in the repository root for full details.
 
     &.mx_AuthPage_modal_withBlur {
         /* Apply a blurred shadow around the modal */
-        box-shadow: 0 2px 4px 0 rgb(0, 0, 0, 0.33);
+        box-shadow: 0 24px 80px rgb(15, 23, 42, 0.12);
 
         .mx_AuthPage_modalContent {
-            /* Make the modal's background semitransparent */
-            background-color: $authpage-modal-content-with-blur-bg-color;
+            background-color: $background;
         }
+    }
+
+    .mx_AuthPage_modalContent {
+        flex-direction: column;
     }
 }

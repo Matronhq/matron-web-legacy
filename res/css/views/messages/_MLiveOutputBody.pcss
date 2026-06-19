@@ -1,0 +1,87 @@
+/*
+Copyright 2026 Matron Contributors.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+.mx_MLiveOutputBody {
+    border: 1px solid var(--cpd-color-border-interactive-secondary);
+    border-radius: var(--cpd-space-2x);
+    background-color: var(--cpd-color-bg-canvas-default);
+    margin: 4px 0;
+    font-family: var(--cpd-font-family-mono, monospace);
+    overflow: hidden;
+}
+
+.mx_MLiveOutputBody_header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background-color: var(--cpd-color-bg-subtle-secondary);
+    cursor: default;
+    font-size: 13px;
+}
+
+.mx_MLiveOutputBody_cmd {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--cpd-color-text-primary);
+}
+
+.mx_MLiveOutputBody_status {
+    flex: 0 0 auto;
+    color: var(--cpd-color-text-secondary);
+    font-size: 12px;
+}
+
+.mx_MLiveOutputBody_toggle {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    color: var(--cpd-color-text-secondary);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.mx_MLiveOutputBody_toggle:hover {
+    background-color: var(--cpd-color-bg-subtle-primary);
+}
+
+/* The output area is intentionally pinned to a dark terminal palette regardless
+   of the app theme — bot output is rendered with ANSI colors tuned for this
+   background, and a light backdrop would wash out dim/bright variants. */
+.mx_MLiveOutputBody_output {
+    margin: 0;
+    padding: 8px 10px;
+    /* ~3 lines of output before the user has to expand: 3 × line-height (1.4em)
+       at the local 12px font-size, plus the 8px top+bottom padding. */
+    max-height: calc(3 * 1.4em + 16px);
+    overflow-y: auto;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #dcdcdc;
+    background-color: #1e1e1e;
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.mx_MLiveOutputBody[data-expanded="true"] .mx_MLiveOutputBody_output {
+    max-height: 600px;
+}
+
+.mx_MLiveOutputBody_placeholder {
+    margin: 0;
+    padding: 12px 10px;
+    color: var(--cpd-color-text-secondary);
+    font-style: italic;
+    font-size: 13px;
+}

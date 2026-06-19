@@ -25,6 +25,7 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     uisi_autorageshake_app: "matron-auto-uisi",
     show_labs_settings: false,
     force_verification: false,
+    matron_auto_join_bot_user_ids: [],
 
     jitsi: {
         preferred_domain: "meet.matron.chat",

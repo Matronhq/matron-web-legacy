@@ -459,21 +459,24 @@ describe("MessagePanel", function () {
         const { container } = render(getComponent({ events }), clientAndSDKContextRenderOptions(client, sdkContext));
 
         // we expect that
-        // - the room creation event, the room encryption event, and Alice inviting Bob,
-        //   should be outside of the room creation summary
+        // - the room creation event and Alice inviting Bob should be outside of
+        //   the room creation summary
+        // - the room encryption event should be hidden
         // - all other events should be inside the room creation summary
 
         const tiles = container.getElementsByClassName("mx_EventTile");
 
         expect(tiles[0].getAttribute("data-event-id")).toEqual(createEvent.getId());
-        expect(tiles[1].getAttribute("data-event-id")).toEqual(encryptionEvent.getId());
+        expect(Array.from(tiles).some((tile) => tile.getAttribute("data-event-id") === encryptionEvent.getId())).toBe(
+            false,
+        );
 
         const [summaryTile] = container.getElementsByClassName("mx_GenericEventListSummary");
 
         const summaryEventTiles = summaryTile.getElementsByClassName("mx_EventTile");
-        // every event except for the room creation, room encryption, and Bob's
-        // invite event should be in the event summary
-        expect(summaryEventTiles.length).toEqual(tiles.length - 3);
+        // every rendered event except for the room creation and Bob's invite
+        // event should be in the event summary
+        expect(summaryEventTiles.length).toEqual(tiles.length - 2);
     });
 
     it("should not collapse beacons as part of creation events", function () {
@@ -517,8 +520,8 @@ describe("MessagePanel", function () {
 
         const [messageList] = container.getElementsByClassName("mx_RoomView_MessageList");
         const rows = messageList.children;
-        expect(rows.length).toEqual(7); // 6 events + the NewRoomIntro
-        expect(rm.previousSibling).toEqual(rows[5]);
+        expect(rows.length).toEqual(6); // 5 rendered events + the NewRoomIntro
+        expect(rm.previousSibling).toEqual(rows[4]);
 
         // read marker should be hidden given props and at the last event
         expect(isReadMarkerVisible(rm)).toBeFalsy();

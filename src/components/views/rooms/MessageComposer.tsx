@@ -18,7 +18,7 @@ import {
 } from "matrix-js-sdk/src/matrix";
 import { Tooltip } from "@vector-im/compound-web";
 import { logger } from "matrix-js-sdk/src/logger";
-import { LockOffIcon, SendSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
+import { SendSolidIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -26,7 +26,6 @@ import dis from "../../../dispatcher/dispatcher";
 import { type ActionPayload } from "../../../dispatcher/payloads";
 import Stickerpicker from "./Stickerpicker";
 import { makeRoomPermalink, type RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import E2EIcon from "./E2EIcon";
 import SettingsStore from "../../../settings/SettingsStore";
 import { aboveLeftOf, type MenuProps } from "../../structures/ContextMenu";
 import ReplyPreview from "./ReplyPreview";
@@ -36,7 +35,7 @@ import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { RecordingState } from "../../../audio/VoiceRecording";
 import type ResizeNotifier from "../../../utils/ResizeNotifier";
-import { E2EStatus } from "../../../utils/ShieldUtils";
+import type { E2EStatus } from "../../../utils/ShieldUtils";
 import SendMessageComposer, { type SendMessageComposer as SendMessageComposerClass } from "./SendMessageComposer";
 import { type ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
@@ -97,7 +96,6 @@ interface IState {
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
-    showPollsButton: boolean;
     isWysiwygLabEnabled: boolean;
     isRichTextEnabled: boolean;
     initialComposerContent: string;
@@ -148,7 +146,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
-            showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
             isWysiwygLabEnabled: isWysiwygLabEnabled,
             isRichTextEnabled: isRichTextEnabled,
             initialComposerContent: initialComposerContent,
@@ -242,7 +239,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
         }
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
-        SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
         SettingsStore.monitorSetting("feature_wysiwyg_composer", null);
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -283,13 +279,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
                         if (this.state.showStickersButton !== showStickersButton) {
                             this.setState({ showStickersButton });
-                        }
-                        break;
-                    }
-                    case "MessageComposerInput.showPollsButton": {
-                        const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
-                        if (this.state.showPollsButton !== showPollsButton) {
-                            this.setState({ showPollsButton });
                         }
                         break;
                     }
@@ -527,36 +516,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
     };
 
     public render(): React.ReactNode {
-        let leftIcon: false | JSX.Element = false;
-        if (!this.state.isWysiwygLabEnabled) {
-            if (!this.props.e2eStatus) {
-                leftIcon = (
-                    <div className="mx_MessageComposer_e2eIconWrapper">
-                        <Tooltip label={_t("composer|room_unencrypted")}>
-                            <LockOffIcon
-                                aria-label={_t("composer|room_unencrypted")}
-                                width="12px"
-                                height="12px"
-                                color="var(--cpd-color-icon-info-primary)"
-                                className="mx_E2EIcon mx_MessageComposer_e2eIcon"
-                            />
-                        </Tooltip>
-                    </div>
-                );
-            } else if (this.props.e2eStatus !== E2EStatus.Normal) {
-                leftIcon = (
-                    <div className="mx_MessageComposer_e2eIconWrapper">
-                        <E2EIcon
-                            key="e2eIcon"
-                            status={this.props.e2eStatus}
-                            className="mx_MessageComposer_e2eIcon"
-                            size={12}
-                        />
-                    </div>
-                );
-            }
-        }
-
         const controls: ReactNode[] = [];
         const menuPosition = this.getMenuPosition();
 
@@ -572,7 +531,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         onSend={this.sendMessage}
                         isRichTextEnabled={this.state.isRichTextEnabled}
                         initialContent={this.state.initialComposerContent}
-                        e2eStatus={this.props.e2eStatus}
                         menuPosition={menuPosition}
                         placeholder={this.renderPlaceholderText()}
                         eventRelation={this.props.relation}
@@ -668,7 +626,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
         const classes = classNames({
             "mx_MessageComposer": true,
             "mx_MessageComposer--compact": this.props.compact,
-            "mx_MessageComposer_e2eStatus": leftIcon,
             "mx_MessageComposer_wysiwyg": this.state.isWysiwygLabEnabled,
         });
 
@@ -681,7 +638,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator}
                     />
                     <div className="mx_MessageComposer_row">
-                        {leftIcon}
                         {composer}
                         <div className="mx_MessageComposer_actions">
                             {controls}
@@ -698,7 +654,6 @@ export class MessageComposer extends React.Component<IProps, IState> {
                                     showLocationButton={
                                         !window.electron && SettingsStore.getValue(UIFeature.LocationSharing)
                                     }
-                                    showPollsButton={this.state.showPollsButton}
                                     showStickersButton={this.showStickersButton}
                                     isRichTextEnabled={this.state.isRichTextEnabled}
                                     onComposerModeClick={this.onRichTextToggle}

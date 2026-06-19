@@ -16,7 +16,7 @@ describe("<AuthPage />", () => {
     beforeEach(() => {
         SdkConfig.reset();
         // @ts-ignore private access
-        AuthPage.welcomeBackgroundUrl = undefined;
+        AuthPage.welcomeBackground = undefined;
     });
 
     it("should match snapshot", () => {

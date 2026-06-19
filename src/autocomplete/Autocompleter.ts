@@ -10,6 +10,7 @@ import { type ReactElement, type RefAttributes, type HTMLAttributes } from "reac
 import { type Room } from "matrix-js-sdk/src/matrix";
 
 import CommandProvider from "./CommandProvider";
+import MatronCommandProvider from "./MatronCommandProvider";
 import RoomProvider from "./RoomProvider";
 import UserProvider from "./UserProvider";
 import EmojiProvider from "./EmojiProvider";
@@ -40,7 +41,15 @@ export interface ICompletion {
     href?: string;
 }
 
-const PROVIDERS = [UserProvider, RoomProvider, EmojiProvider, NotifProvider, CommandProvider, SpaceProvider];
+const PROVIDERS = [
+    UserProvider,
+    RoomProvider,
+    EmojiProvider,
+    NotifProvider,
+    MatronCommandProvider,
+    CommandProvider,
+    SpaceProvider,
+];
 
 // Providers will get rejected if they take longer than this.
 const PROVIDER_COMPLETION_TIMEOUT = 3000;

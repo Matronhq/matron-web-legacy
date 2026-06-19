@@ -8,8 +8,6 @@ Please see LICENSE files in the repository root for full details.
 import React, { useState, useCallback } from "react";
 import { Flex, RoomListHeaderView, useCreateAutoDisposedViewModel } from "@element-hq/web-shared-components";
 
-import { shouldShowComponent } from "../../../../customisations/helpers/UIComponents";
-import { UIComponent } from "../../../../settings/UIFeature";
 import { RoomListSearch } from "./RoomListSearch";
 import { RoomListView } from "./RoomListView";
 import { _t } from "../../../../languageHandler";
@@ -18,6 +16,7 @@ import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import { Landmark, LandmarkNavigation } from "../../../../accessibility/LandmarkNavigation";
 import { type IState as IRovingTabIndexState } from "../../../../accessibility/RovingTabIndex";
 import { RoomListHeaderViewModel } from "../../../../viewmodels/room-list/RoomListHeaderViewModel";
+import { RoomListViewViewModel } from "../../../../viewmodels/room-list/RoomListViewViewModel";
 import { useMatrixClientContext } from "../../../../contexts/MatrixClientContext";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
 
@@ -33,7 +32,6 @@ type RoomListPanelProps = {
  * The panel of the room list
  */
 export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => {
-    const displayRoomSearch = shouldShowComponent(UIComponent.FilterContainer);
     const [focusedElement, setFocusedElement] = useState<Element | null>(null);
 
     const onFocus = useCallback((ev: React.FocusEvent): void => {
@@ -61,9 +59,11 @@ export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => 
     );
 
     const matrixClient = useMatrixClientContext();
-    const vm = useCreateAutoDisposedViewModel(
+    const headerVm = useCreateAutoDisposedViewModel(
         () => new RoomListHeaderViewModel({ matrixClient, spaceStore: SpaceStore.instance }),
     );
+    const roomListVm = useCreateAutoDisposedViewModel(() => new RoomListViewViewModel({ client: matrixClient }));
+    const isDesktop = Boolean(window.electron);
 
     return (
         <Flex
@@ -76,9 +76,18 @@ export const RoomListPanel: React.FC<RoomListPanelProps> = ({ activeSpace }) => 
             onBlur={onBlur}
             onKeyDown={onKeyDown}
         >
-            {displayRoomSearch && <RoomListSearch activeSpace={activeSpace} />}
-            <RoomListHeaderView vm={vm} />
-            <RoomListView />
+            {isDesktop ? (
+                <>
+                    <RoomListHeaderView vm={headerVm} />
+                    <RoomListSearch activeSpace={activeSpace} onSearchQueryChange={roomListVm.setSearchQuery} />
+                </>
+            ) : (
+                <Flex className="mx_RoomListPanel_webControls" align="center" gap="var(--cpd-space-2x)">
+                    <RoomListSearch activeSpace={activeSpace} onSearchQueryChange={roomListVm.setSearchQuery} />
+                    <RoomListHeaderView vm={headerVm} hideTitle />
+                </Flex>
+            )}
+            <RoomListView vm={roomListVm} />
         </Flex>
     );
 };

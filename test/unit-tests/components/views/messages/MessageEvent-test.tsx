@@ -17,6 +17,10 @@ import SettingsStore from "../../../../../src/settings/SettingsStore";
 import { mkEvent, mkRoom, stubClient } from "../../../../test-utils";
 import MessageEvent from "../../../../../src/components/views/messages/MessageEvent";
 import { RoomPermalinkCreator } from "../../../../../src/utils/permalinks/Permalinks";
+import {
+    MATRON_LIVE_OUTPUT_EVENT_TYPE,
+    MATRON_LIVE_OUTPUT_CONTENT_KEY,
+} from "../../../../../src/matron/EventTypes";
 
 jest.mock("../../../../../src/components/views/messages/UnknownBody", () => ({
     __esModule: true,
@@ -51,6 +55,11 @@ jest.mock("../../../../../src/components/views/messages/MStickerBody", () => ({
 jest.mock("../../../../../src/components/views/messages/TextualBody.tsx", () => ({
     __esModule: true,
     default: () => <div data-testid="textual-body" />,
+}));
+
+jest.mock("../../../../../src/components/views/messages/MLiveOutputBody", () => ({
+    __esModule: true,
+    default: () => <div data-testid="live-output-body" />,
 }));
 
 describe("MessageEvent", () => {
@@ -132,5 +141,26 @@ describe("MessageEvent", () => {
             result.getByTestId("file-body");
             result.getByTestId("textual-body");
         });
+    });
+
+    it("dispatches to MLiveOutputBody when content has the live-output key", () => {
+        event = mkEvent({
+            event: true,
+            type: MATRON_LIVE_OUTPUT_EVENT_TYPE,
+            user: "@user:server",
+            room: "!room:server",
+            content: {
+                msgtype: "m.text",
+                body: "$ ls\n[live output: https://example/live?token=x]",
+                [MATRON_LIVE_OUTPUT_CONTENT_KEY]: {
+                    tool_use_id: "toolu_1",
+                    command: "ls",
+                    viewer_url: "https://example/live?token=x",
+                    expires_at: Math.floor(Date.now() / 1000) + 600,
+                },
+            },
+        });
+        const { getByTestId } = render(<MessageEvent mxEvent={event} permalinkCreator={new RoomPermalinkCreator(room)} />);
+        expect(getByTestId("live-output-body")).toBeInTheDocument();
     });
 });

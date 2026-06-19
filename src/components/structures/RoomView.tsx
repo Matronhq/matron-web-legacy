@@ -1376,12 +1376,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (data.timeline.getTimelineSet() !== room.getUnfilteredTimelineSet()) return;
 
         if (ev.getType() === "org.matrix.room.preview_urls") {
-            this.updatePreviewUrlVisibility(room);
+            this.updatePreviewUrlVisibility();
         }
 
         if (ev.getType() === "m.room.encryption") {
             this.updateE2EStatus(room);
-            this.updatePreviewUrlVisibility(room);
+            this.updatePreviewUrlVisibility();
         }
 
         // ignore anything but real-time updates at the end of the room:
@@ -1537,15 +1537,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private updatePreviewUrlVisibility(room: Room): void {
+    private updatePreviewUrlVisibility(): void {
         this.setState(({ isRoomEncrypted }) => ({
-            showUrlPreview: this.getPreviewUrlVisibility(room, isRoomEncrypted),
+            showUrlPreview: this.getPreviewUrlVisibility(isRoomEncrypted),
         }));
     }
 
-    private getPreviewUrlVisibility({ roomId }: Room, isRoomEncrypted: boolean | null): boolean {
-        const key = isRoomEncrypted ? "urlPreviewsEnabled_e2ee" : "urlPreviewsEnabled";
-        return SettingsStore.getValue(key, roomId);
+    private getPreviewUrlVisibility(isRoomEncrypted: boolean | null): boolean {
+        return SettingsStore.getValue(isRoomEncrypted ? "urlPreviewsEnabled_e2ee" : "urlPreviewsEnabled");
     }
 
     private onRoom = (room: Room): void => {
@@ -1604,9 +1603,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onUrlPreviewsEnabledChange = (): void => {
-        if (this.state.room) {
-            this.updatePreviewUrlVisibility(this.state.room);
-        }
+        this.updatePreviewUrlVisibility();
     };
 
     private onRoomStateEvents = async (ev: MatrixEvent, state: RoomState): Promise<void> => {
@@ -1634,7 +1631,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         this.setState({
             isRoomEncrypted,
-            showUrlPreview: this.getPreviewUrlVisibility(room, isRoomEncrypted),
+            showUrlPreview: this.getPreviewUrlVisibility(isRoomEncrypted),
             ...(newE2EStatus && { e2eStatus: newE2EStatus }),
         });
     }
@@ -2573,6 +2570,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             highlightedEventId = this.state.initialEventId;
         }
 
+        const encryptionNotice = isRoomEncrypted ? (
+            <li className="mx_RoomView_encryptionNotice">Messages are end-to-end encrypted</li>
+        ) : undefined;
+
         let messagePanel: JSX.Element | undefined;
         if (!isRoomEncryptionLoading) {
             messagePanel = (
@@ -2601,6 +2602,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     layout={this.state.layout}
                     editState={this.state.editState}
                     enableReadReceiptsAndMarkersOnActivity={this.props.enableReadReceiptsAndMarkersOnActivity}
+                    topTimelineTile={encryptionNotice}
                 />
             );
         }

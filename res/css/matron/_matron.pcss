@@ -1,0 +1,529 @@
+/*
+Copyright 2026 Matron Contributors.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+/*
+ * Matron UI overrides.
+ *
+ * Keep product-specific interface polish here where possible, instead of
+ * changing upstream Element styles throughout the tree.
+ */
+
+.mx_Dialog_background:not(.mx_Dialog_staticBackground) {
+    background-color: rgb(18, 16, 14, 0.12);
+    backdrop-filter: blur(6px);
+}
+
+.mx_ResizeHandle.mx_ResizeHandle--horizontal {
+    margin: 0 -6px 0 -5px;
+}
+
+.mx_AuthPage_modal {
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #fffefa;
+    box-shadow: 0 16px 44px rgb(18, 16, 14, 0.18);
+}
+
+.mx_AuthPage_modal.mx_AuthPage_modal_withBlur {
+    box-shadow: 0 16px 44px rgb(18, 16, 14, 0.18);
+}
+
+.mx_AuthPage_modal .mx_AuthPage_modalContent,
+.mx_AuthPage_modal.mx_AuthPage_modal_withBlur .mx_AuthPage_modalContent,
+.mx_AuthBody {
+    background-color: #fffefa;
+}
+
+.mx_AuthBody {
+    border-radius: 10px;
+}
+
+.mx_Dialog_border {
+    max-height: calc(100% - var(--cpd-space-12x));
+}
+
+.mx_Dialog_border[class*="_glass_"] {
+    padding: 0;
+    outline: 0;
+    border-radius: 10px;
+    background: transparent;
+    box-shadow: 0 16px 44px rgb(18, 16, 14, 0.18);
+    backdrop-filter: none;
+}
+
+.mx_Dialog_border[class*="_glass_"] > :first-child {
+    border-radius: 10px;
+}
+
+.mx_Dialog {
+    width: min(92vw, 520px);
+    border: 0;
+    border-radius: 10px;
+    background-color: #fffefa;
+    box-shadow: none;
+    color: var(--cpd-color-text-primary);
+    padding: var(--cpd-space-6x);
+}
+
+.mx_Dialog:has(.mx_UserSettingsDialog, .mx_RoomSettingsDialog, .mx_SpaceSettingsDialog, .mx_SpacePreferencesDialog) {
+    width: min(90vw, 980px);
+    max-width: 980px;
+}
+
+.mx_Dialog_fixedWidth:not(
+    .mx_UserSettingsDialog,
+    .mx_RoomSettingsDialog,
+    .mx_SpaceSettingsDialog,
+    .mx_SpacePreferencesDialog
+) {
+    width: min(92vw, 520px);
+    max-width: 520px;
+}
+
+.mx_Dialog_header {
+    margin-bottom: var(--cpd-space-3x);
+    padding-inline-end: var(--cpd-space-7x);
+}
+
+.mx_Dialog_title {
+    color: var(--cpd-color-text-primary);
+    font: var(--cpd-font-heading-md-semibold);
+    letter-spacing: var(--cpd-font-letter-spacing-heading-md);
+}
+
+.mx_Dialog_content {
+    margin: var(--cpd-space-5x) 0 var(--cpd-space-6x);
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_Dialog_buttons {
+    margin-top: var(--cpd-space-6x);
+}
+
+.mx_Dialog_buttons .mx_Dialog_buttons_row {
+    gap: var(--cpd-space-3x);
+    justify-content: flex-end;
+}
+
+.mx_Dialog_cancelButton {
+    top: var(--cpd-space-4x);
+    right: var(--cpd-space-4x);
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: var(--cpd-space-2x);
+    background-color: rgb(28, 24, 20, 0.04);
+    box-sizing: border-box;
+}
+
+.mx_Dialog_cancelButton svg {
+    width: 16px;
+    height: 16px;
+}
+
+.mx_Dialog_cancelButton:hover {
+    background-color: rgb(28, 24, 20, 0.08);
+}
+
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton, .mx_AccessibleButton),
+.mx_Dialog input[type="submit"],
+.mx_Dialog_buttons input[type="submit"] {
+    min-height: 36px;
+    border-radius: var(--cpd-space-2x);
+    padding: var(--cpd-space-1-5x) var(--cpd-space-4x);
+}
+
+.mx_Dialog_buttons
+    button:not(
+        .mx_Dialog_nonDialogButton,
+        .mx_AccessibleButton,
+        .mx_UserProfileSettings button,
+        .mx_ThemeChoicePanel_CustomTheme button,
+        .mx_UnpinAllDialog button,
+        .mx_ShareDialog button,
+        .mx_EncryptionUserSettingsTab button
+    ),
+.mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
+    min-width: auto;
+}
+
+.mx_Dialog button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton, [class|="maplibregl"]),
+.mx_Dialog input[type="submit"].mx_Dialog_primary,
+.mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
+    box-shadow: 0 1px 3px rgb(28, 24, 20, 0.14);
+}
+
+.mx_AccessSecretStorageDialog {
+    gap: var(--cpd-space-6x);
+    border: 0;
+    border-radius: 10px;
+    box-shadow: none;
+    padding: 0;
+}
+
+.mx_AccessSecretStorageDialog .mx_EncryptionCard_header {
+    gap: var(--cpd-space-3x);
+}
+
+.mx_AccessSecretStorageDialog .mx_EncryptionCard_header > h2 {
+    font: var(--cpd-font-heading-md-semibold);
+}
+
+.mx_AccessSecretStorageDialog .mx_EncryptionCard_header > span {
+    max-width: 34rem;
+}
+
+.mx_AccessSecretStorageDialog_primaryContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--cpd-space-4x);
+}
+
+.mx_AccessSecretStorageDialog_recoveryKeyFeedback {
+    min-height: 24px;
+    color: var(--cpd-color-text-secondary);
+    font: var(--cpd-font-body-sm-regular);
+}
+
+.mx_EncryptionCard_buttons {
+    gap: var(--cpd-space-2x);
+}
+
+.mx_EncryptionCard_buttons button {
+    min-height: 40px;
+    border-radius: var(--cpd-space-2x);
+}
+
+.mx_SetupEncryptionBody {
+    width: min(100%, 520px);
+}
+
+.mx_RoomHeader {
+    height: 56px;
+}
+
+.mx_RoomHeader .mx_BaseAvatar {
+    --cpd-avatar-size: 32px !important;
+}
+
+.mx_RoomHeader_viewSummaryButton {
+    min-height: 28px;
+    padding: var(--cpd-space-1x) var(--cpd-space-2x);
+    border-radius: var(--cpd-space-1-5x);
+    font: var(--cpd-font-body-sm-medium);
+}
+
+.mx_RoomHeader_e2eIcon {
+    margin: 0;
+}
+
+.mx_RoomListPanel [data-testid="room-list-header"] {
+    height: 46px;
+    min-height: 46px;
+    padding-block: 0;
+}
+
+.mx_RoomListPanel [data-testid="room-list-header"] > div {
+    padding-bottom: var(--cpd-space-1x);
+}
+
+.mx_RoomListPanel_webControls {
+    align-self: stretch;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 56px;
+    border-bottom: var(--cpd-border-width-1) solid var(--cpd-color-bg-subtle-primary);
+    padding: 0 var(--cpd-space-3x);
+}
+
+.mx_RoomListPanel_webControls .mx_RoomListSearch {
+    flex: 1;
+    min-width: 0;
+    min-height: auto;
+    border-bottom: 0 !important;
+    padding: 0;
+}
+
+.mx_RoomListPanel_webControls [data-testid="room-list-header"] {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: auto;
+    padding: 0;
+}
+
+.mx_RoomListPanel_webControls [data-testid="room-list-header"] > div {
+    flex: 0 0 auto;
+    padding-bottom: 0;
+}
+
+.mx_RoomListPanel_webControls [data-testid="room-list-header"] h1 {
+    display: none;
+}
+
+.mx_RoomListSearch {
+    min-height: 56px;
+    box-sizing: border-box;
+    border-bottom: var(--cpd-border-width-1) solid var(--cpd-color-bg-subtle-primary);
+    padding: 0 var(--cpd-space-3x);
+}
+
+.mx_RoomListSearch_inputWrapper {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    height: 36px;
+    align-items: center;
+    gap: var(--cpd-space-2x);
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: var(--cpd-color-bg-subtle-secondary);
+    padding: 0 var(--cpd-space-3x);
+    color: var(--cpd-color-icon-secondary);
+}
+
+.mx_RoomListSearch_inputWrapper:focus-within {
+    border-color: var(--cpd-color-border-interactive-primary);
+    background-color: var(--cpd-color-bg-canvas-default);
+}
+
+.mx_RoomListSearch_inputWrapper svg {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    color: currentColor;
+}
+
+.mx_RoomListSearch_input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--cpd-color-text-primary);
+    font: var(--cpd-font-body-md-regular);
+}
+
+.mx_RoomListSearch_input::placeholder {
+    color: var(--cpd-color-text-secondary);
+}
+
+.mx_RoomListItemView {
+    margin-bottom: var(--cpd-space-1x);
+}
+
+[data-testid="room-list"] [data-testid="virtuoso-item-list"] {
+    padding-top: 8px !important;
+}
+
+.mx_RoomListItemView > div {
+    margin-inline: var(--cpd-space-1x) var(--cpd-space-2x);
+    padding: 5px var(--cpd-space-2x) 5px var(--cpd-space-1x);
+}
+
+.mx_RoomListItemView.mx_RoomListItemView_selected > div {
+    background-color: color-mix(in srgb, var(--cpd-color-gray-200) 55%, var(--cpd-color-gray-300));
+}
+
+.mx_RoomListItemView.mx_RoomListItemView_selected > div::before {
+    display: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] {
+    --RoomView_MessageList-padding: 6px;
+    --matron-room-timeline-background: #f2f0ea;
+    --matron-room-timeline-background-bottom: #e8e5dc;
+    background:
+        linear-gradient(
+            180deg,
+            var(--matron-room-timeline-background) 0%,
+            var(--matron-room-timeline-background-bottom) 100%
+        ),
+        var(--matron-room-timeline-background);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_RoomView_timeline,
+.mx_RoomView_body[data-layout="bubble"] .mx_RoomView_messagePanel {
+    background: transparent;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_MessagePanel_myReadMarker hr {
+    display: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_RoomView_encryptionNotice {
+    align-self: center;
+    clear: both;
+    width: fit-content;
+    margin: var(--cpd-space-2x) auto var(--cpd-space-3x);
+    border: 1px solid var(--cpd-color-gray-300);
+    border-radius: var(--cpd-space-2x);
+    background-color: var(--cpd-color-bg-canvas-default);
+    color: var(--cpd-color-text-secondary);
+    font: var(--cpd-font-body-sm-regular);
+    padding: var(--cpd-space-1x) var(--cpd-space-3x);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_MessageComposer_wrapper {
+    border-top-color: var(--cpd-color-gray-200);
+    background-color: var(--matron-room-timeline-background);
+    padding-left: 16px;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_MessageComposer {
+    padding-bottom: 0;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_SendMessageComposer .mx_BasicMessageComposer_input,
+.mx_RoomView_body[data-layout="bubble"] .mx_SendWysiwygComposer .mx_WysiwygComposer_Editor {
+    box-sizing: border-box;
+    border: 1px solid var(--cpd-color-gray-300);
+    background-color: var(--cpd-color-bg-canvas-default);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_SendMessageComposer .mx_BasicMessageComposer_input {
+    width: 100%;
+    min-height: 38px;
+    border-radius: var(--cpd-space-2x);
+    padding: var(--cpd-space-2x) var(--cpd-space-3x);
+}
+
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_BasicMessageComposer
+    .mx_BasicMessageComposer_inputEmpty
+    > :first-child::before,
+.mx_RoomView_body[data-layout="bubble"] .mx_WysiwygComposer_Editor_content_placeholder::before {
+    content: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_SendWysiwygComposer .mx_WysiwygComposer_Editor {
+    border-radius: var(--cpd-space-2x);
+}
+
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_SendWysiwygComposer
+    .mx_WysiwygComposer_Editor[data-is-expanded="false"] {
+    border-radius: var(--cpd-space-2x);
+}
+
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_SendMessageComposer
+    .mx_BasicMessageComposer:focus-within
+    .mx_BasicMessageComposer_input,
+.mx_RoomView_body[data-layout="bubble"] .mx_SendWysiwygComposer-focused .mx_WysiwygComposer_Editor {
+    border-color: var(--cpd-color-gray-400);
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="false"] {
+    --backgroundColor: var(--cpd-color-bg-canvas-default);
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body blockquote,
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body pre,
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body pre code {
+    background-color: color-mix(in srgb, var(--cpd-color-gray-100) 15%, var(--cpd-color-gray-200));
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="false"] .markdown-body code:not(pre *) {
+    background-color: color-mix(in srgb, var(--cpd-color-gray-100) 15%, var(--cpd-color-gray-200));
+    border-color: var(--cpd-color-gray-200);
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="true"] {
+    --backgroundColor: #c4f5fb;
+}
+
+.mx_EventTile[data-layout="bubble"][data-self="true"] .mx_MediaBody {
+    background: #c4f5fb;
+}
+
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"],
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] .mx_EventTile_line,
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] .mx_EventTileBubble,
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] .mx_TextualEvent,
+.mx_EventTile.mx_EventTile_info[data-layout="bubble"] [class*="_container_"] {
+    --backgroundColor: transparent !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none;
+}
+
+.mx_EventTile[data-layout="bubble"],
+.mx_GenericEventListSummary[data-layout="bubble"] {
+    --cornerRadius: 6px;
+    --EventTile_bubble-margin-inline-start: var(--cpd-space-5x);
+    --EventTile_bubble-margin-inline-end: var(--cpd-space-5x);
+}
+
+.mx_EventTile[data-layout="bubble"] .mx_EventTile_avatar {
+    display: none;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_WhoIsTypingTile_avatars {
+    flex-basis: 40px;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_WhoIsTypingTile {
+    margin-left: 6px;
+    margin-bottom: var(--cpd-space-2x);
+    padding-top: var(--cpd-space-2x);
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_line,
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info)
+    .mx_MImageBody
+    .mx_MImageBody_thumbnail_container,
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info)
+    .mx_MVideoBody
+    .mx_MVideoBody_container,
+.mx_RoomView_body[data-layout="bubble"]
+    .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info)
+    .mx_MImageBody::before,
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_MediaBody,
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_MLocationBody_map,
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_MBeaconBody {
+    border-radius: var(--cornerRadius) !important;
+}
+
+.mx_RoomView_body[data-layout="bubble"] .mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_line {
+    box-shadow: 0 1px 2px rgb(18, 16, 14, 0.08);
+}
+
+.mx_EventTile[data-layout="bubble"]:hover::before,
+.mx_EventTile[data-layout="bubble"].mx_EventTile_selected::before {
+    background: transparent;
+}
+
+.mx_EventTile[data-layout="bubble"]:hover .mx_EventTile_avatar,
+.mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_avatar,
+.mx_EventTile[data-layout="bubble"].mx_EventTile_selected .mx_EventTile_avatar {
+    border-color: var(--matron-room-timeline-background);
+}
+
+.mx_EventTile[data-layout="bubble"]:hover .mx_EventTile_avatar img,
+.mx_EventTile[data-layout="bubble"]:not(.mx_EventTile_info) .mx_EventTile_avatar img,
+.mx_EventTile[data-layout="bubble"].mx_EventTile_selected .mx_EventTile_avatar img {
+    box-shadow: 0 0 0 3px var(--matron-room-timeline-background);
+}
+
+.mx_EventTile .mx_MessageActionBar {
+    visibility: hidden !important;
+}
+
+.mx_SessionSummaryDialog_content {
+    white-space: pre-wrap;
+}
+
+.mx_RoomView .mx_NewRoomIntro,
+.mx_RoomView [data-testid="matron-room-creation-summary"] {
+    display: none;
+}

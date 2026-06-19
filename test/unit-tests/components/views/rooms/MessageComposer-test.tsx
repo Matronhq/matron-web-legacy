@@ -43,7 +43,6 @@ const openStickerPicker = async (): Promise<void> => {
 };
 
 const startVoiceMessage = async (): Promise<void> => {
-    await userEvent.click(screen.getByLabelText("More options"));
     await userEvent.click(screen.getByLabelText("Voice Message"));
 };
 
@@ -69,15 +68,11 @@ describe("MessageComposer", () => {
 
         // restore settings
         act(() => {
-            (
-                [
-                    "MessageComposerInput.showStickersButton",
-                    "MessageComposerInput.showPollsButton",
-                    "feature_wysiwyg_composer",
-                ] as const
-            ).forEach((setting): void => {
-                SettingsStore.setValue(setting, null, SettingLevel.DEVICE, SettingsStore.getDefaultValue(setting));
-            });
+            (["MessageComposerInput.showStickersButton", "feature_wysiwyg_composer"] as const).forEach(
+                (setting): void => {
+                    SettingsStore.setValue(setting, null, SettingLevel.DEVICE, SettingsStore.getDefaultValue(setting));
+                },
+            );
         });
     });
 
@@ -195,10 +190,6 @@ describe("MessageComposer", () => {
             {
                 setting: "MessageComposerInput.showStickersButton" as const,
                 buttonLabel: "Sticker",
-            },
-            {
-                setting: "MessageComposerInput.showPollsButton" as const,
-                buttonLabel: "Poll",
             },
         ].forEach(({ setting, buttonLabel }) => {
             [true, false].forEach((value: boolean) => {
@@ -428,9 +419,12 @@ describe("MessageComposer", () => {
 
         it("should not show the stickers button", async () => {
             wrapAndRender({ room: localRoom });
-            await act(async () => {
-                await userEvent.click(screen.getByLabelText("More options"));
-            });
+            const moreOptionsButton = screen.queryByLabelText("More options");
+            if (moreOptionsButton) {
+                await act(async () => {
+                    await userEvent.click(moreOptionsButton);
+                });
+            }
             expect(screen.queryByLabelText("Sticker")).not.toBeInTheDocument();
         });
     });

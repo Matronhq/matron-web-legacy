@@ -53,6 +53,10 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): bool
     // Hide all poll end events
     if (M_POLL_END.matches(ev.getType())) return true;
 
+    // Matron rooms are bot-led and closed-loop, so startup ceremony events add
+    // noise without helping users understand the conversation.
+    if (ev.getType() === EventType.RoomEncryption) return true;
+
     // Accessing the settings store directly can be expensive if done frequently,
     // so we should prefer using cached values if a RoomContext is available
     const isEnabled = ctx
@@ -70,6 +74,12 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): bool
     const eventDiff = memberEventDiff(ev);
 
     if (eventDiff.isMemberEvent) {
+        const membership = ev.getContent().membership;
+        const ownUserId = ctx?.room?.client.getSafeUserId();
+        if (ownUserId && ev.getStateKey() === ownUserId) {
+            if (membership === KnownMembership.Invite || membership === KnownMembership.Join) return true;
+        }
+
         if ((eventDiff.isJoin || eventDiff.isPart) && !isEnabled("showJoinLeaves")) return true;
         if (eventDiff.isAvatarChange && !isEnabled("showAvatarChanges")) return true;
         if (eventDiff.isDisplaynameChange && !isEnabled("showDisplaynameChanges")) return true;

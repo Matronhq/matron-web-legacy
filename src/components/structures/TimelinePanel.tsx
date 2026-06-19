@@ -140,6 +140,7 @@ interface IProps {
 
     hideThreadedMessages?: boolean;
     disableGrouping?: boolean;
+    topTimelineTile?: ReactNode;
 
     /**
      * Enable updating the read receipts and markers on user activity.
@@ -682,9 +683,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // updates from pagination will happen when the paginate completes.
         if (toStartOfTimeline || !data || !data.liveEvent) return;
 
-        if (!this.messagePanel.current?.getScrollState()) return;
+        const myUserId = MatrixClientPeg.safeGet().credentials.userId;
+        const isOwnEvent = ev.getSender() === myUserId;
+        const scrollState = this.messagePanel.current?.getScrollState();
 
-        if (!this.messagePanel.current.getScrollState()?.stuckAtBottom) {
+        if (!scrollState && !isOwnEvent) return;
+
+        if (scrollState && !scrollState.stuckAtBottom && !isOwnEvent) {
             // we won't load this event now, because we don't want to push any
             // events off the other end of the timeline. But we need to note
             // that we can now paginate.
@@ -725,7 +730,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 // read-marker when a remote echo of an event we have just sent takes
                 // more than the timeout on userActiveRecently.
                 //
-                const myUserId = MatrixClientPeg.safeGet().credentials.userId;
                 callRMUpdated = false;
                 if (ev.getSender() !== myUserId && !UserActivity.sharedInstance().userActiveRecently()) {
                     updatedState.readMarkerVisible = true;
@@ -1868,6 +1872,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 layout={this.props.layout}
                 hideThreadedMessages={this.props.hideThreadedMessages}
                 disableGrouping={this.props.disableGrouping}
+                topTimelineTile={this.props.topTimelineTile}
                 callEventGroupers={this.callEventGroupers}
             />
         );

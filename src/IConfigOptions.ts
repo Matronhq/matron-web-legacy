@@ -87,12 +87,13 @@ export interface IConfigOptions {
     };
 
     mobile_guide_toast?: boolean;
-    mobile_guide_app_variant?: "element" | "element-classic" | "element-pro";
+    mobile_guide_app_variant?: "matron" | "matron-classic" | "matron-pro";
 
     default_theme?: "light" | "dark" | string; // custom themes are strings
     default_country_code?: string; // ISO 3166 alpha2 country code
     default_federate?: boolean;
     default_device_display_name?: string; // for device naming on login+registration
+    matron_auto_join_bot_user_ids?: string[]; // inviter MXID allowlist; supports * wildcards
 
     setting_defaults?: Record<string, any>; // <SettingName, Value>
 

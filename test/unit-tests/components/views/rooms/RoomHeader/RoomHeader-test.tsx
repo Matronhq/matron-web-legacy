@@ -61,6 +61,8 @@ import { UIFeature } from "../../../../../../src/settings/UIFeature";
 import { SettingLevel } from "../../../../../../src/settings/SettingLevel";
 import { ElementCallMemberEventType } from "../../../../../../src/call-types";
 import { defaultWatchManager } from "../../../../../../src/settings/Settings.tsx";
+import * as pinnedEventHooks from "../../../../../../src/hooks/usePinnedEvents";
+import Modal from "../../../../../../src/Modal";
 
 jest.mock("../../../../../../src/utils/ShieldUtils");
 jest.mock("../../../../../../src/hooks/right-panel/useCurrentPhase", () => ({
@@ -112,6 +114,8 @@ describe("RoomHeader", () => {
 
         setCardSpy = jest.spyOn(RightPanelStore.instance, "setCard");
         jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Normal);
+        jest.spyOn(pinnedEventHooks, "usePinnedEvents").mockReturnValue([]);
+        jest.spyOn(pinnedEventHooks, "useSortedFetchedPinnedEvents").mockReturnValue([]);
 
         // Mock CallStore.instance.getCall to return null by default
         // Individual tests can override this when they need a specific Call object
@@ -146,59 +150,13 @@ describe("RoomHeader", () => {
         expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.RoomSummary });
     });
 
-    it("shows a face pile for rooms", async () => {
-        const user = userEvent.setup();
-        const members = [
-            {
-                userId: "@me:example.org",
-                name: "Member",
-                rawDisplayName: "Member",
-                roomId: room.roomId,
-                membership: KnownMembership.Join,
-                getAvatarUrl: () => "mxc://avatar.url/image.png",
-                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-            },
-            {
-                userId: "@you:example.org",
-                name: "Member",
-                rawDisplayName: "Member",
-                roomId: room.roomId,
-                membership: KnownMembership.Join,
-                getAvatarUrl: () => "mxc://avatar.url/image.png",
-                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-            },
-            {
-                userId: "@them:example.org",
-                name: "Member",
-                rawDisplayName: "Member",
-                roomId: room.roomId,
-                membership: KnownMembership.Join,
-                getAvatarUrl: () => "mxc://avatar.url/image.png",
-                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-            },
-            {
-                userId: "@bot:example.org",
-                name: "Bot user",
-                rawDisplayName: "Bot user",
-                roomId: room.roomId,
-                membership: KnownMembership.Join,
-                getAvatarUrl: () => "mxc://avatar.url/image.png",
-                getMxcAvatarUrl: () => "mxc://avatar.url/image.png",
-            },
-        ];
-        room.currentState.setJoinedMemberCount(members.length);
-        room.getJoinedMembers = jest.fn().mockReturnValue(members);
+    it("does not show the member face pile for rooms", () => {
+        room.currentState.setJoinedMemberCount(4);
 
         const { container } = render(<RoomHeader room={room} />, getWrapper());
 
-        expect(container).toHaveTextContent("4");
-
-        const facePile = getByLabelText(document.body, "4 members");
-        expect(facePile).toHaveTextContent("4");
-
-        await user.click(facePile);
-
-        expect(setCardSpy).toHaveBeenCalledWith({ phase: RightPanelPhases.MemberList });
+        expect(container).not.toHaveTextContent("4");
+        expect(queryByLabelText(document.body, "4 members")).not.toBeInTheDocument();
     });
 
     it("has room info icon that opens the room info panel", async () => {
@@ -801,9 +759,10 @@ describe("RoomHeader", () => {
         });
 
         it.each([
-            [ShieldUtils.E2EStatus.Verified, "Verified"],
-            [ShieldUtils.E2EStatus.Warning, "Untrusted"],
+            [ShieldUtils.E2EStatus.Verified, "Everyone in this room is verified"],
+            [ShieldUtils.E2EStatus.Warning, "Someone is using an unknown session"],
         ])("shows the %s icon", async (value: ShieldUtils.E2EStatus, expectedLabel: string) => {
+            mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(value);
 
             render(<RoomHeader room={room} />, getWrapper());
@@ -823,10 +782,14 @@ describe("RoomHeader", () => {
         });
 
         it("updates the icon when the encryption status changes", async () => {
+            mocked(client.getCrypto()!).isEncryptionEnabledInRoom.mockResolvedValue(true);
+
             // The room starts verified
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Verified);
             render(<RoomHeader room={room} />, getWrapper());
-            await waitFor(() => expect(getByLabelText(document.body, "Verified")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Everyone in this room is verified")).toBeInTheDocument(),
+            );
 
             // A new member joins, and the room becomes unverified
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Warning);
@@ -847,7 +810,9 @@ describe("RoomHeader", () => {
                     new RoomMember(room.roomId, "@alice:example.org"),
                 );
             });
-            await waitFor(() => expect(getByLabelText(document.body, "Untrusted")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Someone is using an unknown session")).toBeInTheDocument(),
+            );
 
             // The user becomes verified
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Verified);
@@ -858,14 +823,18 @@ describe("RoomHeader", () => {
                     new UserVerificationStatus(true, true, true, false),
                 );
             });
-            await waitFor(() => expect(getByLabelText(document.body, "Verified")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Everyone in this room is verified")).toBeInTheDocument(),
+            );
 
             // An unverified device is added
             jest.spyOn(ShieldUtils, "shieldStatusForRoom").mockResolvedValue(ShieldUtils.E2EStatus.Warning);
             act(() => {
                 MatrixClientPeg.get()!.emit(CryptoEvent.DevicesUpdated, ["@alice:example.org"], false);
             });
-            await waitFor(() => expect(getByLabelText(document.body, "Untrusted")).toBeInTheDocument());
+            await waitFor(() =>
+                expect(getByLabelText(document.body, "Someone is using an unknown session")).toBeInTheDocument(),
+            );
         });
     });
 
@@ -930,6 +899,32 @@ describe("RoomHeader", () => {
         const dispatcherSpy = jest.spyOn(dispatcher, "dispatch");
         await user.click(getByLabelText(document.body, "Open room settings"));
         expect(dispatcherSpy).toHaveBeenCalledWith(expect.objectContaining({ action: "open_room_settings" }));
+    });
+
+    it("opens a pinned session summary in a modal", async () => {
+        const user = userEvent.setup();
+        const summaryEvent = new MatrixEvent({
+            type: EventType.RoomMessage,
+            sender: "@alice:example.org",
+            content: {
+                body: "📌 Session Summary\n\n• Summary text",
+                msgtype: "m.text",
+            },
+            room_id: ROOM_ID,
+            origin_server_ts: 0,
+            event_id: "$summaryEventId",
+        });
+        jest.spyOn(pinnedEventHooks, "usePinnedEvents").mockReturnValue([summaryEvent.getId()!]);
+        jest.spyOn(pinnedEventHooks, "useSortedFetchedPinnedEvents").mockReturnValue([summaryEvent]);
+        const createDialogSpy = jest.spyOn(Modal, "createDialog").mockReturnValue({
+            close: jest.fn(),
+            finished: Promise.resolve([false]),
+        } as any);
+
+        render(<RoomHeader room={room} />, getWrapper());
+        await user.click(screen.getByRole("button", { name: "View summary" }));
+
+        expect(createDialogSpy).toHaveBeenCalledWith(expect.any(Function), { mxEvent: summaryEvent });
     });
 });
 

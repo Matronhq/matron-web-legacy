@@ -194,6 +194,7 @@ interface IProps {
 
     hideThreadedMessages?: boolean;
     disableGrouping?: boolean;
+    topTimelineTile?: ReactNode;
 
     callEventGroupers: Map<string, LegacyCallEventGrouper>;
 }
@@ -1077,6 +1078,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     fixedChildren={ircResizer}
                 >
                     {topSpinner}
+                    {!this.props.canBackPaginate && this.props.topTimelineTile}
                     {this.getEventTiles()}
                     {whoIsTyping}
                     {bottomSpinner}

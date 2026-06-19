@@ -18,7 +18,7 @@ const { Default } = composeStories(stories);
 const renderWithMockContext = (component: React.ReactElement): ReturnType<typeof render> => {
     return render(component, {
         wrapper: ({ children }) => (
-            <VirtuosoMockContext.Provider value={{ viewportHeight: 600, itemHeight: 52 }}>
+            <VirtuosoMockContext.Provider value={{ viewportHeight: 600, itemHeight: 60 }}>
                 {children}
             </VirtuosoMockContext.Provider>
         ),

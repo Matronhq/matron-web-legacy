@@ -23,7 +23,6 @@ import * as SlashCommands from "../../../../../../../src/slash-commands/SlashCom
 import * as Commands from "../../../../../../../src/editor/commands";
 import * as Reply from "../../../../../../../src/utils/Reply";
 import { MatrixClientPeg } from "../../../../../../../src/MatrixClientPeg";
-import { Action } from "../../../../../../../src/dispatcher/actions";
 
 describe("message", () => {
     const message = "<i><b>hello</b> world</i>";
@@ -48,6 +47,7 @@ describe("message", () => {
     mockRoom.findEventById = jest.fn((eventId) => {
         return eventId === mockEvent.getId() ? mockEvent : null;
     });
+    mockRoom.addLiveEvents = jest.fn();
 
     const defaultRoomContext: IRoomState = getRoomContext(mockRoom, {});
 
@@ -325,9 +325,7 @@ describe("message", () => {
                 },
             );
 
-            it("if user enters invalid command and then sends it anyway", async () => {
-                // mock out returning a true value for `shouldSendAnyway` to avoid rendering the modal
-                jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValueOnce(true);
+            it("sends invalid slash commands to the room for bots to handle", async () => {
                 const invalidCommandInput = "/badCommand";
 
                 await sendMessage(invalidCommandInput, true, {
@@ -335,19 +333,14 @@ describe("message", () => {
                     mxClient: mockClient,
                 });
 
-                // we expect the message to have been sent
-                // and a composer focus action to have been dispatched
                 expect(mockClient.sendMessage).toHaveBeenCalledWith(
                     "myfakeroom",
                     null,
                     expect.objectContaining({ body: invalidCommandInput }),
                 );
-                expect(spyDispatcher).toHaveBeenCalledWith(expect.objectContaining({ action: Action.FocusAComposer }));
             });
 
-            it("if user enters invalid command and then does not send, return undefined", async () => {
-                // mock out returning a false value for `shouldSendAnyway` to avoid rendering the modal
-                jest.spyOn(Commands, "shouldSendAnyway").mockResolvedValueOnce(false);
+            it("does not return early for invalid slash commands", async () => {
                 const invalidCommandInput = "/badCommand";
 
                 const result = await sendMessage(invalidCommandInput, true, {
@@ -355,7 +348,7 @@ describe("message", () => {
                     mxClient: mockClient,
                 });
 
-                expect(result).toBeUndefined();
+                expect(result).toBeDefined();
             });
         });
     });

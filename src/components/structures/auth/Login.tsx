@@ -30,7 +30,6 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton, { type ButtonEvent } from "../../views/elements/AccessibleButton";
 import { type ValidatedServerConfig } from "../../../utils/ValidatedServerConfig";
-import { filterBoolean } from "../../../utils/arrays";
 import { startOidcLogin } from "../../../utils/oidc/authorize";
 
 interface IProps {
@@ -401,20 +400,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     };
 
     public renderLoginComponentForFlows(): ReactNode {
-        if (!this.state.flows) return null;
-
-        // this is the ideal order we want to show the flows in
-        const order = ["oidcNativeFlow", "m.login.password", "m.login.sso"];
-
-        const flows = filterBoolean(order.map((type) => this.state.flows?.find((flow) => flow.type === type)));
-        return (
-            <React.Fragment>
-                {flows.map((flow) => {
-                    const stepRenderer = this.stepRendererMap[flow.type];
-                    return <React.Fragment key={flow.type}>{stepRenderer()}</React.Fragment>;
-                })}
-            </React.Fragment>
-        );
+        return this.renderPasswordStep();
     }
 
     private renderPasswordStep = (): JSX.Element => {
@@ -544,6 +530,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         serverConfig={this.props.serverConfig}
                         onServerConfigChange={this.props.onServerConfigChange}
                         disabled={this.isBusy()}
+                        inlineField
                     />
                     {this.renderLoginComponentForFlows()}
                     {footer}

@@ -65,13 +65,12 @@ describe("MessageComposerButtons", () => {
                 {...mockProps}
                 isMenuOpen={false}
                 showLocationButton={true}
-                showPollsButton={true}
                 showStickersButton={true}
             />,
             false,
         );
 
-        expect(getButtonLabels()).toEqual(["Emoji", "Attachment", "More options"]);
+        expect(getButtonLabels()).toEqual(["Emoji", "Attachment", "Voice Message", "More options"]);
     });
 
     it("Renders other buttons in menu in wide mode", async () => {
@@ -80,7 +79,6 @@ describe("MessageComposerButtons", () => {
                 {...mockProps}
                 isMenuOpen={true}
                 showLocationButton={true}
-                showPollsButton={true}
                 showStickersButton={true}
             />,
             false,
@@ -92,8 +90,9 @@ describe("MessageComposerButtons", () => {
             expect(getButtonLabels()).toEqual([
                 "Emoji",
                 "Attachment",
+                "Voice Message",
                 "More options",
-                ["Sticker", "Voice Message", "Poll", "Location"],
+                ["Sticker", "Location"],
             ]);
         });
     });
@@ -104,7 +103,6 @@ describe("MessageComposerButtons", () => {
                 {...mockProps}
                 isMenuOpen={false}
                 showLocationButton={true}
-                showPollsButton={true}
                 showStickersButton={true}
             />,
             true,
@@ -119,53 +117,11 @@ describe("MessageComposerButtons", () => {
                 {...mockProps}
                 isMenuOpen={true}
                 showLocationButton={true}
-                showPollsButton={true}
                 showStickersButton={true}
             />,
             true,
         );
 
-        expect(getButtonLabels()).toEqual(["Emoji", "More options", ["Attachment", "Sticker", "Poll", "Location"]]);
-    });
-
-    describe("polls button", () => {
-        it("should render when asked to", () => {
-            wrapAndRender(
-                <MessageComposerButtons
-                    {...mockProps}
-                    isMenuOpen={true}
-                    showLocationButton={true}
-                    showPollsButton={true}
-                    showStickersButton={true}
-                />,
-                true,
-            );
-
-            expect(getButtonLabels()).toEqual(["Emoji", "More options", ["Attachment", "Sticker", "Poll", "Location"]]);
-        });
-
-        it("should not render when asked not to", () => {
-            wrapAndRender(
-                <MessageComposerButtons
-                    {...mockProps}
-                    isMenuOpen={true}
-                    showLocationButton={true}
-                    showPollsButton={false} // !! the change from the alternate test
-                    showStickersButton={true}
-                />,
-                true,
-            );
-
-            expect(getButtonLabels()).toEqual([
-                "Emoji",
-                "More options",
-                [
-                    "Attachment",
-                    "Sticker",
-                    // "Poll", // should be hidden
-                    "Location",
-                ],
-            ]);
-        });
+        expect(getButtonLabels()).toEqual(["Emoji", "More options", ["Attachment", "Sticker", "Location"]]);
     });
 });

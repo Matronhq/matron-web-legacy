@@ -222,6 +222,34 @@ describe("<PinnedMessageBanner />", () => {
         expect(asFragment()).toMatchSnapshot();
     });
 
+    it("should not render the banner for a session summary pinned event", async () => {
+        const summaryEvent = makePinEvent({
+            event_id: "$summaryEventId",
+            content: { body: "📌 Session Summary\n\n• Summary text", msgtype: "m.text" },
+        });
+        jest.spyOn(pinnedEventHooks, "usePinnedEvents").mockReturnValue([summaryEvent.getId()!]);
+        jest.spyOn(pinnedEventHooks, "useSortedFetchedPinnedEvents").mockReturnValue([summaryEvent]);
+
+        const { container } = renderBanner();
+
+        expect(container).toBeEmptyDOMElement();
+    });
+
+    it("should filter session summaries out of the regular pinned message banner", async () => {
+        const summaryEvent = makePinEvent({
+            event_id: "$summaryEventId",
+            content: { body: "📌 Session Summary\n\n• Summary text", msgtype: "m.text" },
+        });
+        jest.spyOn(pinnedEventHooks, "usePinnedEvents").mockReturnValue([event1.getId()!, summaryEvent.getId()!]);
+        jest.spyOn(pinnedEventHooks, "useSortedFetchedPinnedEvents").mockReturnValue([event1, summaryEvent]);
+
+        renderBanner();
+
+        await expect(screen.findByText("First pinned message")).resolves.toBeVisible();
+        expect(screen.queryByText("📌 Session Summary")).not.toBeInTheDocument();
+        expect(screen.queryByRole("button", { name: "View all" })).toBeNull();
+    });
+
     describe("Notify the timeline to resize", () => {
         beforeEach(() => {
             jest.spyOn(sdkContext.resizeNotifier, "notifyTimelineHeightChanged");

@@ -1,0 +1,92 @@
+/*
+Copyright 2026 Matron Contributors.
+
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+Please see LICENSE files in the repository root for full details.
+*/
+
+.mx_MButtonGroupBody {
+    margin-top: var(--cpd-space-2x);
+}
+
+.mx_MButtonGroupBody_prompt {
+    margin-bottom: var(--cpd-space-3x);
+    white-space: pre-wrap;
+}
+
+.mx_MButtonGroupBody_buttons {
+    display: flex;
+    gap: var(--cpd-space-2x);
+}
+
+.mx_MButtonGroupBody_horizontal {
+    flex-flow: row wrap;
+}
+
+.mx_MButtonGroupBody_vertical {
+    flex-direction: column;
+}
+
+.mx_MButtonGroupBody_button {
+    padding: var(--cpd-space-2x) var(--cpd-space-4x);
+    border: 1px solid var(--cpd-color-border-interactive-primary);
+    border-radius: var(--cpd-space-2x);
+    background: var(--cpd-color-bg-canvas-default);
+    color: var(--cpd-color-text-primary);
+    cursor: pointer;
+    font-size: var(--cpd-font-size-body-md);
+    text-align: left;
+    transition:
+        background 0.15s,
+        border-color 0.15s;
+}
+
+.mx_MButtonGroupBody_button:hover:not(:disabled) {
+    background: var(--cpd-color-bg-subtle-secondary);
+}
+
+.mx_MButtonGroupBody_button_selected {
+    background: var(--cpd-color-bg-action-primary-rest);
+    color: var(--cpd-color-text-on-solid-primary);
+    border-color: var(--cpd-color-bg-action-primary-rest);
+}
+
+.mx_MButtonGroupBody_button_disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.mx_MButtonGroupBody_button_submitted {
+    cursor: default;
+}
+
+.mx_MButtonGroupBody_vertical .mx_MButtonGroupBody_button {
+    width: 100%;
+}
+
+.mx_MButtonGroupBody_submit {
+    margin-top: var(--cpd-space-2x);
+    padding: var(--cpd-space-2x) var(--cpd-space-6x);
+    border: none;
+    border-radius: var(--cpd-space-2x);
+    background: var(--cpd-color-bg-action-primary-rest);
+    color: var(--cpd-color-text-on-solid-primary);
+    cursor: pointer;
+    font-size: var(--cpd-font-size-body-md);
+    font-weight: var(--cpd-font-weight-semibold);
+}
+
+.mx_MButtonGroupBody_submit:hover:not(:disabled) {
+    background: var(--cpd-color-bg-action-primary-hovered);
+}
+
+.mx_MButtonGroupBody_submit:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.mx_MButtonGroupBody_submitted {
+    margin-top: var(--cpd-space-2x);
+    font-size: var(--cpd-font-size-body-sm);
+    color: var(--cpd-color-text-secondary);
+}

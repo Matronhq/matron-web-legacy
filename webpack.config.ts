@@ -132,6 +132,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
     const nodeEnv = argv.mode;
     const devMode = nodeEnv !== "production";
     const enableMinification = !devMode && !process.env.CI_PACKAGE;
+    const liveReloadDevServer = process.env.MATRON_WEB_LIVE_RELOAD === "1";
 
     let VERSION = process.env.VERSION;
     if (!VERSION) {
@@ -795,9 +796,10 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 stats: "minimal",
             },
 
-            // Enable Hot Module Replacement without page refresh as a fallback in
-            // case of build failures
-            hot: "only",
+            // The Electron desktop hot launcher needs full reloads because the theme CSS
+            // bundles are separate extracted entries, so HMR-only can miss visible changes.
+            hot: liveReloadDevServer ? false : "only",
+            liveReload: liveReloadDevServer,
 
             // Disable host check
             allowedHosts: "all",
