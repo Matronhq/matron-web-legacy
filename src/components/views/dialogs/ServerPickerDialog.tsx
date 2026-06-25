@@ -54,7 +54,11 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
             }
         }
 
-        const hasDefaultServer = !!this.defaultServer.hsUrl;
+        // Only treat the server as a selectable default when it is an actual
+        // configured default (isDefault). A remembered last-used server seeds the
+        // config with a real hsUrl but isDefault=false, and must NOT appear as a
+        // "default homeserver" radio.
+        const hasDefaultServer = this.defaultServer.isDefault;
 
         this.state = {
             defaultChosen: hasDefaultServer && serverConfig.isDefault,
@@ -168,7 +172,11 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     };
 
     public render(): React.ReactNode {
-        const hasDefaultServer = !!this.defaultServer.hsUrl;
+        // Only treat the server as a selectable default when it is an actual
+        // configured default (isDefault). A remembered last-used server seeds the
+        // config with a real hsUrl but isDefault=false, and must NOT appear as a
+        // "default homeserver" radio.
+        const hasDefaultServer = this.defaultServer.isDefault;
 
         let text: string | undefined;
         if (this.defaultServer.hsName === "matrix.org") {

@@ -259,33 +259,50 @@ describe("<ServerPickerDialog />", () => {
         });
     });
 
-    describe("ServerPickerDialog — empty default homeserver", () => {
-        const emptyDefaultServerConfig = {
+    describe("ServerPickerDialog — no configured default homeserver", () => {
+        const emptyServerConfig = {
             hsUrl: "",
             hsName: "",
             hsNameIsDifferent: false,
             isUrl: "",
-            isDefault: true,
+            isDefault: false,
             isNameResolvable: false,
             warning: "",
         };
 
-        beforeEach(() => {
-            SdkConfig.add({
-                validated_server_config: emptyDefaultServerConfig,
-            });
-        });
+        // A remembered last-used server: a real hsUrl, but isDefault=false. It must
+        // NOT be presented as a configured "default homeserver" radio.
+        const rememberedServerConfig = {
+            ...emptyServerConfig,
+            hsUrl: "https://remembered.example",
+            hsName: "remembered.example",
+            isUrl: "",
+            isDefault: false,
+        };
 
-        it("should not render the default-server radio when hsUrl is empty, and should show the Other homeserver field", () => {
-            render(<ServerPickerDialog serverConfig={emptyDefaultServerConfig} onFinished={jest.fn()} />);
+        it("does not render the default-server radio for an empty config, and shows the Other homeserver field", () => {
+            SdkConfig.add({ validated_server_config: emptyServerConfig });
+            render(<ServerPickerDialog serverConfig={emptyServerConfig} onFinished={jest.fn()} />);
 
-            // default-server radio must NOT be present
             expect(screen.queryByTestId("defaultHomeserver")).toBeNull();
-
-            // Other homeserver text input must be present
             expect(
                 screen.getAllByLabelText("Other homeserver").find((node) => node.getAttribute("type") === "text"),
             ).toBeTruthy();
+        });
+
+        it("does not render the default-server radio for a remembered (non-default) server", () => {
+            SdkConfig.add({ validated_server_config: rememberedServerConfig });
+            render(<ServerPickerDialog serverConfig={rememberedServerConfig} onFinished={jest.fn()} />);
+
+            expect(screen.queryByTestId("defaultHomeserver")).toBeNull();
+        });
+
+        it("does render the default-server radio when a real default is configured", () => {
+            const configuredDefault = { ...rememberedServerConfig, hsName: "configured.example", isDefault: true };
+            SdkConfig.add({ validated_server_config: configuredDefault });
+            render(<ServerPickerDialog serverConfig={configuredDefault} onFinished={jest.fn()} />);
+
+            expect(screen.queryByTestId("defaultHomeserver")).not.toBeNull();
         });
     });
 });
