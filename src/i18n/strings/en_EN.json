@@ -203,6 +203,7 @@
         "email_phone_discovery_text": "Use email or phone to optionally be discoverable by existing contacts.",
         "enter_email_explainer": "<b>%(homeserver)s</b> will send you a verification link to let you reset your password.",
         "enter_email_heading": "Enter your email to reset password",
+        "enter_your_homeserver": "Enter your homeserver to sign in",
         "failed_connect_identity_server": "Cannot reach identity server",
         "failed_connect_identity_server_other": "You can log in, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.",
         "failed_connect_identity_server_register": "You can register, but some features will be unavailable until the identity server is back online. If you keep seeing this warning, check your configuration or contact a server admin.",
