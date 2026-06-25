@@ -29,6 +29,7 @@ import { ModuleRunner } from "../modules/ModuleRunner";
 import { getInitialScreenAfterLogin, getScreenFromLocation, init as initRouting, onNewScreen } from "./routing";
 import { type URLParams } from "./url_utils.ts";
 import { UserFriendlyError } from "../languageHandler";
+import { getLastServer } from "../utils/LastServer";
 import { ModuleApi } from "../modules/Api";
 import { RoomView } from "../components/structures/RoomView";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
@@ -191,9 +192,22 @@ async function verifyServerConfig(): Promise<IConfigOptions> {
             throw new UserFriendlyError("error|invalid_configuration_mixed_server");
         }
         if (incompatibleOptions.length < 1) {
-            // Matron is bring-your-own-homeserver: with no default configured we do
-            // NOT contact any server. Return an empty config; the login screen will
-            // prompt the user to enter their homeserver.
+            // Matron is bring-your-own-homeserver. Try the last server the user used.
+            const last = getLastServer();
+            if (last?.hsUrl) {
+                try {
+                    const remembered = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
+                        last.hsUrl,
+                        last.isUrl,
+                        false,
+                    );
+                    logger.log("Seeding server config from remembered server", last.hsUrl);
+                    SdkConfig.add({ validated_server_config: remembered });
+                    return SdkConfig.get();
+                } catch (e) {
+                    logger.warn("Remembered server failed validation; starting empty", e);
+                }
+            }
             const emptyConfig: ValidatedServerConfig = {
                 hsUrl: "",
                 hsName: "",

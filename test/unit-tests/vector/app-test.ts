@@ -28,6 +28,7 @@ const webCrypto = new Crypto();
 
 describe("no default homeserver", () => {
     beforeEach(() => {
+        localStorage.clear();
         SdkConfig.reset();
         SdkConfig.put({ brand: "Matron" }); // no default_server_config / _name / _hs_url
     });
@@ -39,6 +40,24 @@ describe("no default homeserver", () => {
         expect(cfg).toBeTruthy();
         expect(cfg!.hsUrl).toBe("");
         expect(cfg!.isDefault).toBe(false);
+    });
+
+    it("seeds from the remembered server when present", async () => {
+        localStorage.setItem(
+            "mx_last_server_config",
+            JSON.stringify({ hsUrl: "https://synapse" }),
+        );
+        fetchMock.get("https://synapse/_matrix/client/versions", { versions: ["v1.1"] });
+        await loadApp({}, jest.fn());
+        const cfg = SdkConfig.get("validated_server_config");
+        expect(cfg!.hsUrl).toBe("https://synapse");
+    });
+
+    it("falls back to empty when the remembered server fails validation", async () => {
+        localStorage.setItem("mx_last_server_config", JSON.stringify({ hsUrl: "https://dead" }));
+        fetchMock.get("https://dead/_matrix/client/versions", { throws: new Error("offline") });
+        await loadApp({}, jest.fn());
+        expect(SdkConfig.get("validated_server_config")!.hsUrl).toBe("");
     });
 });
 
