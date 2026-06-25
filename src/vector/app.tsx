@@ -199,7 +199,7 @@ async function verifyServerConfig(): Promise<IConfigOptions> {
                     const remembered = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
                         last.hsUrl,
                         last.isUrl,
-                        false,
+                        true,
                     );
                     logger.log("Seeding server config from remembered server", last.hsUrl);
                     SdkConfig.add({ validated_server_config: remembered });

@@ -53,11 +53,11 @@ describe("no default homeserver", () => {
         expect(cfg!.hsUrl).toBe("https://synapse");
     });
 
-    it("falls back to empty when the remembered server fails validation", async () => {
-        localStorage.setItem("mx_last_server_config", JSON.stringify({ hsUrl: "https://dead" }));
-        fetchMock.get("https://dead/_matrix/client/versions", { throws: new Error("offline") });
+    it("still seeds an unreachable remembered server (offline-friendly)", async () => {
+        localStorage.setItem("mx_last_server_config", JSON.stringify({ hsUrl: "https://offline" }));
+        fetchMock.get("https://offline/_matrix/client/versions", { throws: new Error("offline") });
         await loadApp({}, jest.fn());
-        expect(SdkConfig.get("validated_server_config")!.hsUrl).toBe("");
+        expect(SdkConfig.get("validated_server_config")!.hsUrl).toBe("https://offline");
     });
 });
 
