@@ -26,6 +26,22 @@ const defaultConfig = {
 const issuer = "https://auth.org/";
 const webCrypto = new Crypto();
 
+describe("no default homeserver", () => {
+    beforeEach(() => {
+        SdkConfig.reset();
+        SdkConfig.put({ brand: "Matron" }); // no default_server_config / _name / _hs_url
+    });
+
+    it("loads without contacting matrix.org and yields an empty server config", async () => {
+        // No fetchMock route is registered; any network call would throw.
+        await expect(loadApp({}, jest.fn())).resolves.toBeTruthy();
+        const cfg = SdkConfig.get("validated_server_config");
+        expect(cfg).toBeTruthy();
+        expect(cfg!.hsUrl).toBe("");
+        expect(cfg!.isDefault).toBe(false);
+    });
+});
+
 describe("sso_redirect_options", () => {
     beforeAll(() => {
         Object.defineProperty(window, "crypto", {

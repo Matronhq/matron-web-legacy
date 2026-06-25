@@ -191,8 +191,21 @@ async function verifyServerConfig(): Promise<IConfigOptions> {
             throw new UserFriendlyError("error|invalid_configuration_mixed_server");
         }
         if (incompatibleOptions.length < 1) {
-            // noinspection ExceptionCaughtLocallyJS
-            throw new UserFriendlyError("error|invalid_configuration_no_server");
+            // Matron is bring-your-own-homeserver: with no default configured we do
+            // NOT contact any server. Return an empty config; the login screen will
+            // prompt the user to enter their homeserver.
+            const emptyConfig: ValidatedServerConfig = {
+                hsUrl: "",
+                hsName: "",
+                hsNameIsDifferent: false,
+                isUrl: "",
+                isDefault: false,
+                isNameResolvable: false,
+                warning: "",
+            };
+            logger.log("No default server configured - starting with empty server config");
+            SdkConfig.add({ validated_server_config: emptyConfig });
+            return SdkConfig.get();
         }
 
         if (hsUrl) {
