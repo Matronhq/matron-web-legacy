@@ -190,6 +190,7 @@
         "check_email_resend_tooltip": "Verification link email resent!",
         "check_email_wrong_email_button": "Re-enter email address",
         "check_email_wrong_email_prompt": "Wrong email address?",
+        "choose_a_homeserver": "Choose a homeserver",
         "continue_with_idp": "Continue with %(provider)s",
         "continue_with_sso": "Continue with %(ssoButtons)s",
         "country_dropdown": "Country Dropdown",
