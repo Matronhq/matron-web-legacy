@@ -258,4 +258,34 @@ describe("<ServerPickerDialog />", () => {
             });
         });
     });
+
+    describe("ServerPickerDialog — empty default homeserver", () => {
+        const emptyDefaultServerConfig = {
+            hsUrl: "",
+            hsName: "",
+            hsNameIsDifferent: false,
+            isUrl: "",
+            isDefault: true,
+            isNameResolvable: false,
+            warning: "",
+        };
+
+        beforeEach(() => {
+            SdkConfig.add({
+                validated_server_config: emptyDefaultServerConfig,
+            });
+        });
+
+        it("should not render the default-server radio when hsUrl is empty, and should show the Other homeserver field", () => {
+            render(<ServerPickerDialog serverConfig={emptyDefaultServerConfig} onFinished={jest.fn()} />);
+
+            // default-server radio must NOT be present
+            expect(screen.queryByTestId("defaultHomeserver")).toBeNull();
+
+            // Other homeserver text input must be present
+            expect(
+                screen.getAllByLabelText("Other homeserver").find((node) => node.getAttribute("type") === "text"),
+            ).toBeTruthy();
+        });
+    });
 });

@@ -54,8 +54,10 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
             }
         }
 
+        const hasDefaultServer = !!this.defaultServer.hsUrl;
+
         this.state = {
-            defaultChosen: serverConfig.isDefault,
+            defaultChosen: hasDefaultServer && serverConfig.isDefault,
             otherHomeserver,
         };
     }
@@ -166,6 +168,8 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     };
 
     public render(): React.ReactNode {
+        const hasDefaultServer = !!this.defaultServer.hsUrl;
+
         let text: string | undefined;
         if (this.defaultServer.hsName === "matrix.org") {
             text = _t("auth|server_picker_matrix.org");
@@ -190,19 +194,23 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 hasCancel={true}
             >
                 <form className="mx_Dialog_content" id="mx_ServerPickerDialog" onSubmit={this.onSubmit}>
-                    <p>
-                        {_t("auth|server_picker_intro")} {text}
-                    </p>
+                    {hasDefaultServer && (
+                        <p>
+                            {_t("auth|server_picker_intro")} {text}
+                        </p>
+                    )}
 
-                    <StyledRadioButton
-                        name="defaultChosen"
-                        value="true"
-                        checked={this.state.defaultChosen}
-                        onChange={this.onDefaultChosen}
-                        data-testid="defaultHomeserver"
-                    >
-                        {defaultServerName}
-                    </StyledRadioButton>
+                    {hasDefaultServer && (
+                        <StyledRadioButton
+                            name="defaultChosen"
+                            value="true"
+                            checked={this.state.defaultChosen}
+                            onChange={this.onDefaultChosen}
+                            data-testid="defaultHomeserver"
+                        >
+                            {defaultServerName}
+                        </StyledRadioButton>
+                    )}
 
                     <StyledRadioButton
                         name="defaultChosen"
