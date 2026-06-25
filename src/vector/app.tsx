@@ -29,6 +29,7 @@ import { ModuleRunner } from "../modules/ModuleRunner";
 import { getInitialScreenAfterLogin, getScreenFromLocation, init as initRouting, onNewScreen } from "./routing";
 import { type URLParams } from "./url_utils.ts";
 import { UserFriendlyError } from "../languageHandler";
+import { getLastServer } from "../utils/LastServer";
 import { ModuleApi } from "../modules/Api";
 import { RoomView } from "../components/structures/RoomView";
 import RoomAvatar from "../components/views/avatars/RoomAvatar";
@@ -191,8 +192,34 @@ async function verifyServerConfig(): Promise<IConfigOptions> {
             throw new UserFriendlyError("error|invalid_configuration_mixed_server");
         }
         if (incompatibleOptions.length < 1) {
-            // noinspection ExceptionCaughtLocallyJS
-            throw new UserFriendlyError("error|invalid_configuration_no_server");
+            // Matron is bring-your-own-homeserver. Try the last server the user used.
+            const last = getLastServer();
+            if (last?.hsUrl) {
+                try {
+                    const remembered = await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
+                        last.hsUrl,
+                        last.isUrl,
+                        true,
+                    );
+                    logger.log("Seeding server config from remembered server", last.hsUrl);
+                    SdkConfig.add({ validated_server_config: remembered });
+                    return SdkConfig.get();
+                } catch (e) {
+                    logger.warn("Remembered server failed validation; starting empty", e);
+                }
+            }
+            const emptyConfig: ValidatedServerConfig = {
+                hsUrl: "",
+                hsName: "",
+                hsNameIsDifferent: false,
+                isUrl: "",
+                isDefault: false,
+                isNameResolvable: false,
+                warning: "",
+            };
+            logger.log("No default server configured - starting with empty server config");
+            SdkConfig.add({ validated_server_config: emptyConfig });
+            return SdkConfig.get();
         }
 
         if (hsUrl) {

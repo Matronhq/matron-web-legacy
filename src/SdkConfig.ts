@@ -20,8 +20,6 @@ export const DEFAULTS: DeepReadonly<IConfigOptions> = {
     help_url: "https://matron.chat/help",
     help_encryption_url: "https://matron.chat/help#encryption",
     help_key_storage_url: "https://matron.chat/help#encryption5",
-    integrations_ui_url: "https://scalar.vector.im/",
-    integrations_rest_url: "https://scalar.vector.im/api",
     uisi_autorageshake_app: "matron-auto-uisi",
     show_labs_settings: false,
     force_verification: false,

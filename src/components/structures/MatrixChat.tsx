@@ -135,6 +135,7 @@ import { ConfirmSessionLockTheftView } from "./auth/ConfirmSessionLockTheftView"
 import { LoginSplashView } from "./auth/LoginSplashView";
 import { cleanUpDraftsIfRequired } from "../../DraftCleaner";
 import { shouldAutoJoinMatronInvite } from "../../utils/matronAutoJoin";
+import { persistLastServer } from "../../utils/LastServer";
 import { InitialCryptoSetupStore } from "../../stores/InitialCryptoSetupStore";
 import { setTheme } from "../../theme";
 import { type OpenForwardDialogPayload } from "../../dispatcher/payloads/OpenForwardDialogPayload";
@@ -2133,6 +2134,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     };
 
     private onServerConfigChange = (serverConfig: ValidatedServerConfig): void => {
+        persistLastServer({ hsUrl: serverConfig.hsUrl, isUrl: serverConfig.isUrl });
         this.setState({ serverConfig });
     };
 

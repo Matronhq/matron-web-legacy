@@ -333,6 +333,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
     }
 
     private async initLoginLogic({ hsUrl, isUrl }: ValidatedServerConfig): Promise<void> {
+        if (!hsUrl) {
+            // No server selected yet: don't query anything.
+            this.setState({ busy: false, busyLoggingIn: false, errorText: null, serverIsAlive: true });
+            return;
+        }
         let isDefaultServer = false;
         if (
             this.props.serverConfig.isDefault &&
@@ -532,7 +537,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                         disabled={this.isBusy()}
                         inlineField
                     />
-                    {this.renderLoginComponentForFlows()}
+                    {this.props.serverConfig.hsUrl ? (
+                        this.renderLoginComponentForFlows()
+                    ) : (
+                        <div className="mx_Login_prompt">{_t("auth|enter_your_homeserver")}</div>
+                    )}
                     {footer}
                 </AuthBody>
             </AuthPage>

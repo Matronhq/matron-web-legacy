@@ -204,7 +204,11 @@ const ServerPicker: React.FC<IProps> = ({
         );
     }
 
-    let serverName: React.ReactNode = serverConfig.isNameResolvable ? serverConfig.hsName : serverConfig.hsUrl;
+    let serverName: React.ReactNode = !serverConfig.hsUrl
+        ? _t("auth|choose_a_homeserver")
+        : serverConfig.isNameResolvable
+          ? serverConfig.hsName
+          : serverConfig.hsUrl;
     if (serverConfig.hsNameIsDifferent) {
         serverName = (
             <TextWithTooltip className="mx_Login_underlinedServerName" tooltip={serverConfig.hsUrl}>

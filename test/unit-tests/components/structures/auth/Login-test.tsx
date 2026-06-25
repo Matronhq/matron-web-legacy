@@ -417,4 +417,19 @@ describe("Login", function () {
             expect(screen.getByText("Continue")).toBeInTheDocument();
         });
     });
+
+    it("prompts for a homeserver and makes no request when hsUrl is empty", async () => {
+        const { container } = render(
+            <Login
+                serverConfig={mkServerConfig("", "")}
+                onLoggedIn={() => {}}
+                onRegisterClick={() => {}}
+                onServerConfigChange={() => {}}
+            />,
+        );
+        // No username/password form is rendered without a server.
+        expect(container.querySelector("form")).toBeNull();
+        // The "enter your homeserver" prompt is shown.
+        expect(screen.getByText(/enter your homeserver/i)).toBeInTheDocument();
+    });
 });

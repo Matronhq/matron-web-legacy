@@ -54,8 +54,14 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
             }
         }
 
+        // Only treat the server as a selectable default when it is an actual
+        // configured default (isDefault). A remembered last-used server seeds the
+        // config with a real hsUrl but isDefault=false, and must NOT appear as a
+        // "default homeserver" radio.
+        const hasDefaultServer = this.defaultServer.isDefault;
+
         this.state = {
-            defaultChosen: serverConfig.isDefault,
+            defaultChosen: hasDefaultServer && serverConfig.isDefault,
             otherHomeserver,
         };
     }
@@ -166,6 +172,12 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     };
 
     public render(): React.ReactNode {
+        // Only treat the server as a selectable default when it is an actual
+        // configured default (isDefault). A remembered last-used server seeds the
+        // config with a real hsUrl but isDefault=false, and must NOT appear as a
+        // "default homeserver" radio.
+        const hasDefaultServer = this.defaultServer.isDefault;
+
         let text: string | undefined;
         if (this.defaultServer.hsName === "matrix.org") {
             text = _t("auth|server_picker_matrix.org");
@@ -190,19 +202,23 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                 hasCancel={true}
             >
                 <form className="mx_Dialog_content" id="mx_ServerPickerDialog" onSubmit={this.onSubmit}>
-                    <p>
-                        {_t("auth|server_picker_intro")} {text}
-                    </p>
+                    {hasDefaultServer && (
+                        <p>
+                            {_t("auth|server_picker_intro")} {text}
+                        </p>
+                    )}
 
-                    <StyledRadioButton
-                        name="defaultChosen"
-                        value="true"
-                        checked={this.state.defaultChosen}
-                        onChange={this.onDefaultChosen}
-                        data-testid="defaultHomeserver"
-                    >
-                        {defaultServerName}
-                    </StyledRadioButton>
+                    {hasDefaultServer && (
+                        <StyledRadioButton
+                            name="defaultChosen"
+                            value="true"
+                            checked={this.state.defaultChosen}
+                            onChange={this.onDefaultChosen}
+                            data-testid="defaultHomeserver"
+                        >
+                            {defaultServerName}
+                        </StyledRadioButton>
+                    )}
 
                     <StyledRadioButton
                         name="defaultChosen"
