@@ -10,7 +10,7 @@ Runs in any modern browser, powers [Matron Desktop](https://github.com/matronhq/
 | ------------------------------------------------------------------------ | ------------------------------------------ |
 | [Matron Desktop](https://github.com/Matronhq/matron-desktop)             | Desktop client                             |
 | **Matron Web**                                                           | Web client (this repo)                     |
-| [Matron iOS](https://github.com/Matronhq/matron-iOS-app)                 | iOS client                                 |
+| [Matron iOS](https://github.com/Matronhq/matron-apple)                 | iOS client                                 |
 | [Matron Server](https://github.com/Matronhq/matron-server)               | Matrix homeserver                          |
 | [matron-journal](https://github.com/Matronhq/matron-journal)             | Sync server                                |
 | [claude-matrix-bridge](https://github.com/Matronhq/claude-matrix-bridge) | Runs Claude Code sessions and bridges them |
