@@ -1,18 +1,20 @@
 # Matron Web
 
-A web-based Matrix client. Runs in any modern browser, powers [Matron Desktop](https://github.com/matronhq/matron-desktop), and can be self-hosted.
+Matron is a chat system for talking to [Claude Code](https://claude.com/claude-code) agents from your phone, desktop, or browser — this is the web client, a fork of [Element Web](https://github.com/element-hq/element-web). The client talks Matrix to a homeserver, while [claude-matrix-bridge](https://github.com/Matronhq/claude-matrix-bridge) runs the Claude Code sessions on your dev box; Matron-specific event types (`chat.matron.buttons`, `chat.matron.commands`, `chat.matron.live_output.v1` — see `src/matron/EventTypes.ts`) add interactive buttons, commands, and live output on top of standard Matrix.
 
-Forked from [Element Web](https://github.com/element-hq/element-web). Built on the [Matrix JS SDK](https://github.com/matrix-org/matrix-js-sdk).
+Runs in any modern browser, powers [Matron Desktop](https://github.com/matronhq/matron-desktop), and can be self-hosted. Built on the [Matrix JS SDK](https://github.com/matrix-org/matrix-js-sdk).
 
 ## Part of the Matron ecosystem
 
-| Project                                                      | Description                       |
-| ------------------------------------------------------------ | --------------------------------- |
-| [Matron Desktop](https://github.com/matronhq/matron-desktop) | Desktop client                    |
-| **Matron Web**                                               | Web client (this repo)            |
-| [Matron iOS](https://github.com/matronhq/matron-ios)         | iOS client                        |
-| [Matron Server](https://github.com/matronhq/matron-server)   | Matrix homeserver                 |
-| [Dev Boxer](https://github.com/matronhq/dev-boxer)           | One-command dev environment setup |
+| Project                                                                  | Description                                |
+| ------------------------------------------------------------------------ | ------------------------------------------ |
+| [Matron Desktop](https://github.com/Matronhq/matron-desktop)             | Desktop client                             |
+| **Matron Web**                                                           | Web client (this repo)                     |
+| [Matron iOS](https://github.com/Matronhq/matron-apple)                 | iOS client                                 |
+| [Matron Server](https://github.com/Matronhq/matron-server)               | Matrix homeserver                          |
+| [matron-journal](https://github.com/Matronhq/matron-journal)             | Sync server                                |
+| [claude-matrix-bridge](https://github.com/Matronhq/claude-matrix-bridge) | Runs Claude Code sessions and bridges them |
+| [Dev Boxer](https://github.com/Matronhq/dev-boxer)                       | One-command dev environment setup          |
 
 ## Supported browsers
 
