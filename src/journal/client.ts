@@ -242,6 +242,12 @@ export class MatronJournalClient {
         this.patch({ selectedConversationId: undefined, events: [], pendingMessages: [] });
     }
 
+    public markConversationRead(conversationId: string): void {
+        const conversation = this.state.conversations.find((candidate) => candidate.id === conversationId);
+        if (!conversation?.unread_count) return;
+        this.scheduleRead(conversationId, conversation.last_seq, 0);
+    }
+
     public async loadOlderHistory(): Promise<void> {
         const conversationId = this.state.selectedConversationId;
         if (!conversationId || !this.database || !this.api || this.state.loadingHistory) return;

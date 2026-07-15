@@ -143,6 +143,28 @@ describe("MatronJournalClient state handling", () => {
         expect(state.readHighWater.has("c1")).toBe(false);
     });
 
+    it("marks an unread conversation as read from the conversation list", async () => {
+        jest.useFakeTimers();
+        const client = new MatronJournalClient();
+        const state = internals(client);
+        const database = fakeDatabase();
+        const send = jest.fn().mockReturnValue(true);
+        state.state = {
+            ...signedInState(client),
+            conversations: CONVERSATIONS.map((conversation) =>
+                conversation.id === "c1" ? { ...conversation, unread_count: 3 } : conversation,
+            ),
+        };
+        state.database = database;
+        state.connection = { send };
+
+        client.markConversationRead("c1");
+        await jest.runAllTimersAsync();
+
+        expect(send).toHaveBeenCalledWith({ op: "read_marker", convo_id: "c1", up_to_seq: 10 });
+        expect(database.markLocallyRead).toHaveBeenCalledWith("c1", 10);
+    });
+
     it("stores the open conversation and clears it when returning to the list", async () => {
         const client = new MatronJournalClient();
         const state = internals(client);
