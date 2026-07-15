@@ -44,6 +44,7 @@ interface FakeDatabase {
     events: (conversationId: string) => Promise<[]>;
     outbox: (conversationId?: string) => Promise<PendingMessage[]>;
     putHistory: (events: []) => Promise<void>;
+    replaceWithSnapshot: (snapshot: { seq: number; conversations: Conversation[] }) => Promise<void>;
     markLocallyRead: (conversationId: string, upToSeq: number) => Promise<void>;
     conversations: () => Promise<Conversation[]>;
     addToOutbox: (message: PendingMessage) => Promise<void>;
@@ -52,13 +53,23 @@ interface FakeDatabase {
 interface ClientInternals {
     state: ClientState;
     database?: FakeDatabase;
-    api?: { messages: () => Promise<{ events: [] }> };
+    api?: {
+        messages: () => Promise<{ events: [] }>;
+        snapshot?: () => Promise<{ seq: number; conversations: Conversation[] }>;
+    };
     connection?: { send: ReturnType<typeof jest.fn> };
+    history: Map<string, { initialized: boolean; hasMore: boolean; oldestSeq?: number }>;
+    activities: Map<string, unknown>;
+    statuses: Map<string, unknown>;
+    textStreams: Map<string, Record<string, string>>;
+    toolStreams: Map<string, Record<string, unknown>>;
+    retiredStreamRefs: Set<string>;
     readHighWater: Map<string, number>;
     readTimers: Map<string, number>;
     pendingAck: number;
     scheduleRead(conversationId: string, upToSeq: number, delay?: number): void;
     flushRead(conversationId: string): Promise<void>;
+    replaceSnapshot(): Promise<void>;
 }
 
 function internals(client: MatronJournalClient): ClientInternals {
@@ -81,6 +92,7 @@ function fakeDatabase(overrides: Partial<FakeDatabase> = {}): FakeDatabase {
         events: jest.fn().mockResolvedValue([]),
         outbox: jest.fn().mockResolvedValue([]),
         putHistory: jest.fn().mockResolvedValue(undefined),
+        replaceWithSnapshot: jest.fn().mockResolvedValue(undefined),
         markLocallyRead: jest.fn().mockResolvedValue(undefined),
         conversations: jest.fn().mockResolvedValue(CONVERSATIONS),
         addToOutbox: jest.fn().mockResolvedValue(undefined),
@@ -165,6 +177,72 @@ describe("MatronJournalClient state handling", () => {
 
         await client.loadOlderHistory();
         expect(client.getSnapshot().connectionError).toBeUndefined();
+    });
+
+    it("keeps initial pagination retryable when the summary says history exists", async () => {
+        const client = new MatronJournalClient();
+        const state = internals(client);
+        const messages = jest.fn().mockResolvedValue({ events: [] });
+        state.state = signedInState(client);
+        state.database = fakeDatabase();
+        state.api = { messages };
+
+        await client.loadOlderHistory();
+        await client.loadOlderHistory();
+
+        expect(messages).toHaveBeenCalledTimes(2);
+        expect(state.history.get("c1")).toEqual({ initialized: false, hasMore: true, oldestSeq: undefined });
+        expect(client.getSnapshot().hasOlderHistory).toBe(true);
+    });
+
+    it("clears transient sync state before replacing a required snapshot", async () => {
+        jest.useFakeTimers();
+        const client = new MatronJournalClient();
+        const state = internals(client);
+        const database = fakeDatabase();
+        const snapshot = { seq: 30, conversations: CONVERSATIONS };
+        state.state = {
+            ...signedInState(client),
+            activity: { state: "thinking" },
+            sessionStatus: { model: "stale-model" },
+            textStreams: { stale: "partial" },
+            toolStreams: {},
+            loadingHistory: true,
+            hasOlderHistory: false,
+        };
+        state.database = database;
+        state.api = {
+            messages: jest.fn().mockResolvedValue({ events: [] }),
+            snapshot: jest.fn().mockResolvedValue(snapshot),
+        };
+        state.history.set("c1", { initialized: true, hasMore: false, oldestSeq: 3 });
+        state.activities.set("c1", { state: "thinking" });
+        state.statuses.set("c1", { model: "stale-model" });
+        state.textStreams.set("c1", { stale: "partial" });
+        state.toolStreams.set("c1", { stale: {} });
+        state.retiredStreamRefs.add("c1:stale");
+        state.pendingAck = 29;
+        state.scheduleRead("removed-conversation", 999);
+
+        await state.replaceSnapshot();
+
+        expect(database.replaceWithSnapshot).toHaveBeenCalledWith(snapshot);
+        expect(state.pendingAck).toBe(0);
+        expect(state.readHighWater.size).toBe(0);
+        expect(state.readTimers.size).toBe(0);
+        expect(state.history.get("removed-conversation")).toBeUndefined();
+        expect(state.activities.size).toBe(0);
+        expect(state.statuses.size).toBe(0);
+        expect(state.textStreams.size).toBe(0);
+        expect(state.toolStreams.size).toBe(0);
+        expect(state.retiredStreamRefs.size).toBe(0);
+        expect(client.getSnapshot()).toMatchObject({
+            selectedConversationId: "c1",
+            activity: undefined,
+            sessionStatus: undefined,
+            textStreams: {},
+            toolStreams: {},
+        });
     });
 
     it("mirrors the local id into the outgoing payload for exact reconciliation", async () => {

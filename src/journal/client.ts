@@ -192,13 +192,7 @@ export class MatronJournalClient {
     public async logout(message?: string): Promise<void> {
         this.connection?.stop();
         this.connection = undefined;
-        for (const timer of this.readTimers.values()) window.clearTimeout(timer);
-        if (this.ackTimer !== undefined) window.clearTimeout(this.ackTimer);
-        this.readTimers.clear();
-        this.readHighWater.clear();
-        this.ackTimer = undefined;
-        this.pendingAck = 0;
-        this.historyError = undefined;
+        this.resetTransientSyncState();
         try {
             await this.database?.reset();
         } catch {
@@ -209,12 +203,6 @@ export class MatronJournalClient {
         this.api = undefined;
         for (const url of this.mediaUrls.values()) URL.revokeObjectURL(url);
         this.mediaUrls.clear();
-        this.history.clear();
-        this.activities.clear();
-        this.statuses.clear();
-        this.textStreams.clear();
-        this.toolStreams.clear();
-        this.retiredStreamRefs.clear();
         localStorage.removeItem(SESSION_KEY);
         this.state = {
             ...blankState(),
@@ -272,10 +260,13 @@ export class MatronJournalClient {
                 (current, event) => (current === undefined ? event.seq : Math.min(current, event.seq)),
                 history.oldestSeq,
             );
+            const conversation = this.state.conversations.find((candidate) => candidate.id === conversationId);
+            const emptyInitialPageWithKnownHistory =
+                !history.initialized && response.events.length === 0 && (conversation?.last_seq ?? 0) > 0;
             this.history.set(conversationId, {
-                initialized: true,
+                initialized: !emptyInitialPageWithKnownHistory,
                 oldestSeq: minimum,
-                hasMore: response.events.length === HISTORY_PAGE_SIZE,
+                hasMore: emptyInitialPageWithKnownHistory || response.events.length === HISTORY_PAGE_SIZE,
             });
             if (this.state.selectedConversationId === conversationId)
                 await this.refreshSelectedConversation(conversationId);
@@ -379,13 +370,28 @@ export class MatronJournalClient {
 
     private async replaceSnapshot(): Promise<void> {
         if (!this.api || !this.database) return;
-        this.patch({ connection: "connecting" });
+        const previousSelection = this.state.selectedConversationId;
+        this.resetTransientSyncState();
+        this.patch({
+            connection: "connecting",
+            connectionError: undefined,
+            events: [],
+            pendingMessages: [],
+            loadingHistory: false,
+            hasOlderHistory: true,
+            activity: undefined,
+            sessionStatus: undefined,
+            textStreams: {},
+            toolStreams: {},
+        });
         const snapshot = await this.api.snapshot();
         await this.database.replaceWithSnapshot(snapshot);
-        this.history.clear();
-        await this.refreshConversations();
-        if (this.state.selectedConversationId)
-            await this.refreshSelectedConversation(this.state.selectedConversationId);
+        const conversations = await this.database.conversations();
+        const selectedConversation =
+            conversations.find((conversation) => conversation.id === previousSelection) ?? conversations[0];
+        this.patch({ conversations, selectedConversationId: selectedConversation?.id });
+        if (selectedConversation) await this.selectConversation(selectedConversation.id);
+        else if (this.state.session) storeSelectedConversation(this.state.session, undefined);
     }
 
     private async handleReady(): Promise<void> {
@@ -573,6 +579,22 @@ export class MatronJournalClient {
         if (!this.historyError) return;
         if (this.state.connectionError === this.historyError) this.patch({ connectionError: undefined });
         this.historyError = undefined;
+    }
+
+    private resetTransientSyncState(): void {
+        for (const timer of this.readTimers.values()) window.clearTimeout(timer);
+        if (this.ackTimer !== undefined) window.clearTimeout(this.ackTimer);
+        this.readTimers.clear();
+        this.readHighWater.clear();
+        this.ackTimer = undefined;
+        this.pendingAck = 0;
+        this.historyError = undefined;
+        this.history.clear();
+        this.activities.clear();
+        this.statuses.clear();
+        this.textStreams.clear();
+        this.toolStreams.clear();
+        this.retiredStreamRefs.clear();
     }
 
     private patch(update: Partial<ClientState>): void {
