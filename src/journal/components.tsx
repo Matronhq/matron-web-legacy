@@ -5,7 +5,16 @@ SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Com
 Please see LICENSE files in the repository root for full details.
 */
 
-import React, { type FormEvent, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import React, {
+    type FormEvent,
+    useCallback,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
+    useSyncExternalStore,
+} from "react";
 import { Avatar, Button, Text } from "@vector-im/compound-web";
 import {
     Flex,
@@ -912,6 +921,16 @@ function ToolStream({ stream }: { stream: ToolStreamState }): React.ReactElement
 
 function Timeline({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
     const scrollRef = useRef<HTMLDivElement>(null);
+    const historyScrollAnchor = useRef<
+        | {
+              conversationId?: string;
+              scrollHeight: number;
+              scrollTop: number;
+              oldestSeq?: number;
+          }
+        | undefined
+    >(undefined);
+    const historyScrollRestored = useRef(false);
     const visibleEvents = useMemo(
         () =>
             state.events.filter(
@@ -929,19 +948,56 @@ function Timeline({ client, state }: { client: MatronJournalClient; state: Clien
             ),
         [state.events],
     );
-    const textStreamCount = Object.keys(state.textStreams).length;
-    const toolStreamCount = Object.keys(state.toolStreams).length;
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         const node = scrollRef.current;
-        if (node) node.scrollTop = node.scrollHeight;
+        if (!node) return;
+
+        const anchor = historyScrollAnchor.current;
+        if (anchor) {
+            if (anchor.conversationId !== state.selectedConversationId) {
+                historyScrollAnchor.current = undefined;
+                historyScrollRestored.current = false;
+                node.scrollTop = node.scrollHeight;
+                return;
+            }
+            const oldestSeq = visibleEvents[0]?.seq;
+            const historyPrepended =
+                oldestSeq !== undefined && (anchor.oldestSeq === undefined || oldestSeq < anchor.oldestSeq);
+            if (historyPrepended || !state.loadingHistory) {
+                node.scrollTop = anchor.scrollTop + node.scrollHeight - anchor.scrollHeight;
+                historyScrollAnchor.current = undefined;
+                historyScrollRestored.current = state.loadingHistory;
+            }
+            return;
+        }
+
+        if (historyScrollRestored.current) {
+            if (!state.loadingHistory) historyScrollRestored.current = false;
+            return;
+        }
+
+        node.scrollTop = node.scrollHeight;
     }, [
         state.selectedConversationId,
-        visibleEvents.length,
+        visibleEvents,
         state.pendingMessages.length,
-        textStreamCount,
-        toolStreamCount,
+        state.textStreams,
+        state.toolStreams,
+        state.loadingHistory,
     ]);
+
+    const loadEarlierMessages = (): void => {
+        const node = scrollRef.current;
+        if (node) {
+            historyScrollAnchor.current = {
+                conversationId: state.selectedConversationId,
+                scrollHeight: node.scrollHeight,
+                scrollTop: node.scrollTop,
+                oldestSeq: visibleEvents[0]?.seq,
+            };
+        }
+        void client.loadOlderHistory();
+    };
 
     return (
         <main className="mx_RoomView_timeline" data-testid="timeline">
@@ -952,7 +1008,7 @@ function Timeline({ client, state }: { client: MatronJournalClient; state: Clien
                             <li className="mj_HistoryRow">
                                 <button
                                     className="mj_LoadHistory"
-                                    onClick={() => void client.loadOlderHistory()}
+                                    onClick={loadEarlierMessages}
                                     disabled={state.loadingHistory}
                                 >
                                     {state.loadingHistory ? "Loading…" : "Load earlier messages"}

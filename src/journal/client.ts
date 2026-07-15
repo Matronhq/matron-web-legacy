@@ -26,6 +26,7 @@ import {
 
 const SESSION_KEY = "matron_journal_session_v1";
 const LAST_SERVER_KEY = "matron_journal_last_server";
+const SELECTED_CONVERSATION_KEY_PREFIX = "matron_journal_selected_conversation_v1";
 const HISTORY_PAGE_SIZE = 80;
 const TOOL_STREAM_DISPLAY_BYTES = 65_536;
 
@@ -81,6 +82,28 @@ function storedSession(): Session | undefined {
     }
 }
 
+function selectedConversationStorageKey(session: Session): string {
+    return `${SELECTED_CONVERSATION_KEY_PREFIX}:${encodeURIComponent(session.serverUrl)}:${session.userId}`;
+}
+
+function storedSelectedConversation(session: Session): string | undefined {
+    try {
+        return localStorage.getItem(selectedConversationStorageKey(session)) ?? undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+function storeSelectedConversation(session: Session, conversationId: string | undefined): void {
+    try {
+        const key = selectedConversationStorageKey(session);
+        if (conversationId) localStorage.setItem(key, conversationId);
+        else localStorage.removeItem(key);
+    } catch {
+        // Selection persistence is optional when storage is unavailable.
+    }
+}
+
 function capToolStream(value: string): { content: string; truncated: boolean } {
     const bytes = new TextEncoder().encode(value);
     if (bytes.length <= TOOL_STREAM_DISPLAY_BYTES) return { content: value, truncated: false };
@@ -103,9 +126,10 @@ export class MatronJournalClient {
     private readonly retiredStreamRefs = new Set<string>();
     private readonly mediaUrls = new Map<string, string>();
     private readonly readHighWater = new Map<string, number>();
-    private readTimer?: number;
+    private readonly readTimers = new Map<string, number>();
     private ackTimer?: number;
     private pendingAck = 0;
+    private historyError?: string;
 
     public readonly subscribe = (listener: () => void): (() => void) => {
         this.listeners.add(listener);
@@ -168,10 +192,13 @@ export class MatronJournalClient {
     public async logout(message?: string): Promise<void> {
         this.connection?.stop();
         this.connection = undefined;
-        if (this.readTimer !== undefined) window.clearTimeout(this.readTimer);
+        for (const timer of this.readTimers.values()) window.clearTimeout(timer);
         if (this.ackTimer !== undefined) window.clearTimeout(this.ackTimer);
-        this.readTimer = undefined;
+        this.readTimers.clear();
+        this.readHighWater.clear();
         this.ackTimer = undefined;
+        this.pendingAck = 0;
+        this.historyError = undefined;
         try {
             await this.database?.reset();
         } catch {
@@ -200,6 +227,7 @@ export class MatronJournalClient {
 
     public async selectConversation(conversationId: string): Promise<void> {
         if (!this.database || !this.state.session) return;
+        storeSelectedConversation(this.state.session, conversationId);
         this.patch({
             selectedConversationId: conversationId,
             events: [],
@@ -222,6 +250,7 @@ export class MatronJournalClient {
 
     public clearSelection(): void {
         this.connection?.send({ op: "viewing", convo_id: null });
+        if (this.state.session) storeSelectedConversation(this.state.session, undefined);
         this.patch({ selectedConversationId: undefined, events: [], pendingMessages: [] });
     }
 
@@ -250,8 +279,10 @@ export class MatronJournalClient {
             });
             if (this.state.selectedConversationId === conversationId)
                 await this.refreshSelectedConversation(conversationId);
+            this.clearHistoryError();
         } catch (error) {
-            this.patch({ connectionError: error instanceof Error ? error.message : "Could not load message history" });
+            this.historyError = error instanceof Error ? error.message : "Could not load message history";
+            this.patch({ connectionError: this.historyError });
         } finally {
             if (this.state.selectedConversationId === conversationId) {
                 this.patch({
@@ -321,16 +352,19 @@ export class MatronJournalClient {
             cursor = snapshot.seq;
         }
         const conversations = await this.database.conversations();
+        const storedConversationId = storedSelectedConversation(session);
+        const selectedConversation =
+            conversations.find((conversation) => conversation.id === storedConversationId) ?? conversations[0];
         this.state = {
             ...blankState(),
             phase: "signed-in",
             config: this.state.config,
             session,
             conversations,
-            selectedConversationId: conversations[0]?.id,
+            selectedConversationId: selectedConversation?.id,
         };
         this.emit();
-        if (conversations[0]) await this.selectConversation(conversations[0].id);
+        if (selectedConversation) await this.selectConversation(selectedConversation.id);
 
         this.connection = new JournalConnection(session.serverUrl, session.token, {
             cursor: async () => (await this.database?.cursor()) ?? cursor ?? 0,
@@ -362,6 +396,9 @@ export class MatronJournalClient {
             const conversation = this.selectedConversation();
             if (conversation?.unread_count) this.scheduleRead(conversation.id, conversation.last_seq, 0);
         }
+        for (const [conversationId, upToSeq] of this.readHighWater) {
+            this.scheduleRead(conversationId, upToSeq, 0);
+        }
         const cursor = await this.database?.cursor();
         if (cursor !== undefined) this.connection?.send({ op: "ack", cursor });
     }
@@ -384,6 +421,7 @@ export class MatronJournalClient {
         if (!this.database) return;
         const applied = await this.database.applyJournal(event);
         if (!applied) return;
+        this.clearHistoryError();
         await this.database.reconcileOwnMessage(event);
         this.scheduleAck(event.seq);
 
@@ -493,7 +531,7 @@ export class MatronJournalClient {
             op: "send",
             convo_id: message.convoId,
             type: "text",
-            payload: { body: message.body },
+            payload: { body: message.body, local_id: message.localId },
             local_id: message.localId,
         });
     }
@@ -510,13 +548,17 @@ export class MatronJournalClient {
     private scheduleRead(conversationId: string, upToSeq: number, delay = 400): void {
         const previous = this.readHighWater.get(conversationId) ?? 0;
         this.readHighWater.set(conversationId, Math.max(previous, upToSeq));
-        if (this.readTimer !== undefined) window.clearTimeout(this.readTimer);
-        this.readTimer = window.setTimeout(() => void this.flushRead(conversationId), delay);
+        const currentTimer = this.readTimers.get(conversationId);
+        if (currentTimer !== undefined) window.clearTimeout(currentTimer);
+        this.readTimers.set(
+            conversationId,
+            window.setTimeout(() => void this.flushRead(conversationId), delay),
+        );
     }
 
     private async flushRead(conversationId: string): Promise<void> {
-        this.readTimer = undefined;
-        if (conversationId !== this.state.selectedConversationId || !this.database) return;
+        this.readTimers.delete(conversationId);
+        if (!this.database) return;
         const upToSeq = this.readHighWater.get(conversationId);
         if (upToSeq === undefined) return;
         const sent =
@@ -525,6 +567,12 @@ export class MatronJournalClient {
         this.readHighWater.delete(conversationId);
         await this.database.markLocallyRead(conversationId, upToSeq);
         await this.refreshConversations();
+    }
+
+    private clearHistoryError(): void {
+        if (!this.historyError) return;
+        if (this.state.connectionError === this.historyError) this.patch({ connectionError: undefined });
+        this.historyError = undefined;
     }
 
     private patch(update: Partial<ClientState>): void {

@@ -78,7 +78,24 @@ describe("JournalDatabase", () => {
         await database.replaceWithSnapshot({ seq: 0, conversations: [] });
         await database.addToOutbox({ localId: "local-1", convoId: "c1", body: "ship it", createdAt: 10 });
         expect(await database.outbox("c1")).toHaveLength(1);
-        await database.reconcileOwnMessage(event(1, "user:dan", "text", { body: "ship it" }));
+        await database.reconcileOwnMessage(event(1, "user:dan", "text", { body: "ship it", local_id: "local-1" }));
+        expect(await database.outbox("c1")).toHaveLength(0);
+        database.close();
+    });
+
+    it("reconciles repeated messages by their exact mirrored local id", async () => {
+        const database = await JournalDatabase.open("https://journal.example", 4);
+        await database.replaceWithSnapshot({ seq: 0, conversations: [] });
+        await database.addToOutbox({ localId: "local-1", convoId: "c1", body: "same", createdAt: 10 });
+        await database.addToOutbox({ localId: "local-2", convoId: "c1", body: "same", createdAt: 11 });
+
+        await database.reconcileOwnMessage(event(1, "user:dan", "text", { body: "same" }));
+        expect((await database.outbox("c1")).map((message) => message.localId)).toEqual(["local-1", "local-2"]);
+
+        await database.reconcileOwnMessage(event(1, "user:dan", "text", { body: "same", local_id: "local-2" }));
+        expect((await database.outbox("c1")).map((message) => message.localId)).toEqual(["local-1"]);
+
+        await database.reconcileOwnMessage(event(2, "user:dan", "text", { body: "same", local_id: "local-1" }));
         expect(await database.outbox("c1")).toHaveLength(0);
         database.close();
     });

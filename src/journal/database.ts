@@ -222,11 +222,10 @@ export class JournalDatabase {
     public async reconcileOwnMessage(event: JournalEvent): Promise<void> {
         if (event.type !== "text" || !event.sender.startsWith("user:") || typeof event.payload.body !== "string")
             return;
-        const candidates = await this.outbox(event.convo_id);
-        const match = candidates.find((candidate) => candidate.body === event.payload.body);
-        if (!match) return;
+        const localId = typeof event.payload.local_id === "string" ? event.payload.local_id : undefined;
+        if (!localId) return;
         const transaction = this.database.transaction("outbox", "readwrite");
-        transaction.objectStore("outbox").delete(match.localId);
+        transaction.objectStore("outbox").delete(localId);
         await transactionDone(transaction);
     }
 
