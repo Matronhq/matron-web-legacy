@@ -6,20 +6,35 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { type FormEvent, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { Avatar, Button, IconButton, Text, Tooltip } from "@vector-im/compound-web";
+import {
+    Box,
+    Flex,
+    I18nContext,
+    registerTranslations,
+    RoomListHeaderView,
+    type RoomListHeaderViewModel,
+    RoomListView,
+    type RoomListViewModel,
+    RoomNotifState,
+    setLocale,
+    type ViewModel,
+} from "@element-hq/web-shared-components";
 import AttachmentIcon from "@vector-im/compound-design-tokens/assets/web/icons/attachment";
-import ChevronDownIcon from "@vector-im/compound-design-tokens/assets/web/icons/chevron-down";
 import ChevronLeftIcon from "@vector-im/compound-design-tokens/assets/web/icons/chevron-left";
-import ComposeIcon from "@vector-im/compound-design-tokens/assets/web/icons/compose";
 import InfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info-solid";
+import MicOnIcon from "@vector-im/compound-design-tokens/assets/web/icons/mic-on";
+import ReactionIcon from "@vector-im/compound-design-tokens/assets/web/icons/reaction";
 import SearchIcon from "@vector-im/compound-design-tokens/assets/web/icons/search";
 import SendIcon from "@vector-im/compound-design-tokens/assets/web/icons/send-solid";
-import SettingsIcon from "@vector-im/compound-design-tokens/assets/web/icons/settings";
 
+import matronLogo from "../../res/themes/element/img/logos/matron-logo-simple.svg";
 import { errorMessage, type MatronJournalClient } from "./client";
 import {
     asNumber,
     asString,
     type ClientState,
+    type Conversation,
     conversationTitle,
     displaySender,
     type EventPayload,
@@ -27,6 +42,62 @@ import {
     type SessionStatus,
     type ToolStreamState,
 } from "./types";
+
+registerTranslations("en", {
+    action: { invite: "Invite" },
+    room_list: {
+        a11y: {
+            default: "Open room %(roomName)s",
+            invitation: "Open room %(roomName)s invitation.",
+            mention: {
+                one: "Open room %(roomName)s with 1 unread mention.",
+                other: "Open room %(roomName)s with %(count)s unread mentions.",
+            },
+            unread: {
+                one: "Open room %(roomName)s with 1 unread message.",
+                other: "Open room %(roomName)s with %(count)s unread messages.",
+            },
+            unsent_message: "Open room %(roomName)s with an unsent message.",
+        },
+        more_options: {
+            copy_link: "Copy room link",
+            favourited: "Favourited",
+            leave_room: "Leave room",
+            low_priority: "Low priority",
+            mark_read: "Mark as read",
+            mark_unread: "Mark as unread",
+        },
+        notification_options: "Notification options",
+        room: { more_options: "More Options" },
+    },
+});
+setLocale("en");
+
+const JOURNAL_I18N = {
+    language: "en",
+    register: (): void => undefined,
+    translate: (key: string, variables?: Record<string, unknown>): string => {
+        const translations: Record<string, string> = {
+            "action|new_conversation": "New conversation",
+            "common|settings": "Settings",
+            "room|context_menu|title": "Room options",
+        };
+        let value = translations[key] ?? key;
+        for (const [name, replacement] of Object.entries(variables ?? {})) {
+            value = value.replaceAll(`%(${name})s`, String(replacement));
+        }
+        return value;
+    },
+    humanizeTime: (timeMillis: number): string => new Date(timeMillis).toLocaleString(),
+};
+
+function staticViewModel<T, A extends object>(snapshot: T, actions: A): ViewModel<T> & A {
+    return {
+        getSnapshot: () => snapshot,
+        subscribe: () => () => undefined,
+        ...actions,
+    };
+}
 
 function formatTime(timestamp: number): string {
     return new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(new Date(timestamp));
@@ -37,10 +108,6 @@ function formatBytes(value: unknown): string | undefined {
     if (value < 1024) return `${value} B`;
     if (value < 1024 * 1024) return `${Math.round(value / 1024)} KB`;
     return `${(value / 1024 / 1024).toFixed(1)} MB`;
-}
-
-function conversationInitial(title: string): string {
-    return Array.from(title.trim())[0]?.toLocaleUpperCase() || "M";
 }
 
 function LoginScreen({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
@@ -64,119 +131,274 @@ function LoginScreen({ client, state }: { client: MatronJournalClient; state: Cl
     };
 
     return (
-        <main className="mj_Login">
-            <section className="mj_LoginCard">
-                <div className="mj_BrandMark" aria-hidden="true">
-                    M
-                </div>
-                <h1>Sign in</h1>
-                <p className="mj_LoginIntro">Continue to {state.config.brand || "Matron"}</p>
-                <form onSubmit={(event) => void submit(event)}>
-                    <label>
-                        Journal server
-                        <input
-                            type="text"
-                            inputMode="url"
-                            value={server}
-                            onChange={(event) => setServer(event.target.value)}
-                            placeholder="https://chat.example.com"
-                            autoComplete="url"
-                            required
-                            autoFocus={!server}
-                        />
-                    </label>
-                    <label>
-                        Username
-                        <input
-                            value={username}
-                            onChange={(event) => setUsername(event.target.value)}
-                            autoComplete="username"
-                            required
-                            autoFocus={Boolean(server)}
-                        />
-                    </label>
-                    <label>
-                        Password
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(event) => setPassword(event.target.value)}
-                            autoComplete="current-password"
-                            required
-                        />
-                    </label>
-                    {error && (
-                        <div className="mj_Error" role="alert">
-                            {error}
-                        </div>
-                    )}
-                    <button className="mj_PrimaryButton" type="submit" disabled={busy}>
-                        {busy ? "Signing in…" : "Sign in"}
-                    </button>
-                </form>
-                {state.config.privacy_policy_url && (
-                    <a
-                        className="mj_PrivacyLink"
-                        href={state.config.privacy_policy_url}
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Privacy policy
-                    </a>
-                )}
-            </section>
-        </main>
+        <div className="mx_AuthPage" style={{ background: "#fbfaf6" }}>
+            <div className="mx_AuthPage_modal mx_AuthPage_modal_withBlur" style={{ position: "relative" }}>
+                <div
+                    className="mx_AuthPage_modalBlur"
+                    style={{ position: "absolute", inset: 0, filter: "blur(40px)", background: "#fbfaf6" }}
+                />
+                <main
+                    className="mx_AuthPage_modalContent"
+                    style={{ display: "flex", zIndex: 1, borderRadius: "inherit" }}
+                    tabIndex={-1}
+                    aria-live="polite"
+                >
+                    <div className="mx_AuthHeader">
+                        <aside className="mx_AuthHeaderLogo">
+                            <img src={matronLogo} alt={state.config.brand || "Matron"} />
+                        </aside>
+                    </div>
+                    <div className="mx_AuthBody">
+                        <h1>Sign in</h1>
+                        <form onSubmit={(event) => void submit(event)}>
+                            <div className="mx_Field mx_Field_labelAlwaysTopLeft">
+                                <input
+                                    id="mj_LoginForm_server"
+                                    type="text"
+                                    inputMode="url"
+                                    value={server}
+                                    onChange={(event) => setServer(event.target.value)}
+                                    placeholder="https://chat.example.com"
+                                    autoComplete="url"
+                                    required
+                                    autoFocus={!server}
+                                />
+                                <label htmlFor="mj_LoginForm_server">Journal server</label>
+                            </div>
+                            <div className="mx_Field">
+                                <input
+                                    id="mj_LoginForm_username"
+                                    type="text"
+                                    value={username}
+                                    onChange={(event) => setUsername(event.target.value)}
+                                    placeholder=" "
+                                    autoComplete="username"
+                                    required
+                                    autoFocus={Boolean(server)}
+                                />
+                                <label htmlFor="mj_LoginForm_username">Username</label>
+                            </div>
+                            <div className="mx_Field">
+                                <input
+                                    id="mj_LoginForm_password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(event) => setPassword(event.target.value)}
+                                    placeholder=" "
+                                    autoComplete="current-password"
+                                    required
+                                />
+                                <label htmlFor="mj_LoginForm_password">Password</label>
+                            </div>
+                            {error && (
+                                <div className="mx_ErrorMessage mj_Error" role="alert">
+                                    {error}
+                                </div>
+                            )}
+                            <Button className="mx_Login_submit" size="sm" type="submit" disabled={busy}>
+                                {busy ? "Signing in…" : "Sign in"}
+                            </Button>
+                        </form>
+                        {state.config.privacy_policy_url && (
+                            <a
+                                className="mj_PrivacyLink"
+                                href={state.config.privacy_policy_url}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                Privacy policy
+                            </a>
+                        )}
+                    </div>
+                </main>
+            </div>
+        </div>
     );
 }
 
 function ConversationList({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
     const [query, setQuery] = useState("");
-    const [filter, setFilter] = useState<"all" | "unread" | "rooms">("all");
     const [accountOpen, setAccountOpen] = useState(false);
     const [composeHint, setComposeHint] = useState(false);
     const conversations = useMemo(() => {
         const normalized = query.trim().toLocaleLowerCase();
-        return state.conversations.filter((conversation) => {
-            if (filter === "unread" && conversation.unread_count === 0) return false;
-            if (filter === "rooms") return false;
-            return (
+        return state.conversations.filter(
+            (conversation) =>
                 !normalized ||
                 `${conversation.title} ${conversation.id} ${conversation.snippet}`
                     .toLocaleLowerCase()
-                    .includes(normalized)
-            );
-        });
-    }, [filter, query, state.conversations]);
+                    .includes(normalized),
+        );
+    }, [query, state.conversations]);
+
+    const headerVm = useMemo<RoomListHeaderViewModel>(
+        () =>
+            staticViewModel(
+                {
+                    title: "Home",
+                    displayComposeMenu: false,
+                    displaySpaceMenu: false,
+                    canCreateRoom: false,
+                    canCreateVideoRoom: false,
+                    canInviteInSpace: false,
+                    canAccessSpaceSettings: false,
+                    activeSortOption: "recent" as const,
+                    isMessagePreviewEnabled: true,
+                },
+                {
+                    createChatRoom: () => {
+                        setAccountOpen(false);
+                        setComposeHint((open) => !open);
+                    },
+                    createRoom: () => undefined,
+                    createVideoRoom: () => undefined,
+                    openUserSettings: () => {
+                        setComposeHint(false);
+                        setAccountOpen((open) => !open);
+                    },
+                    openSpaceHome: () => undefined,
+                    inviteInSpace: () => undefined,
+                    openSpacePreferences: () => undefined,
+                    openSpaceSettings: () => undefined,
+                    sort: () => undefined,
+                    toggleMessagePreview: () => undefined,
+                },
+            ),
+        [],
+    );
+
+    const roomListVm = useMemo<RoomListViewModel>(() => {
+        const roomIds = conversations.map((conversation) => conversation.id);
+        const activeRoomIndex = state.selectedConversationId
+            ? roomIds.indexOf(state.selectedConversationId)
+            : undefined;
+        const itemViewModels = new Map(
+            conversations.map((conversation) => {
+                const unread = conversation.unread_count > 0;
+                return [
+                    conversation.id,
+                    staticViewModel(
+                        {
+                            id: conversation.id,
+                            room: conversation,
+                            name: conversationTitle(conversation),
+                            isBold: unread,
+                            messagePreview: conversation.snippet || undefined,
+                            notification: {
+                                hasAnyNotificationOrActivity: unread,
+                                isUnsentMessage: false,
+                                invited: false,
+                                isMention: false,
+                                isActivityNotification: false,
+                                isNotification: unread,
+                                hasUnreadCount: unread,
+                                count: conversation.unread_count,
+                                muted: false,
+                            },
+                            showMoreOptionsMenu: false,
+                            showNotificationMenu: false,
+                            isFavourite: false,
+                            isLowPriority: false,
+                            canInvite: false,
+                            canCopyRoomLink: false,
+                            canMarkAsRead: unread,
+                            canMarkAsUnread: !unread,
+                            roomNotifState: RoomNotifState.AllMessages,
+                        },
+                        {
+                            onOpenRoom: () => void client.selectConversation(conversation.id),
+                            onMarkAsRead: () => undefined,
+                            onMarkAsUnread: () => undefined,
+                            onToggleFavorite: () => undefined,
+                            onToggleLowPriority: () => undefined,
+                            onInvite: () => undefined,
+                            onCopyRoomLink: () => undefined,
+                            onLeaveRoom: () => undefined,
+                            onSetRoomNotifState: () => undefined,
+                        },
+                    ),
+                ] as const;
+            }),
+        );
+
+        return staticViewModel(
+            {
+                isLoadingRooms: false,
+                isRoomListEmpty: roomIds.length === 0,
+                filterIds: [],
+                activeFilterId: undefined,
+                roomListState: {
+                    activeRoomIndex: activeRoomIndex === -1 ? undefined : activeRoomIndex,
+                    spaceId: "home",
+                    filterKeys: query ? [query] : undefined,
+                },
+                roomIds,
+                emptyStateDescription: "Your agent conversations will appear here.",
+                canCreateRoom: false,
+            },
+            {
+                onToggleFilter: () => undefined,
+                createChatRoom: () => setComposeHint(true),
+                createRoom: () => undefined,
+                getRoomItemViewModel: (roomId: string) => itemViewModels.get(roomId),
+                updateVisibleRooms: () => undefined,
+            },
+        );
+    }, [client, conversations, query, state.selectedConversationId]);
 
     return (
-        <aside className={`mj_Sidebar ${state.selectedConversationId ? "mj_Sidebar_mobileHidden" : ""}`}>
-            <header className="mj_SidebarHeader">
-                <strong>Home</strong>
-                <div className="mj_SidebarActions">
-                    <button
-                        className="mj_IconButton"
-                        onClick={() => {
-                            setComposeHint(false);
-                            setAccountOpen((open) => !open);
-                        }}
-                        title="Settings"
-                        aria-label="Settings"
-                        aria-expanded={accountOpen}
-                    >
-                        <SettingsIcon />
-                    </button>
-                    <button
-                        className="mj_IconButton"
-                        onClick={() => {
-                            setAccountOpen(false);
-                            setComposeHint((open) => !open);
-                        }}
-                        title="New conversation"
-                        aria-label="New conversation"
-                        aria-expanded={composeHint}
-                    >
-                        <ComposeIcon />
-                    </button>
+        <div className={`mx_LeftPanel_outerWrapper ${state.selectedConversationId ? "mj_Sidebar_mobileHidden" : ""}`}>
+            <div className="mx_LeftPanel_wrapper mx_LeftPanel_newRoomList">
+                <div className="mx_LeftPanel_wrapper--user">
+                    <div className="mx_LeftPanel mx_LeftPanel_newRoomList">
+                        <div className="mx_LeftPanel_roomListContainer">
+                            <nav className="mx_RoomListPanel" aria-label="Room list">
+                                <RoomListHeaderView vm={headerVm} />
+                                <Flex
+                                    data-testid="room-list-search"
+                                    className="mx_RoomListSearch"
+                                    role="search"
+                                    gap="var(--cpd-space-2x)"
+                                    align="center"
+                                >
+                                    <label
+                                        className="mx_RoomListSearch_inputWrapper mx_no_textinput"
+                                        htmlFor="room-list-search-input"
+                                    >
+                                        <SearchIcon aria-hidden />
+                                        <input
+                                            id="room-list-search-input"
+                                            className="mx_RoomListSearch_input"
+                                            type="search"
+                                            value={query}
+                                            onChange={(event) => setQuery(event.target.value)}
+                                            placeholder="Search"
+                                            aria-label="Search"
+                                            autoComplete="off"
+                                        />
+                                    </label>
+                                </Flex>
+                                <RoomListView
+                                    vm={roomListVm}
+                                    renderAvatar={(room) => {
+                                        const conversation = room as Conversation;
+                                        const title = conversationTitle(conversation);
+                                        return (
+                                            <Avatar
+                                                id={conversation.id}
+                                                name={title}
+                                                type="round"
+                                                size="32px"
+                                                className="mx_BaseAvatar"
+                                                role="presentation"
+                                                data-testid="avatar-img"
+                                            />
+                                        );
+                                    }}
+                                />
+                            </nav>
+                        </div>
+                    </div>
                 </div>
                 {accountOpen && (
                     <div className="mj_HeaderMenu mj_AccountMenu">
@@ -190,66 +412,8 @@ function ConversationList({ client, state }: { client: MatronJournalClient; stat
                         New conversations appear when an agent starts a session.
                     </div>
                 )}
-            </header>
-            <div className="mj_Search">
-                <SearchIcon aria-hidden="true" />
-                <input
-                    type="search"
-                    value={query}
-                    onChange={(event) => setQuery(event.target.value)}
-                    placeholder="Search conversations"
-                    aria-label="Search conversations"
-                />
             </div>
-            <div className="mj_Filters" aria-label="Conversation filters">
-                <button
-                    className={filter === "unread" ? "mj_Filter_active" : ""}
-                    onClick={() => setFilter((current) => (current === "unread" ? "all" : "unread"))}
-                >
-                    Unreads
-                </button>
-                <button onClick={() => setFilter("all")}>People</button>
-                <button className={filter === "rooms" ? "mj_Filter_active" : ""} onClick={() => setFilter("rooms")}>
-                    Rooms
-                </button>
-                <button className="mj_FilterMore" onClick={() => setFilter("all")} aria-label="Show all conversations">
-                    <ChevronDownIcon />
-                </button>
-            </div>
-            <div className="mj_ConversationList">
-                {conversations.map((conversation) => (
-                    <button
-                        key={conversation.id}
-                        className={`mj_Conversation ${conversation.id === state.selectedConversationId ? "mj_Conversation_selected" : ""}`}
-                        onClick={() => void client.selectConversation(conversation.id)}
-                    >
-                        <span className={`mj_Avatar mj_Avatar_${conversation.session_state}`} aria-hidden="true">
-                            {conversationInitial(conversationTitle(conversation))}
-                        </span>
-                        <span className="mj_ConversationBody">
-                            <span className="mj_ConversationLine">
-                                <strong>{conversationTitle(conversation)}</strong>
-                            </span>
-                            <span className="mj_ConversationLine mj_ConversationPreview">
-                                <span>{conversation.snippet || "No messages yet"}</span>
-                                {conversation.unread_count > 0 && (
-                                    <span className="mj_Unread" aria-label={`${conversation.unread_count} unread`}>
-                                        {conversation.unread_count > 99 ? "99+" : conversation.unread_count}
-                                    </span>
-                                )}
-                            </span>
-                        </span>
-                    </button>
-                ))}
-                {conversations.length === 0 && (
-                    <div className="mj_EmptyList">
-                        {query || filter !== "all"
-                            ? "No matching conversations"
-                            : "Your agent conversations will appear here."}
-                    </div>
-                )}
-            </div>
-        </aside>
+        </div>
     );
 }
 
@@ -279,7 +443,7 @@ function ChatHeader({ client, state }: { client: MatronJournalClient; state: Cli
     const [infoOpen, setInfoOpen] = useState(false);
     const title = conversation ? conversationTitle(conversation) : "Conversation";
     return (
-        <header className="mj_ChatHeader">
+        <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
             <button
                 className="mj_BackButton"
                 onClick={() => client.clearSelection()}
@@ -287,23 +451,44 @@ function ChatHeader({ client, state }: { client: MatronJournalClient; state: Cli
             >
                 <ChevronLeftIcon />
             </button>
-            <span className={`mj_Avatar mj_Avatar_${conversation?.session_state ?? "running"}`} aria-hidden="true">
-                {conversationInitial(title)}
-            </span>
-            <div className="mj_ChatHeading">
-                <strong>{title}</strong>
-            </div>
-            <div className="mj_ChatHeaderActions">
-                <button
-                    className="mj_IconButton"
+            <Avatar
+                id={conversation?.id ?? title}
+                name={title}
+                type="round"
+                size="32px"
+                className="mx_BaseAvatar"
+                role="presentation"
+                data-testid="avatar-img"
+            />
+            <button
+                aria-label="Conversation information"
+                tabIndex={0}
+                onClick={() => setInfoOpen((open) => !open)}
+                className="mx_RoomHeader_infoWrapper"
+            >
+                <Box flex="1" className="mx_RoomHeader_info">
+                    <Text
+                        as="div"
+                        size="lg"
+                        weight="semibold"
+                        dir="auto"
+                        role="heading"
+                        aria-level={1}
+                        className="mx_RoomHeader_heading"
+                    >
+                        <span className="mx_RoomHeader_truncated mx_lineClamp">{title}</span>
+                    </Text>
+                </Box>
+            </button>
+            <Tooltip label="Room information">
+                <IconButton
                     onClick={() => setInfoOpen((open) => !open)}
-                    title="Conversation information"
-                    aria-label="Conversation information"
+                    aria-label="Room information"
                     aria-expanded={infoOpen}
                 >
-                    <InfoIcon />
-                </button>
-            </div>
+                    <InfoIcon className="mx_RoomHeader_icon" />
+                </IconButton>
+            </Tooltip>
             {infoOpen && (
                 <div className="mj_HeaderMenu mj_RoomInfoMenu">
                     <strong>{title}</strong>
@@ -318,7 +503,7 @@ function ChatHeader({ client, state }: { client: MatronJournalClient; state: Cli
                     <SessionStatusView status={state.sessionStatus} />
                 </div>
             )}
-        </header>
+        </Flex>
     );
 }
 
@@ -577,46 +762,77 @@ function EventRow({
     client,
     event,
     answeredPrompts,
+    continuation = false,
+    lastInSection = true,
 }: {
     client: MatronJournalClient;
     event: JournalEvent;
     answeredPrompts: Set<number>;
+    continuation?: boolean;
+    lastInSection?: boolean;
 }): React.ReactElement {
     const own = event.sender.startsWith("user:");
     return (
-        <article className={`mj_Event ${own ? "mj_Event_own" : "mj_Event_agent"}`}>
+        <li
+            className={`mx_EventTile${continuation ? " mx_EventTile_continuation" : ""}${lastInSection ? " mx_EventTile_lastInSection" : ""}`}
+            tabIndex={-1}
+            aria-live="polite"
+            aria-atomic="true"
+            data-layout="bubble"
+            data-self={own}
+            data-event-id={event.seq}
+        >
             {!own && (
-                <span className="mj_EventAvatar" aria-hidden="true">
-                    ✦
+                <span className="mx_DisambiguatedProfile">
+                    <span className="mx_DisambiguatedProfile_displayName">{displaySender(event.sender)}</span>
                 </span>
             )}
-            <div className="mj_EventColumn">
-                {!own && <span className="mj_Sender">{displaySender(event.sender)}</span>}
-                <div className="mj_EventBubble">
-                    <EventContent client={client} event={event} answeredPrompts={answeredPrompts} />
-                </div>
-                <time>{formatTime(event.ts)}</time>
+            <div className="mx_EventTile_avatar" aria-hidden="true">
+                <Avatar
+                    id={event.sender}
+                    name={displaySender(event.sender)}
+                    type="round"
+                    size="32px"
+                    className="mx_BaseAvatar"
+                    role="presentation"
+                />
             </div>
-        </article>
+            <div className="mx_EventTile_line">
+                <a href={`#event-${event.seq}`} onClick={(clickEvent) => clickEvent.preventDefault()}>
+                    <time className="mx_MessageTimestamp" dateTime={new Date(event.ts).toISOString()}>
+                        {formatTime(event.ts)}
+                    </time>
+                </a>
+                <div className="mx_MTextBody mx_EventTile_content">
+                    <div className="markdown-body">
+                        <EventContent client={client} event={event} answeredPrompts={answeredPrompts} />
+                    </div>
+                </div>
+            </div>
+        </li>
     );
 }
 
 function ToolStream({ stream }: { stream: ToolStreamState }): React.ReactElement {
     return (
-        <article className="mj_Event mj_Event_agent">
-            <span className="mj_EventAvatar" aria-hidden="true">
-                ✦
+        <li className="mx_EventTile mx_EventTile_lastInSection" tabIndex={-1} data-layout="bubble" data-self="false">
+            <span className="mx_DisambiguatedProfile">
+                <span className="mx_DisambiguatedProfile_displayName">agent</span>
             </span>
-            <div className="mj_EventColumn mj_EventColumn_wide">
-                <span className="mj_Sender">agent</span>
-                <div className="mj_LiveTool">
-                    <div>
-                        <span className="mj_LiveDot" /> Running <code>{stream.command || stream.tool || "tool"}</code>
+            <div className="mx_EventTile_line">
+                <div className="mx_MTextBody mx_EventTile_content">
+                    <div className="markdown-body mj_LiveTool">
+                        <div>
+                            <span className="mj_LiveDot" /> Running{" "}
+                            <code>{stream.command || stream.tool || "tool"}</code>
+                        </div>
+                        <pre>
+                            {stream.headTruncated ? `… earlier output omitted …\n${stream.content}` : stream.content}
+                        </pre>
                     </div>
-                    <pre>{stream.headTruncated ? `… earlier output omitted …\n${stream.content}` : stream.content}</pre>
                 </div>
             </div>
-        </article>
+        </li>
     );
 }
 
@@ -654,66 +870,86 @@ function Timeline({ client, state }: { client: MatronJournalClient; state: Clien
     ]);
 
     return (
-        <div className="mj_Timeline" ref={scrollRef}>
-            <div className="mj_TimelineInner">
-                {state.hasOlderHistory && (
-                    <button
-                        className="mj_LoadHistory"
-                        onClick={() => void client.loadOlderHistory()}
-                        disabled={state.loadingHistory}
-                    >
-                        {state.loadingHistory ? "Loading…" : "Load earlier messages"}
-                    </button>
-                )}
-                {visibleEvents.length === 0 && !state.loadingHistory && (
-                    <div className="mj_EmptyConversation">
-                        <span>✦</span>
-                        <strong>This conversation is ready.</strong>
-                        <p>Send a message to the agent to continue.</p>
-                    </div>
-                )}
-                {visibleEvents.map((event) => (
-                    <EventRow key={event.seq} client={client} event={event} answeredPrompts={answeredPrompts} />
-                ))}
-                {state.pendingMessages.map((message) => (
-                    <article className="mj_Event mj_Event_own mj_Event_pending" key={message.localId}>
-                        <div className="mj_EventColumn">
-                            <div className="mj_EventBubble">
-                                <div className="mj_MessageText">{message.body}</div>
-                            </div>
-                            <span>Sending…</span>
-                        </div>
-                    </article>
-                ))}
-                {Object.values(state.textStreams).map((text, index) => (
-                    <article className="mj_Event mj_Event_agent" key={`text-stream-${index}`}>
-                        <span className="mj_EventAvatar" aria-hidden="true">
-                            ✦
-                        </span>
-                        <div className="mj_EventColumn">
-                            <span className="mj_Sender">agent</span>
-                            <div className="mj_EventBubble mj_EventBubble_streaming">
-                                {text}
-                                <span className="mj_Cursor" />
-                            </div>
-                        </div>
-                    </article>
-                ))}
-                {Object.values(state.toolStreams).map((stream) => (
-                    <ToolStream key={stream.messageRef} stream={stream} />
-                ))}
-                {state.activity && state.activity.state !== "idle" && (
-                    <div className="mj_Activity">
-                        <span />
-                        <span />
-                        <span />
-                        {state.activity.state === "thinking"
-                            ? "Thinking"
-                            : `Running ${state.activity.detail || "a tool"}`}
-                    </div>
-                )}
+        <main className="mx_RoomView_timeline" data-testid="timeline">
+            <div className="mx_RoomView_messagePanel mx_AutoHideScrollbar" ref={scrollRef}>
+                <div className="mx_RoomView_messageListWrapper">
+                    <ol className="mx_RoomView_MessageList" aria-live="polite">
+                        {state.hasOlderHistory && (
+                            <li className="mj_HistoryRow">
+                                <button
+                                    className="mj_LoadHistory"
+                                    onClick={() => void client.loadOlderHistory()}
+                                    disabled={state.loadingHistory}
+                                >
+                                    {state.loadingHistory ? "Loading…" : "Load earlier messages"}
+                                </button>
+                            </li>
+                        )}
+                        {visibleEvents.map((event, index) => (
+                            <EventRow
+                                key={event.seq}
+                                client={client}
+                                event={event}
+                                answeredPrompts={answeredPrompts}
+                                continuation={index > 0 && visibleEvents[index - 1].sender === event.sender}
+                                lastInSection={
+                                    index === visibleEvents.length - 1 ||
+                                    visibleEvents[index + 1].sender !== event.sender
+                                }
+                            />
+                        ))}
+                        {state.pendingMessages.map((message) => (
+                            <li
+                                className="mx_EventTile mx_EventTile_sending mx_EventTile_lastInSection"
+                                key={message.localId}
+                                data-layout="bubble"
+                                data-self="true"
+                            >
+                                <div className="mx_EventTile_line">
+                                    <div className="mx_MTextBody mx_EventTile_content">
+                                        <div className="markdown-body mj_MessageText">{message.body}</div>
+                                    </div>
+                                </div>
+                                <span className="mj_SendingLabel">Sending…</span>
+                            </li>
+                        ))}
+                        {Object.values(state.textStreams).map((text, index) => (
+                            <li
+                                className="mx_EventTile mx_EventTile_lastInSection"
+                                key={`text-stream-${index}`}
+                                data-layout="bubble"
+                                data-self="false"
+                            >
+                                <span className="mx_DisambiguatedProfile">
+                                    <span className="mx_DisambiguatedProfile_displayName">agent</span>
+                                </span>
+                                <div className="mx_EventTile_line">
+                                    <div className="mx_MTextBody mx_EventTile_content">
+                                        <div className="markdown-body mj_MessageText">
+                                            {text}
+                                            <span className="mj_Cursor" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        ))}
+                        {Object.values(state.toolStreams).map((stream) => (
+                            <ToolStream key={stream.messageRef} stream={stream} />
+                        ))}
+                        {state.activity && state.activity.state !== "idle" && (
+                            <li className="mx_WhoIsTypingTile mj_Activity">
+                                <span />
+                                <span />
+                                <span />
+                                {state.activity.state === "thinking"
+                                    ? "Thinking"
+                                    : `Running ${state.activity.detail || "a tool"}`}
+                            </li>
+                        )}
+                    </ol>
+                </div>
             </div>
-        </div>
+        </main>
     );
 }
 
@@ -727,73 +963,107 @@ function Composer({ client, state }: { client: MatronJournalClient; state: Clien
         }
     };
     return (
-        <footer className="mj_ComposerArea">
-            {state.connectionError && (
-                <div className="mj_ConnectionError" role="status">
-                    {state.connectionError}
-                </div>
-            )}
-            <div className="mj_Composer">
-                <textarea
-                    ref={textarea}
-                    rows={1}
-                    value={body}
-                    onChange={(event) => {
-                        setBody(event.target.value);
-                        event.target.style.height = "auto";
-                        event.target.style.height = `${Math.min(event.target.scrollHeight, 160)}px`;
-                    }}
-                    onKeyDown={(event) => {
-                        if (event.key === "Enter" && !event.shiftKey) {
-                            event.preventDefault();
-                            void send();
-                        }
-                    }}
-                    placeholder={
-                        state.connection === "online" ? "Send a message…" : "Messages will send when reconnected"
-                    }
-                    aria-label="Message your agent"
-                />
-                <button
-                    className="mj_ComposerButton"
-                    disabled
-                    title="Attachments are not supported by this journal server"
-                    aria-label="Attach a file"
-                >
-                    <AttachmentIcon />
-                </button>
-                {body.trim() && (
-                    <button className="mj_SendButton" onClick={() => void send()} aria-label="Send message">
-                        <SendIcon />
-                    </button>
+        <div className="mx_MessageComposer" role="region" aria-label="Message composer">
+            <div className="mx_MessageComposer_wrapper">
+                {state.connectionError && (
+                    <div className="mj_ConnectionError" role="status">
+                        {state.connectionError}
+                    </div>
                 )}
+                <div className="mx_MessageComposer_row">
+                    <div className="mx_SendMessageComposer" onClick={() => textarea.current?.focus()}>
+                        <div className="mx_BasicMessageComposer">
+                            <textarea
+                                className="mx_BasicMessageComposer_input"
+                                ref={textarea}
+                                rows={1}
+                                value={body}
+                                onChange={(event) => {
+                                    setBody(event.target.value);
+                                    event.target.style.height = "auto";
+                                    event.target.style.height = `${Math.min(event.target.scrollHeight, 160)}px`;
+                                }}
+                                onKeyDown={(event) => {
+                                    if (event.key === "Enter" && !event.shiftKey) {
+                                        event.preventDefault();
+                                        void send();
+                                    }
+                                }}
+                                placeholder={
+                                    state.connection === "online"
+                                        ? "Send a message…"
+                                        : "Messages will send when reconnected"
+                                }
+                                aria-label="Message your agent"
+                            />
+                        </div>
+                    </div>
+                    <div className="mx_MessageComposer_actions">
+                        <button className="mx_MessageComposer_button mx_EmojiButton" title="Emoji" aria-label="Emoji">
+                            <ReactionIcon />
+                        </button>
+                        <button
+                            className="mx_MessageComposer_button"
+                            title="Attachments are not supported by this journal server"
+                            aria-label="Attach a file"
+                            aria-disabled="true"
+                        >
+                            <AttachmentIcon />
+                        </button>
+                        <button
+                            className="mx_MessageComposer_button"
+                            title="Voice messages are not supported by this journal server"
+                            aria-label="Voice message"
+                            aria-disabled="true"
+                        >
+                            <MicOnIcon />
+                        </button>
+                        {body.trim() && (
+                            <button
+                                className="mx_MessageComposer_sendMessage"
+                                onClick={() => void send()}
+                                aria-label="Send message"
+                            >
+                                <SendIcon />
+                            </button>
+                        )}
+                    </div>
+                </div>
             </div>
-        </footer>
+        </div>
     );
 }
 
 function SignedInApp({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
     return (
-        <main className="mj_App">
-            <ConversationList client={client} state={state} />
-            <section className={`mj_Chat ${state.selectedConversationId ? "" : "mj_Chat_mobileHidden"}`}>
-                {state.selectedConversationId ? (
-                    <>
-                        <ChatHeader client={client} state={state} />
-                        <Timeline client={client} state={state} />
-                        <Composer client={client} state={state} />
-                    </>
-                ) : (
-                    <div className="mj_NoSelection">
-                        <span className="mj_BrandMark" aria-hidden="true">
-                            M
-                        </span>
-                        <h2>Select a conversation</h2>
-                        <p>Your agent sessions stay synced across every Matron device.</p>
+        <I18nContext.Provider value={JOURNAL_I18N}>
+            <div className="mx_MatrixChat_wrapper">
+                <div className="mx_MatrixChat">
+                    <ConversationList client={client} state={state} />
+                    <div className="mx_ResizeHandle mx_ResizeHandle--horizontal" id="lp-resizer" />
+                    <div
+                        className={`mx_RoomView_wrapper ${state.selectedConversationId ? "" : "mj_Chat_mobileHidden"}`}
+                    >
+                        {state.selectedConversationId ? (
+                            <div className="mx_RoomView">
+                                <div className="mx_RoomView_body mx_MainSplit_timeline" data-layout="bubble">
+                                    <ChatHeader client={client} state={state} />
+                                    <Timeline client={client} state={state} />
+                                    <Composer client={client} state={state} />
+                                </div>
+                            </div>
+                        ) : (
+                            <main className="mx_HomePage mx_HomePage_default">
+                                <div className="mx_HomePage_default_wrapper">
+                                    <img src={matronLogo} alt={state.config.brand || "Matron"} />
+                                    <h1>Welcome to {state.config.brand || "Matron"}</h1>
+                                </div>
+                            </main>
+                        )}
                     </div>
-                )}
-            </section>
-        </main>
+                </div>
+            </div>
+        </I18nContext.Provider>
     );
 }
 
@@ -801,8 +1071,8 @@ export function MatronApp({ client }: { client: MatronJournalClient }): React.Re
     const state = useSyncExternalStore(client.subscribe, client.getSnapshot);
     if (state.phase === "loading")
         return (
-            <div className="mj_Loading">
-                <span className="mj_BrandMark">M</span>
+            <div className="mx_MatrixChat_splash mj_Loading">
+                <img src={matronLogo} alt="Matron" />
             </div>
         );
     if (state.phase === "signed-out") return <LoginScreen client={client} state={state} />;

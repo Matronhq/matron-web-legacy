@@ -538,6 +538,10 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
 
             // We bake the version in so the app knows its version immediately
             new webpack.DefinePlugin({ "process.env.VERSION": JSON.stringify(VERSION) }),
+            // The standalone Journal entry imports the shared Element views directly.
+            // Their browser dependencies expect the standard process shim which the
+            // former Matrix bootstrap pulled in transitively.
+            new webpack.ProvidePlugin({ process: "process/browser" }),
             // But we also write it to a file which gets polled for update detection
             new VersionFilePlugin({
                 outputFile: "version",
