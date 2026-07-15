@@ -15,6 +15,11 @@ body,
     overflow: hidden;
 }
 
+html {
+    /* Match Matron's pre-Journal FontWatcher default (the browser default minus 1px). */
+    font-size: calc(var(--cpd-font-size-root) - 1px);
+}
+
 body {
     margin: 0;
 }
@@ -26,8 +31,10 @@ textarea {
 }
 
 .mx_LeftPanel_outerWrapper {
-    flex: 0 0 320px;
-    width: 320px;
+    --mj-left-panel-width: 350px;
+
+    flex: 0 0 var(--mj-left-panel-width);
+    width: var(--mj-left-panel-width);
 }
 
 .mx_LeftPanel_wrapper--user,
@@ -376,11 +383,9 @@ button.mj_File {
     display: block;
     width: 100%;
     max-height: 160px;
-    margin: 0;
     outline: none;
     resize: none;
     color: var(--cpd-color-text-primary);
-    line-height: 20px;
     overflow-y: auto;
 }
 

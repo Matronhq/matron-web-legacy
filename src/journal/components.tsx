@@ -91,6 +91,78 @@ const JOURNAL_I18N = {
     humanizeTime: (timeMillis: number): string => new Date(timeMillis).toLocaleString(),
 };
 
+const LEFT_PANEL_SIZE_KEY = "mx_lhs_size";
+const LEFT_PANEL_DEFAULT_WIDTH = 350;
+const LEFT_PANEL_MIN_WIDTH = 224;
+
+function clampLeftPanelWidth(width: number, containerWidth: number): number {
+    return Math.min(Math.max(width, LEFT_PANEL_MIN_WIDTH), Math.max(LEFT_PANEL_MIN_WIDTH, containerWidth / 2));
+}
+
+function initialLeftPanelWidth(): number {
+    const storedWidth = Number.parseInt(window.localStorage.getItem(LEFT_PANEL_SIZE_KEY) ?? "", 10);
+    return clampLeftPanelWidth(
+        Number.isFinite(storedWidth) && storedWidth >= LEFT_PANEL_MIN_WIDTH ? storedWidth : LEFT_PANEL_DEFAULT_WIDTH,
+        document.documentElement.clientWidth,
+    );
+}
+
+function useLeftPanelResize(): {
+    width: number;
+    onPointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
+} {
+    const [width, setWidth] = useState(initialLeftPanelWidth);
+    const widthRef = useRef(width);
+    const stopDraggingRef = useRef<() => void>(() => undefined);
+
+    useEffect(() => {
+        widthRef.current = width;
+    }, [width]);
+
+    useEffect(() => {
+        const clampToWindow = (): void => {
+            const nextWidth = clampLeftPanelWidth(widthRef.current, document.documentElement.clientWidth);
+            widthRef.current = nextWidth;
+            setWidth(nextWidth);
+        };
+        window.addEventListener("resize", clampToWindow);
+        return () => {
+            window.removeEventListener("resize", clampToWindow);
+            stopDraggingRef.current();
+        };
+    }, []);
+
+    const onPointerDown = useCallback((event: React.PointerEvent<HTMLDivElement>): void => {
+        if (event.button !== 0) return;
+        event.preventDefault();
+
+        const container = event.currentTarget.parentElement;
+        if (!container) return;
+        const containerLeft = container.getBoundingClientRect().left;
+
+        const stopDragging = (): void => {
+            window.removeEventListener("pointermove", onPointerMove);
+            window.removeEventListener("pointerup", stopDragging);
+            window.removeEventListener("pointercancel", stopDragging);
+            window.localStorage.setItem(LEFT_PANEL_SIZE_KEY, String(Math.round(widthRef.current)));
+            stopDraggingRef.current = () => undefined;
+        };
+        const onPointerMove = (moveEvent: PointerEvent): void => {
+            const nextWidth = clampLeftPanelWidth(moveEvent.clientX - containerLeft, container.clientWidth);
+            widthRef.current = nextWidth;
+            setWidth(nextWidth);
+        };
+
+        stopDraggingRef.current();
+        stopDraggingRef.current = stopDragging;
+        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointerup", stopDragging);
+        window.addEventListener("pointercancel", stopDragging);
+    }, []);
+
+    return { width, onPointerDown };
+}
+
 function staticViewModel<T, A extends object>(snapshot: T, actions: A): ViewModel<T> & A {
     return {
         getSnapshot: () => snapshot,
@@ -216,7 +288,15 @@ function LoginScreen({ client, state }: { client: MatronJournalClient; state: Cl
     );
 }
 
-function ConversationList({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
+function ConversationList({
+    client,
+    state,
+    width,
+}: {
+    client: MatronJournalClient;
+    state: ClientState;
+    width: number;
+}): React.ReactElement {
     const [query, setQuery] = useState("");
     const [accountOpen, setAccountOpen] = useState(false);
     const [composeHint, setComposeHint] = useState(false);
@@ -347,7 +427,10 @@ function ConversationList({ client, state }: { client: MatronJournalClient; stat
     }, [client, conversations, query, state.selectedConversationId]);
 
     return (
-        <div className={`mx_LeftPanel_outerWrapper ${state.selectedConversationId ? "mj_Sidebar_mobileHidden" : ""}`}>
+        <div
+            className={`mx_LeftPanel_outerWrapper ${state.selectedConversationId ? "mj_Sidebar_mobileHidden" : ""}`}
+            style={{ "--mj-left-panel-width": `${width}px` } as React.CSSProperties}
+        >
             <div className="mx_LeftPanel_wrapper mx_LeftPanel_newRoomList">
                 <div className="mx_LeftPanel_wrapper--user">
                     <div className="mx_LeftPanel mx_LeftPanel_newRoomList">
@@ -782,7 +865,7 @@ function EventRow({
             data-self={own}
             data-event-id={event.seq}
         >
-            {!own && (
+            {!own && !continuation && (
                 <span className="mx_DisambiguatedProfile">
                     <span className="mx_DisambiguatedProfile_displayName">{displaySender(event.sender)}</span>
                 </span>
@@ -1035,12 +1118,20 @@ function Composer({ client, state }: { client: MatronJournalClient; state: Clien
 }
 
 function SignedInApp({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
+    const leftPanel = useLeftPanelResize();
+
     return (
         <I18nContext.Provider value={JOURNAL_I18N}>
             <div className="mx_MatrixChat_wrapper">
                 <div className="mx_MatrixChat">
-                    <ConversationList client={client} state={state} />
-                    <div className="mx_ResizeHandle mx_ResizeHandle--horizontal" id="lp-resizer" />
+                    <ConversationList client={client} state={state} width={leftPanel.width} />
+                    <div
+                        className="mx_ResizeHandle mx_ResizeHandle--horizontal"
+                        data-id="lp-resizer"
+                        onPointerDown={leftPanel.onPointerDown}
+                    >
+                        <div />
+                    </div>
                     <div
                         className={`mx_RoomView_wrapper ${state.selectedConversationId ? "" : "mj_Chat_mobileHidden"}`}
                     >
