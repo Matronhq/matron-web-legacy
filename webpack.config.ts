@@ -7,7 +7,6 @@ Please see LICENSE files in the repository root for full details.
 
 import dotenv from "dotenv";
 import path from "node:path";
-import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import webpack from "webpack";
 import "webpack-dev-server"; // for types
@@ -28,7 +27,6 @@ import postcssNested from "postcss-nested";
 import postcssEasings from "postcss-easings";
 
 import pkgJson from "./package.json" with { type: "json" };
-import componentsJson from "./components.json" with { type: "json" };
 import type { sentryWebpackPlugin as sentryWebpackPluginType } from "@sentry/webpack-plugin/webpack5";
 
 // Environment variables
@@ -53,72 +51,11 @@ dotenv.config();
 let ogImageUrl = process.env.RIOT_OG_IMAGE_URL;
 if (!ogImageUrl) ogImageUrl = "https://app.matron.chat/themes/element/img/logos/opengraph.png";
 
-const cssThemes = {
-    // CSS themes
-    "theme-legacy-light": "./res/themes/legacy-light/css/legacy-light.pcss",
-    "theme-legacy-dark": "./res/themes/legacy-dark/css/legacy-dark.pcss",
-    "theme-light": "./res/themes/light/css/light.pcss",
-    "theme-light-high-contrast": "./res/themes/light-high-contrast/css/light-high-contrast.pcss",
-    "theme-dark": "./res/themes/dark/css/dark.pcss",
-    "theme-light-custom": "./res/themes/light-custom/css/light-custom.pcss",
-    "theme-dark-custom": "./res/themes/dark-custom/css/dark-custom.pcss",
-};
-
-// See docs/customisations.md
-let fileOverrides = {
-    /* {[file: string]: string} */
-};
-try {
-    const customisationsFile = fs.readFileSync("./customisations.json", "utf-8");
-    fileOverrides = JSON.parse(customisationsFile);
-
-    // stringify the output so it appears in logs correctly, as large files can sometimes get
-    // represented as `<Object>` which is less than helpful.
-    console.log("Using customisations.json : " + JSON.stringify(fileOverrides, null, 4));
-
-    process.on("exit", () => {
-        console.log(""); // blank line
-        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        console.warn("!! Customisations have been deprecated and will be removed in a future release      !!");
-        console.warn("!! See https://github.com/matronhq/matron-web/blob/develop/docs/customisations.md !!");
-        console.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        console.log(""); // blank line
-    });
-} catch {
-    // ignore - not important
-}
-
 // Get the root of a node_modules dependency the name of its import
 function getPackageRoot(dep: string, target = "package.json"): string {
     const targetPath = import.meta.resolve(`${dep}${target ? "/" + target : ""}`);
     return path.dirname(fileURLToPath(targetPath));
 }
-
-function parseOverridesToReplacements(overrides: Record<string, string>): webpack.NormalModuleReplacementPlugin[] {
-    return Object.entries(overrides).map(([oldPath, newPath]) => {
-        return new webpack.NormalModuleReplacementPlugin(
-            // because the input is effectively defined by the person running the build, we don't
-            // need to do anything special to protect against regex overrunning, etc.
-            new RegExp(oldPath.replace(/\//g, "[\\/\\\\]").replace(/\./g, "\\.")),
-            function (resource) {
-                resource.request = path.resolve(__dirname, newPath);
-                resource.createData.resource = path.resolve(__dirname, newPath);
-                // Starting with Webpack 5 we also need to set the context as otherwise replacing
-                // files in e.g. matrix-js-sdk with files from element-web will try to resolve
-                // them within matrix-js-sdk (https://github.com/webpack/webpack/issues/17716)
-                resource.context = path.dirname(resource.request);
-                resource.createData.context = path.dirname(resource.createData.resource);
-            },
-        );
-    });
-}
-
-const moduleReplacementPlugins = [
-    ...parseOverridesToReplacements(componentsJson),
-
-    // Allow customisations to override the default components too
-    ...parseOverridesToReplacements(fileOverrides),
-];
 
 export default (env: string, argv: Record<string, any>): webpack.Configuration => {
     // Establish settings based on the environment and args.
@@ -153,11 +90,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
         development["devtool"] = "source-map";
     }
 
-    // Resolve the directories for the js-sdk for later use. We resolve these early, so we
-    // don't have to call them over and over. We also resolve to the package.json instead of the src
-    // directory, so we don't have to rely on an index.js or similar file existing.
-    const jsSdkSrcDir = path.join(getPackageRoot("matrix-js-sdk"), "src");
-
     return {
         ...development,
 
@@ -168,15 +100,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
         bail: true,
 
         entry: {
-            bundle: "./src/vector/index.ts",
-            mobileguide: "./src/vector/mobile_guide/index.ts",
-            jitsi: "./src/vector/jitsi/index.ts",
-            usercontent: "./src/usercontent/index.ts",
-            serviceworker: {
-                import: "./src/serviceworker/index.ts",
-                filename: "sw.js", // update WebPlatform if this changes
-            },
-            ...cssThemes,
+            bundle: "./src/journal/index.tsx",
         },
 
         optimization: {
@@ -192,16 +116,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                         // Do not add `chunks: 'all'` here because you'll break the app entry point.
                     },
 
-                    // put the unhomoglyph data in its own file. It contains
-                    // magic characters which mess up line numbers in the
-                    // javascript debugger.
-                    unhomoglyph_data: {
-                        name: "unhomoglyph_data",
-                        test: /unhomoglyph\/data\.json$/,
-                        enforce: true,
-                        chunks: "all",
-                    },
-
                     default: {
                         reuseExistingChunk: true,
                     },
@@ -214,17 +128,7 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
             // Minification is normally enabled by default for webpack in production mode, but
             // we use a CSS optimizer too and need to manage it ourselves.
             minimize: enableMinification,
-            minimizer: enableMinification
-                ? [
-                      new TerserPlugin({
-                          // Already minified and includes an auto-generated license comment
-                          // that the plugin would otherwise pointlessly extract into a separate
-                          // file. We add the actual license using CopyWebpackPlugin below.
-                          exclude: "jitsi_external_api.min.js",
-                      }),
-                      new CssMinimizerPlugin(),
-                  ]
-                : [],
+            minimizer: enableMinification ? [new TerserPlugin(), new CssMinimizerPlugin()] : [],
 
             // Set the value of `process.env.NODE_ENV` for libraries like React
             // See also https://v4.webpack.js.org/configuration/optimization/#optimizationnodeenv
@@ -240,20 +144,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 // using linked dependencies.
                 "react": getPackageRoot("react"),
                 "react-dom": getPackageRoot("react-dom"),
-
-                // Same goes for js/react-sdk - we don't need two copies.
-                "matrix-js-sdk": getPackageRoot("matrix-js-sdk"),
-                "@matrix-org/react-sdk-module-api": getPackageRoot("@matrix-org/react-sdk-module-api"),
-                // and matrix-widget-api
-                "matrix-widget-api": getPackageRoot("matrix-widget-api"),
-                "oidc-client-ts": getPackageRoot("oidc-client-ts"),
-
-                // Define a variable so the i18n stuff can load
-                "$webapp": path.resolve(__dirname, "webapp"),
-
-                // Make shared-components imports resolve to EW deps
-                "counterpart": getPackageRoot("counterpart"),
-                "@vector-im/compound-web": getPackageRoot("@vector-im/compound-web", ""),
             },
             fallback: {
                 // Mock out the NodeFS module: The opus decoder imports this wrongly.
@@ -267,16 +157,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 // Polyfill needed by sentry
                 "process/browser": import.meta.resolve("process/browser"),
             },
-
-            // Enable the custom "wasm-esm" export condition [1] to indicate to
-            // matrix-sdk-crypto-wasm that we support the ES Module Integration
-            // Proposal for WebAssembly [2].  The "..." magic value means "the
-            // default conditions" [3].
-            //
-            // [1]: https://nodejs.org/api/packages.html#conditional-exports
-            // [2]: https://github.com/webassembly/esm-integration
-            // [3]: https://github.com/webpack/webpack/issues/17692#issuecomment-1866272674.
-            conditionNames: ["matrix-org:wasm-esm", "..."],
         },
 
         // Some of our deps have broken source maps, so we have to ignore warnings or exclude them one-by-one
@@ -304,18 +184,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                     include: (f: string) => {
                         // our own source needs babel-ing
                         if (f.startsWith(path.resolve(__dirname, "src"))) return true;
-
-                        // we use the original source files of js-sdk, so we need to
-                        // run them through babel. Because the path tested is the resolved, absolute
-                        // path, these could be anywhere thanks to linking. We must also not
-                        // include node modules inside these modules, so we add 'src'.
-                        if (f.startsWith(jsSdkSrcDir)) return true;
-
-                        // Some of the syntax in this package is not understood by
-                        // either webpack or our babel setup.
-                        // When we do get to upgrade our current setup, this should
-                        // probably be removed.
-                        if (f.includes(path.join("@vector-im", "compound-web"))) return true;
 
                         // but we can't run all of our dependencies through babel (many of them still
                         // use module.exports which breaks if babel injects an 'include' for its
@@ -617,8 +485,6 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
         },
 
         plugins: [
-            ...moduleReplacementPlugins,
-
             // This exports our CSS using the splitChunks and loaders above.
             new MiniCssExtractPlugin({
                 filename: "bundles/[fullhash]/[name].css",
@@ -634,50 +500,11 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 // HtmlWebpackPlugin will screw up our formatting like the names
                 // of the themes and which chunks we actually care about.
                 inject: false,
-                excludeChunks: ["mobileguide", "usercontent", "jitsi", "serviceworker"],
                 minify: false,
                 templateParameters: {
                     og_image_url: ogImageUrl,
                     csp_extra_source: process.env.CSP_EXTRA_SOURCE ?? "",
                 },
-            }),
-
-            // This is the jitsi widget wrapper (embedded, so isolated stack)
-            new HtmlWebpackPlugin({
-                template: "./src/vector/jitsi/index.html",
-                filename: "jitsi.html",
-                minify: false,
-                chunks: ["jitsi"],
-            }),
-
-            // This is the mobile guide's entry point (separate for faster mobile loading)
-            new HtmlWebpackPlugin({
-                template: "./src/vector/mobile_guide/index.html",
-                filename: "mobile_guide/index.html",
-                minify: false,
-                chunks: ["mobileguide"],
-            }),
-
-            // These are the static error pages for when the javascript env is *really unsupported*
-            new HtmlWebpackPlugin({
-                template: "./src/vector/static/unable-to-load.html",
-                filename: "static/unable-to-load.html",
-                minify: false,
-                chunks: [],
-            }),
-            new HtmlWebpackPlugin({
-                template: "./src/vector/static/incompatible-browser.html",
-                filename: "static/incompatible-browser.html",
-                minify: false,
-                chunks: [],
-            }),
-
-            // This is the usercontent sandbox's entry point (separate for iframing)
-            new HtmlWebpackPlugin({
-                template: "./src/usercontent/index.html",
-                filename: "usercontent/index.html",
-                minify: false,
-                chunks: ["usercontent"],
             }),
 
             new HtmlWebpackInjectPreload({
@@ -703,35 +530,10 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 patterns: [
                     "res/apple-app-site-association",
                     { from: ".well-known/**", context: path.resolve(__dirname, "res") },
-                    "res/jitsi_external_api.min.js",
-                    "res/jitsi_external_api.min.js.LICENSE.txt",
                     "res/manifest.json",
-                    "res/welcome.html",
-                    { from: "welcome/**", context: path.resolve(__dirname, "res") },
-                    { from: "themes/**", context: path.resolve(__dirname, "res") },
                     { from: "vector-icons/**", context: path.resolve(__dirname, "res") },
-                    { from: "decoder-ring/**", context: path.resolve(__dirname, "res") },
-                    { from: "media/**", context: path.resolve(__dirname, "res/") },
                     { from: "config.json", noErrorOnMissing: true },
-                    // Element Call embedded widget
-                    {
-                        from: "**",
-                        context: path.join(getPackageRoot("@element-hq/element-call-embedded"), "dist"),
-                        to: path.join(__dirname, "webapp", "widgets", "element-call"),
-                    },
-                    // Mobile guide assets
-                    {
-                        from: "assets/**",
-                        context: path.resolve(__dirname, "src/vector/mobile_guide"),
-                        to: "mobile_guide",
-                    },
                 ],
-            }),
-
-            // Automatically load buffer & process modules as we use them without explicitly
-            // importing them
-            new webpack.ProvidePlugin({
-                process: "process/browser",
             }),
 
             // We bake the version in so the app knows its version immediately
@@ -796,8 +598,19 @@ export default (env: string, argv: Record<string, any>): webpack.Configuration =
                 stats: "minimal",
             },
 
-            // The Electron desktop hot launcher needs full reloads because the theme CSS
-            // bundles are separate extracted entries, so HMR-only can miss visible changes.
+            // Browser development stays same-origin; override the target when
+            // matron-journal is not on its standard local port.
+            proxy: [
+                {
+                    context: ["/journal"],
+                    target: process.env.MATRON_JOURNAL_URL ?? "http://127.0.0.1:9810",
+                    pathRewrite: { "^/journal": "" },
+                    changeOrigin: true,
+                    ws: true,
+                },
+            ],
+
+            // Electron hot development uses full reloads so the renderer and extracted CSS stay in lockstep.
             hot: liveReloadDevServer ? false : "only",
             liveReload: liveReloadDevServer,
 

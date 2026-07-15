@@ -31,6 +31,7 @@
         },
         "build": {
             "command": "webpack-cli --disable-interpret --progress --mode production",
+            "dependsOn": ["clean"],
             "outputs": ["{projectRoot}/webapp"]
         },
         "start:i18n": {

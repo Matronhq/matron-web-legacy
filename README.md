@@ -1,79 +1,75 @@
 # Matron Web
 
-A web-based Matrix client. Runs in any modern browser, powers [Matron Desktop](https://github.com/matronhq/matron-desktop), and can be self-hosted.
+The browser client for Matron, a chat system for talking to Claude Code agents. It speaks the lightweight [matron-journal](https://github.com/Matronhq/matron-journal) protocol directly—there is no Matrix client or homeserver in the shipped application.
 
-Forked from [Element Web](https://github.com/element-hq/element-web). Built on the [Matrix JS SDK](https://github.com/matrix-org/matrix-js-sdk).
+This repository began as an Element Web fork. The old Element source remains in the tree to preserve fork history and make the UI migration auditable, but webpack ships only the journal-native client under `src/journal/`.
 
-## Part of the Matron ecosystem
+## Architecture
 
-| Project                                                      | Description                       |
-| ------------------------------------------------------------ | --------------------------------- |
-| [Matron Desktop](https://github.com/matronhq/matron-desktop) | Desktop client                    |
-| **Matron Web**                                               | Web client (this repo)            |
-| [Matron iOS](https://github.com/matronhq/matron-ios)         | iOS client                        |
-| [Matron Server](https://github.com/matronhq/matron-server)   | Matrix homeserver                 |
-| [Dev Boxer](https://github.com/matronhq/dev-boxer)           | One-command dev environment setup |
+- `POST /login`, `GET /snapshot`, conversation pagination, and authenticated media over HTTP.
+- One resumable `/ws` connection for ordered journal frames and ephemeral streaming.
+- IndexedDB stores the cursor, conversation summaries, lazy-loaded events, and an idempotent send outbox.
+- The same bundle is packaged by [Matron Desktop](https://github.com/Matronhq/matron-desktop).
 
-## Supported browsers
+The event renderer supports text, prompts and permission requests, prompt replies, tool output (including live byte-offset streams and the 24-hour cache TTL), diffs, files, images, activity, and session status. Unknown event types get a JSON fallback.
 
-Matron Web supports the last two major versions of Chrome, Firefox, Edge, and Safari.
+## Development
 
-## Getting started
-
-### Self-hosting
-
-Download a [release tarball](https://github.com/matronhq/matron-web/releases), extract it, and serve the contents with any web server.
-
-Create a `config.json` (see `config.sample.json`) and place it in the root directory.
-
-> **Security note:** Matron Web should be served on its own domain, separate from your homeserver, to prevent XSS attacks from gaining homeserver access. Set appropriate `Content-Security-Policy`, `X-Content-Type-Options`, and `X-Frame-Options` headers.
-
-### Prerequisites
-
-Building or developing Matron Web requires:
-
-- **Node.js ≥ 22.18** — check with `node --version`.
-- **pnpm** — the repo pins its exact version via the `packageManager` field. The simplest way to match it is to let [Corepack](https://nodejs.org/api/corepack.html) (bundled with Node) manage pnpm for you:
-
-  ```bash
-  corepack enable
-  ```
-
-  Any `pnpm` command run inside the repo then uses the pinned version automatically. (You can install pnpm 10.x manually instead if you prefer.)
-
-### Building from source
+Requires Node 22.18+ and the pnpm version pinned in `package.json`.
 
 ```bash
+corepack enable
 pnpm install
-cp config.sample.json config.json  # edit as needed
-pnpm run build
+
+# matron-journal defaults to http://127.0.0.1:9810
+pnpm start
 ```
 
-The built app will be in the `webapp/` directory — serve its contents with any static web server.
-
-### Development
+The dev server runs at `http://localhost:8080` and proxies `/journal` to the local journal service. Override its target when needed:
 
 ```bash
-pnpm install
-pnpm start  # starts dev server at http://localhost:8080
+MATRON_JOURNAL_URL=https://chat.example.com pnpm start
 ```
 
-## Configuration
+Run the focused client checks:
 
-Copy `config.sample.json` to `config.json` and edit. Key options:
+```bash
+pnpm exec jest --runInBand test/unit-tests/journal
+pnpm exec nx build --skip-nx-cache
+```
+
+## Production deployment
+
+Build into `webapp/`:
+
+```bash
+pnpm build
+```
+
+The recommended browser deployment keeps journal requests same-origin. Put the static app at your public origin, proxy `/journal/` to matron-journal, and use:
 
 ```json
 {
-    "default_server_config": {
-        "m.homeserver": {
-            "base_url": "https://matrix.org"
-        }
-    },
-    "brand": "Matron"
+    "brand": "Matron",
+    "journal_server_url": "/journal"
 }
 ```
 
-See `docs/config.md` for full configuration reference.
+Example nginx location (alongside the static webapp):
+
+```nginx
+location /journal/ {
+    proxy_pass http://127.0.0.1:9810/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+}
+```
+
+matron-journal does not currently emit browser CORS headers. An absolute `journal_server_url` therefore requires a trusted proxy which adds suitable CORS headers; the same-origin layout above needs none.
+
+See [docs/config.md](docs/config.md) for the small runtime configuration surface.
 
 ## License
 

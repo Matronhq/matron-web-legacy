@@ -1,7 +1,7 @@
 {
     "name": "matron-web",
     "version": "1.12.11-rc.0",
-    "description": "Matron: a Matrix web client",
+    "description": "Matron: a browser client for chatting with agents",
     "author": "Matron Contributors",
     "repository": {
         "type": "git",

@@ -33,7 +33,10 @@ export interface IConfigOptions {
     // "instance customisation", "login stuff", "branding", etc. Use blank lines to denote
     // a logical separation of properties, but keep similar ones near each other.
 
-    // Exactly one of the following must be supplied
+    // matron-journal base URL. Empty/omitted lets the user choose at sign-in.
+    journal_server_url?: string;
+
+    // Legacy Element configuration retained for the archived Matrix UI.
     default_server_config?: IClientWellKnown; // copy/paste of client well-known
     default_server_name?: string; // domain to do well-known lookup on
     default_hs_url?: string; // http url

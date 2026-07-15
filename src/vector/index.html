@@ -34,11 +34,7 @@
     <% for (var i=0; i < htmlWebpackPlugin.files.css.length; i++) {
         var file = htmlWebpackPlugin.files.css[i];
         var match = file.match(/^bundles\/.*?\/theme-(.*)\.css$/);
-        if (match) {
-            var title = match[1].charAt(0).toUpperCase() + match[1].slice(1);
-        %>
-           <link rel="stylesheet" disabled="disabled" data-mx-theme="<%= title %>" title="<%= title %>" href="<%= file %>">
-        <% } else { %>
+        if (!match) { %>
            <link rel="stylesheet" href="<%= file %>">
         <% }
     } %>
@@ -53,7 +49,7 @@
   </head>
   <body style="height: 100%; margin: 0;">
     <noscript>Sorry, Matron requires JavaScript to be enabled.</noscript> <!-- TODO: Translate this? -->
-    <div id="matrixchat" style="height: 100%;" class="notranslate"></div>
+    <div id="matron" style="height: 100%;" class="notranslate"></div>
 
 <%
     // insert <script> tags for the JS entry points
@@ -65,21 +61,5 @@
     }
 %>
 
-    <!-- Legacy supporting Prefetch images -->
-    <img src="<%= require('@vector-im/compound-design-tokens/icons/warning.svg').default %>" aria-hidden alt="" width="24" height="23" style="visibility: hidden; position: absolute; top: 0px; left: 0px;"/>
-    <img src="<%= require('@vector-im/compound-design-tokens/icons/bold.svg').default %>" aria-hidden alt="" width="25" height="22" style="visibility: hidden; position: absolute; top: 0px; left: 0px;"/>
-    <img src="<%= require('@vector-im/compound-design-tokens/icons/inline-code.svg').default %>" aria-hidden alt="" width="25" height="22" style="visibility: hidden; position: absolute; top: 0px; left: 0px;"/>
-    <img src="<%= require('@vector-im/compound-design-tokens/icons/italic.svg').default %>" aria-hidden alt="" width="25" height="22" style="visibility: hidden; position: absolute; top: 0px; left: 0px;"/>
-    <img src="<%= require('@vector-im/compound-design-tokens/icons/quote.svg').default %>" aria-hidden alt="" width="25" height="22" style="visibility: hidden; position: absolute; top: 0px; left: 0px;"/>
-    <img src="<%= require('@vector-im/compound-design-tokens/icons/strikethrough.svg').default %>" aria-hidden alt="" width="25" height="22" style="visibility: hidden; position: absolute; top: 0px; left: 0px;"/>
-
-    <!-- let CSS themes pass constants to the app -->
-    <div id="mx_theme_accentColor"></div><div id="mx_theme_secondaryAccentColor"></div><div id="mx_theme_tertiaryAccentColor"></div>
-
-    <!-- We eagerly create these containers to ensure their CSS stacking context order is sensible -->
-    <div id="mx_PersistedElement_container"></div>
-    <div id="mx_Dialog_StaticContainer"></div>
-    <div id="mx_Dialog_Container"></div>
-    <div id="mx_ContextualMenu_Container"></div>
   </body>
 </html>
