@@ -6,7 +6,13 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import { MatronJournalClient } from "../../../src/journal/client";
-import { type ClientState, type Conversation, type PendingMessage, type Session } from "../../../src/journal/types";
+import {
+    type ClientState,
+    type Conversation,
+    type JournalEphemeralFrame,
+    type PendingMessage,
+    type Session,
+} from "../../../src/journal/types";
 
 const SESSION: Session = {
     serverUrl: "https://journal.example",
@@ -70,6 +76,7 @@ interface ClientInternals {
     scheduleRead(conversationId: string, upToSeq: number, delay?: number): void;
     flushRead(conversationId: string): Promise<void>;
     replaceSnapshot(): Promise<void>;
+    handleEphemeral(frame: JournalEphemeralFrame): void;
 }
 
 function internals(client: MatronJournalClient): ClientInternals {
@@ -264,6 +271,27 @@ describe("MatronJournalClient state handling", () => {
             sessionStatus: undefined,
             textStreams: {},
             toolStreams: {},
+        });
+    });
+
+    it("applies every field from a combined ephemeral frame", () => {
+        const client = new MatronJournalClient();
+        const state = internals(client);
+        state.state = signedInState(client);
+
+        state.handleEphemeral({
+            kind: "ephemeral",
+            convo_id: "c1",
+            message_ref: "stream-1",
+            text: "partial answer",
+            activity: { state: "thinking", detail: "Planning" },
+            status: { model: "claude-sonnet", email: "dan@example.com" },
+        });
+
+        expect(client.getSnapshot()).toMatchObject({
+            activity: { state: "thinking", detail: "Planning" },
+            sessionStatus: { model: "claude-sonnet", email: "dan@example.com" },
+            textStreams: { "stream-1": "partial answer" },
         });
     });
 

@@ -87,10 +87,16 @@ export class JournalDatabase {
     }
 
     public async replaceWithSnapshot(snapshot: SnapshotResponse): Promise<void> {
-        const transaction = this.database.transaction(["meta", "conversations", "events"], "readwrite");
+        const transaction = this.database.transaction(["meta", "conversations", "events", "outbox"], "readwrite");
         const conversations = transaction.objectStore("conversations");
         conversations.clear();
         transaction.objectStore("events").clear();
+        const validConversationIds = new Set(snapshot.conversations.map((conversation) => conversation.id));
+        const outbox = transaction.objectStore("outbox");
+        const pendingMessages = (await requestResult(outbox.getAll())) as PendingMessage[];
+        for (const message of pendingMessages) {
+            if (!validConversationIds.has(message.convoId)) outbox.delete(message.localId);
+        }
         for (const summary of snapshot.conversations) {
             conversations.put({
                 ...summary,

@@ -459,19 +459,23 @@ export class MatronJournalClient {
         if (frame.activity) {
             if (frame.activity.state === "idle") this.activities.delete(frame.convo_id);
             else this.activities.set(frame.convo_id, frame.activity);
-        } else if (frame.status) {
+        }
+        if (frame.status) {
             this.statuses.set(frame.convo_id, mergeSessionStatus(this.statuses.get(frame.convo_id), frame.status));
-        } else if (frame.tool_stream && frame.message_ref) {
+        }
+        if (frame.tool_stream && frame.message_ref) {
             this.applyToolStream(frame);
-        } else if (frame.message_ref) {
+        }
+        if (frame.message_ref && (typeof frame.text === "string" || typeof frame.replace_text === "string")) {
             const key = `${frame.convo_id}:${frame.message_ref}`;
-            if (this.retiredStreamRefs.has(key)) return;
-            const streams = this.textStreams.get(frame.convo_id) ?? {};
-            streams[frame.message_ref] =
-                typeof frame.replace_text === "string"
-                    ? frame.replace_text
-                    : `${streams[frame.message_ref] ?? ""}${frame.text ?? ""}`;
-            this.textStreams.set(frame.convo_id, streams);
+            if (!this.retiredStreamRefs.has(key)) {
+                const streams = this.textStreams.get(frame.convo_id) ?? {};
+                streams[frame.message_ref] =
+                    typeof frame.replace_text === "string"
+                        ? frame.replace_text
+                        : `${streams[frame.message_ref] ?? ""}${frame.text ?? ""}`;
+                this.textStreams.set(frame.convo_id, streams);
+            }
         }
         if (frame.convo_id === this.state.selectedConversationId) this.refreshEphemeralState(frame.convo_id);
     }

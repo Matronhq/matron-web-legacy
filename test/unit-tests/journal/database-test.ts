@@ -99,4 +99,30 @@ describe("JournalDatabase", () => {
         expect(await database.outbox("c1")).toHaveLength(0);
         database.close();
     });
+
+    it("drops pending messages for conversations removed by a replacement snapshot", async () => {
+        const database = await JournalDatabase.open("https://journal.example", 5);
+        const conversation = {
+            title: "Agent",
+            session_state: "running",
+            last_seq: 0,
+            unread_count: 0,
+            snippet: "",
+            created_at: 1,
+        };
+        await database.replaceWithSnapshot({
+            seq: 0,
+            conversations: [
+                { ...conversation, id: "c1" },
+                { ...conversation, id: "removed" },
+            ],
+        });
+        await database.addToOutbox({ localId: "keep", convoId: "c1", body: "valid", createdAt: 10 });
+        await database.addToOutbox({ localId: "drop", convoId: "removed", body: "orphan", createdAt: 11 });
+
+        await database.replaceWithSnapshot({ seq: 20, conversations: [{ ...conversation, id: "c1" }] });
+
+        expect((await database.outbox()).map((message) => message.localId)).toEqual(["keep"]);
+        database.close();
+    });
 });
