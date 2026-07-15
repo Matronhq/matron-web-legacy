@@ -8,6 +8,7 @@ Please see LICENSE files in the repository root for full details.
 import { JournalApi, JournalApiError, loadMatronConfig } from "./api";
 import { JournalConnection } from "./connection";
 import { JournalDatabase } from "./database";
+import { mergeSessionStatus } from "./status";
 import {
     type ClientState,
     type Conversation,
@@ -409,7 +410,7 @@ export class MatronJournalClient {
             if (frame.activity.state === "idle") this.activities.delete(frame.convo_id);
             else this.activities.set(frame.convo_id, frame.activity);
         } else if (frame.status) {
-            this.statuses.set(frame.convo_id, frame.status);
+            this.statuses.set(frame.convo_id, mergeSessionStatus(this.statuses.get(frame.convo_id), frame.status));
         } else if (frame.tool_stream && frame.message_ref) {
             this.applyToolStream(frame);
         } else if (frame.message_ref) {

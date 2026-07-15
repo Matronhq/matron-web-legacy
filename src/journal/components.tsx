@@ -6,9 +6,8 @@ Please see LICENSE files in the repository root for full details.
 */
 
 import React, { type FormEvent, useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { Avatar, Button, IconButton, Text, Tooltip } from "@vector-im/compound-web";
+import { Avatar, Button, Text } from "@vector-im/compound-web";
 import {
-    Box,
     Flex,
     I18nContext,
     registerTranslations,
@@ -22,7 +21,6 @@ import {
 } from "@element-hq/web-shared-components";
 import AttachmentIcon from "@vector-im/compound-design-tokens/assets/web/icons/attachment";
 import ChevronLeftIcon from "@vector-im/compound-design-tokens/assets/web/icons/chevron-left";
-import InfoIcon from "@vector-im/compound-design-tokens/assets/web/icons/info-solid";
 import MicOnIcon from "@vector-im/compound-design-tokens/assets/web/icons/mic-on";
 import ReactionIcon from "@vector-im/compound-design-tokens/assets/web/icons/reaction";
 import SearchIcon from "@vector-im/compound-design-tokens/assets/web/icons/search";
@@ -30,11 +28,11 @@ import SendIcon from "@vector-im/compound-design-tokens/assets/web/icons/send-so
 
 import matronLogo from "../../res/themes/element/img/logos/matron-logo-simple.svg";
 import { errorMessage, type MatronJournalClient } from "./client";
+import { compactTokens, resetDisplay, usageBarLabel, usageLevel } from "./status";
 import {
     asNumber,
     asString,
     type ClientState,
-    type Conversation,
     conversationTitle,
     displaySender,
     type EventPayload,
@@ -461,24 +459,7 @@ function ConversationList({
                                         />
                                     </label>
                                 </Flex>
-                                <RoomListView
-                                    vm={roomListVm}
-                                    renderAvatar={(room) => {
-                                        const conversation = room as Conversation;
-                                        const title = conversationTitle(conversation);
-                                        return (
-                                            <Avatar
-                                                id={conversation.id}
-                                                name={title}
-                                                type="round"
-                                                size="32px"
-                                                className="mx_BaseAvatar"
-                                                role="presentation"
-                                                data-testid="avatar-img"
-                                            />
-                                        );
-                                    }}
-                                />
+                                <RoomListView vm={roomListVm} renderAvatar={() => null} />
                             </nav>
                         </div>
                     </div>
@@ -500,33 +481,57 @@ function ConversationList({
     );
 }
 
-function SessionStatusView({ status }: { status?: SessionStatus }): React.ReactElement | null {
-    if (!status) return null;
+function useMinuteClock(): number {
+    const [now, setNow] = useState(Date.now);
+    useEffect(() => {
+        const interval = window.setInterval(() => setNow(Date.now()), 60_000);
+        return () => window.clearInterval(interval);
+    }, []);
+    return now;
+}
+
+function UsageBars({ limits }: { limits: NonNullable<SessionStatus["limits"]> }): React.ReactElement {
+    const now = useMinuteClock();
     return (
-        <div className="mj_StatusDetails">
-            {status.model && <span>{status.model}</span>}
-            {status.context && (
-                <span
-                    title={`${status.context.tokens.toLocaleString()} / ${status.context.window.toLocaleString()} tokens`}
-                >
-                    Context {status.context.pct}%
-                </span>
-            )}
-            {status.limits?.map((limit) => (
-                <span key={limit.label} title={limit.resets ? `Resets ${limit.resets}` : undefined}>
-                    {limit.label} {limit.percent}%
-                </span>
-            ))}
+        <div className="mj_UsageBars" aria-label="Usage limits">
+            {limits.slice(0, 3).map((limit) => {
+                const percent = Math.min(Math.max(limit.percent, 0), 100);
+                const reset = resetDisplay(limit.resets_at, limit.resets, now);
+                return (
+                    <div
+                        className="mj_UsageRow"
+                        key={limit.label}
+                        aria-label={`${usageBarLabel(limit.label)}, ${percent}% used${reset ? `, resets ${reset}` : ""}`}
+                    >
+                        <span className="mj_UsageLabel">{usageBarLabel(limit.label)}:</span>
+                        <span
+                            className="mj_UsageTrack"
+                            role="progressbar"
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-valuenow={percent}
+                        >
+                            <span
+                                className={`mj_UsageFill mj_UsageFill_${usageLevel(percent)}`}
+                                style={{ width: `${percent}%` }}
+                            />
+                        </span>
+                        <span className="mj_UsageReset">{reset}</span>
+                    </div>
+                );
+            })}
         </div>
     );
 }
 
 function ChatHeader({ client, state }: { client: MatronJournalClient; state: ClientState }): React.ReactElement {
     const conversation = client.selectedConversation();
-    const [infoOpen, setInfoOpen] = useState(false);
     const title = conversation ? conversationTitle(conversation) : "Conversation";
+    const status = state.sessionStatus;
+    const hasModelContext = Boolean(status?.model || status?.context);
+    const limits = status?.limits?.filter((limit) => limit.label.trim());
     return (
-        <Flex as="header" align="center" gap="var(--cpd-space-3x)" className="mx_RoomHeader light-panel">
+        <header className="mx_RoomHeader light-panel mj_ChatHeader">
             <button
                 className="mj_BackButton"
                 onClick={() => client.clearSelection()}
@@ -534,59 +539,45 @@ function ChatHeader({ client, state }: { client: MatronJournalClient; state: Cli
             >
                 <ChevronLeftIcon />
             </button>
-            <Avatar
-                id={conversation?.id ?? title}
-                name={title}
-                type="round"
-                size="32px"
-                className="mx_BaseAvatar"
-                role="presentation"
-                data-testid="avatar-img"
-            />
-            <button
-                aria-label="Conversation information"
-                tabIndex={0}
-                onClick={() => setInfoOpen((open) => !open)}
-                className="mx_RoomHeader_infoWrapper"
+            <div
+                className={`mj_HeaderCluster mj_ModelContextCluster${hasModelContext ? "" : " mj_HeaderCluster_empty"}`}
+                aria-hidden={!hasModelContext}
             >
-                <Box flex="1" className="mx_RoomHeader_info">
-                    <Text
-                        as="div"
-                        size="lg"
-                        weight="semibold"
-                        dir="auto"
-                        role="heading"
-                        aria-level={1}
-                        className="mx_RoomHeader_heading"
+                {status?.model && <span className="mj_HeaderModel">{status.model}</span>}
+                {status?.context && (
+                    <span
+                        className="mj_HeaderContext"
+                        title={`${status.context.tokens.toLocaleString()} / ${status.context.window.toLocaleString()} tokens`}
                     >
-                        <span className="mx_RoomHeader_truncated mx_lineClamp">{title}</span>
-                    </Text>
-                </Box>
-            </button>
-            <Tooltip label="Room information">
-                <IconButton
-                    onClick={() => setInfoOpen((open) => !open)}
-                    aria-label="Room information"
-                    aria-expanded={infoOpen}
-                >
-                    <InfoIcon className="mx_RoomHeader_icon" />
-                </IconButton>
-            </Tooltip>
-            {infoOpen && (
-                <div className="mj_HeaderMenu mj_RoomInfoMenu">
-                    <strong>{title}</strong>
-                    <span>{conversation?.session_state === "done" ? "Session complete" : "Agent session"}</span>
-                    <span className={`mj_ConnectionLabel mj_ConnectionLabel_${state.connection}`}>
-                        {state.connection === "online"
-                            ? "Connected"
-                            : state.connection === "connecting"
-                              ? "Connecting…"
-                              : "Offline"}
+                        Context: {compactTokens(status.context.tokens)}/{compactTokens(status.context.window)}
                     </span>
-                    <SessionStatusView status={state.sessionStatus} />
-                </div>
-            )}
-        </Flex>
+                )}
+            </div>
+            <div className="mj_HeaderCluster mj_HeaderTitleCluster">
+                <Text
+                    as="div"
+                    size="lg"
+                    weight="semibold"
+                    dir="auto"
+                    role="heading"
+                    aria-level={1}
+                    className="mx_RoomHeader_heading"
+                >
+                    <span className="mx_RoomHeader_truncated mx_lineClamp">{title}</span>
+                </Text>
+                {status?.email && (
+                    <span className="mj_HeaderEmail" title={status.email}>
+                        {status.email}
+                    </span>
+                )}
+            </div>
+            <div
+                className={`mj_HeaderCluster mj_UsageCluster${limits?.length ? "" : " mj_HeaderCluster_empty"}`}
+                aria-hidden={!limits?.length}
+            >
+                {limits?.length ? <UsageBars limits={limits} /> : null}
+            </div>
+        </header>
     );
 }
 

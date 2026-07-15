@@ -119,6 +119,7 @@ export interface SessionStatus {
         resets?: string;
         resets_at?: string;
     }>;
+    email?: string;
 }
 
 export interface ToolStreamState {
