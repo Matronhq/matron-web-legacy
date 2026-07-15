@@ -95,7 +95,6 @@ export default (_environment, arguments_) => {
             new HtmlWebpackPlugin({ template: "./src/index.html", minify: !development }),
             new CopyWebpackPlugin({
                 patterns: [
-                    { from: "res/apple-app-site-association", noErrorOnMissing: true },
                     { from: "res/.well-known", to: ".well-known", noErrorOnMissing: true },
                     { from: "res/manifest.json", noErrorOnMissing: true },
                     { from: "res/vector-icons", to: "vector-icons", noErrorOnMissing: true },

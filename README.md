@@ -2,7 +2,7 @@
 
 Matron Web is the browser client for Matron, a chat system for talking to agents. It speaks the lightweight [matron-journal](https://github.com/Matronhq/matron-journal) protocol directly; the application has no Matrix client or homeserver dependency.
 
-The current source tree is the focused Matron client. This repository retains older Element Web history so the migration remains auditable; see [ORIGIN.md](ORIGIN.md) for provenance.
+The current source tree is the focused Matron client. Some implementation and visual-shell code originated in Element Web; see [ORIGIN.md](ORIGIN.md) for provenance and retained notices.
 
 ## Architecture
 
