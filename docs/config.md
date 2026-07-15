@@ -28,6 +28,4 @@ During `pnpm start`, webpack proxies `/journal` to `http://127.0.0.1:9810`. Set 
 
 Matron Desktop may use an absolute HTTPS URL. Its sandboxed preload exposes a narrowly scoped journal request bridge for HTTP; the WebSocket still connects directly.
 
-## Legacy keys
-
-The repository retains the former Element source and its historical configuration types for upstream reference. Matrix homeserver, identity-server, crypto, calling, widgets, and feature-flag keys are not read by the journal-native entry point.
+Matrix homeserver, identity-server, crypto, calling, widget, and feature-flag settings are not part of Matron Web's configuration surface.

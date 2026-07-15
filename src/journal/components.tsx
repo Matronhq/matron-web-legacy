@@ -1,7 +1,7 @@
 /*
 Copyright 2026 Matron Contributors.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -15,28 +15,19 @@ import React, {
     useState,
     useSyncExternalStore,
 } from "react";
-import { Avatar, Button, Text } from "@vector-im/compound-web";
-import {
-    Flex,
-    I18nContext,
-    registerTranslations,
-    RoomListHeaderView,
-    type RoomListHeaderViewModel,
-    RoomListView,
-    type RoomListViewModel,
-    RoomNotifState,
-    setLocale,
-    type ViewModel,
-} from "@element-hq/web-shared-components";
-import AttachmentIcon from "@vector-im/compound-design-tokens/assets/web/icons/attachment";
-import ChevronLeftIcon from "@vector-im/compound-design-tokens/assets/web/icons/chevron-left";
-import MicOnIcon from "@vector-im/compound-design-tokens/assets/web/icons/mic-on";
-import ReactionIcon from "@vector-im/compound-design-tokens/assets/web/icons/reaction";
-import SearchIcon from "@vector-im/compound-design-tokens/assets/web/icons/search";
-import SendIcon from "@vector-im/compound-design-tokens/assets/web/icons/send-solid";
 
-import matronLogo from "../../res/themes/element/img/logos/matron-logo-simple.svg";
+import matronLogo from "../../res/matron-logo-simple.svg";
 import { errorMessage, type MatronJournalClient } from "./client";
+import {
+    AttachmentIcon,
+    ChevronLeftIcon,
+    ComposeIcon,
+    MicOnIcon,
+    ReactionIcon,
+    SearchIcon,
+    SendIcon,
+    SettingsIcon,
+} from "./icons";
 import { compactTokens, resetDisplay, usageBarLabel, usageLevel } from "./status";
 import {
     asNumber,
@@ -49,54 +40,6 @@ import {
     type SessionStatus,
     type ToolStreamState,
 } from "./types";
-
-registerTranslations("en", {
-    action: { invite: "Invite" },
-    room_list: {
-        a11y: {
-            default: "Open room %(roomName)s",
-            invitation: "Open room %(roomName)s invitation.",
-            mention: {
-                one: "Open room %(roomName)s with 1 unread mention.",
-                other: "Open room %(roomName)s with %(count)s unread mentions.",
-            },
-            unread: {
-                one: "Open room %(roomName)s with 1 unread message.",
-                other: "Open room %(roomName)s with %(count)s unread messages.",
-            },
-            unsent_message: "Open room %(roomName)s with an unsent message.",
-        },
-        more_options: {
-            copy_link: "Copy room link",
-            favourited: "Favourited",
-            leave_room: "Leave room",
-            low_priority: "Low priority",
-            mark_read: "Mark as read",
-            mark_unread: "Mark as unread",
-        },
-        notification_options: "Notification options",
-        room: { more_options: "More Options" },
-    },
-});
-setLocale("en");
-
-const JOURNAL_I18N = {
-    language: "en",
-    register: (): void => undefined,
-    translate: (key: string, variables?: Record<string, unknown>): string => {
-        const translations: Record<string, string> = {
-            "action|new_conversation": "New conversation",
-            "common|settings": "Settings",
-            "room|context_menu|title": "Room options",
-        };
-        let value = translations[key] ?? key;
-        for (const [name, replacement] of Object.entries(variables ?? {})) {
-            value = value.replaceAll(`%(${name})s`, String(replacement));
-        }
-        return value;
-    },
-    humanizeTime: (timeMillis: number): string => new Date(timeMillis).toLocaleString(),
-};
 
 const LEFT_PANEL_SIZE_KEY = "mx_lhs_size";
 const LEFT_PANEL_DEFAULT_WIDTH = 350;
@@ -168,14 +111,6 @@ function useLeftPanelResize(): {
     }, []);
 
     return { width, onPointerDown };
-}
-
-function staticViewModel<T, A extends object>(snapshot: T, actions: A): ViewModel<T> & A {
-    return {
-        getSnapshot: () => snapshot,
-        subscribe: () => () => undefined,
-        ...actions,
-    };
 }
 
 function formatTime(timestamp: number): string {
@@ -274,9 +209,9 @@ function LoginScreen({ client, state }: { client: MatronJournalClient; state: Cl
                                     {error}
                                 </div>
                             )}
-                            <Button className="mx_Login_submit" size="sm" type="submit" disabled={busy}>
+                            <button className="mx_Login_submit" type="submit" disabled={busy}>
                                 {busy ? "Signing in…" : "Sign in"}
-                            </Button>
+                            </button>
                         </form>
                         {state.config.privacy_policy_url && (
                             <a
@@ -318,121 +253,6 @@ function ConversationList({
         );
     }, [query, state.conversations]);
 
-    const headerVm = useMemo<RoomListHeaderViewModel>(
-        () =>
-            staticViewModel(
-                {
-                    title: "Home",
-                    displayComposeMenu: false,
-                    displaySpaceMenu: false,
-                    canCreateRoom: false,
-                    canCreateVideoRoom: false,
-                    canInviteInSpace: false,
-                    canAccessSpaceSettings: false,
-                    activeSortOption: "recent" as const,
-                    isMessagePreviewEnabled: true,
-                },
-                {
-                    createChatRoom: () => {
-                        setAccountOpen(false);
-                        setComposeHint((open) => !open);
-                    },
-                    createRoom: () => undefined,
-                    createVideoRoom: () => undefined,
-                    openUserSettings: () => {
-                        setComposeHint(false);
-                        setAccountOpen((open) => !open);
-                    },
-                    openSpaceHome: () => undefined,
-                    inviteInSpace: () => undefined,
-                    openSpacePreferences: () => undefined,
-                    openSpaceSettings: () => undefined,
-                    sort: () => undefined,
-                    toggleMessagePreview: () => undefined,
-                },
-            ),
-        [],
-    );
-
-    const roomListVm = useMemo<RoomListViewModel>(() => {
-        const roomIds = conversations.map((conversation) => conversation.id);
-        const activeRoomIndex = state.selectedConversationId
-            ? roomIds.indexOf(state.selectedConversationId)
-            : undefined;
-        const itemViewModels = new Map(
-            conversations.map((conversation) => {
-                const unread = conversation.unread_count > 0;
-                return [
-                    conversation.id,
-                    staticViewModel(
-                        {
-                            id: conversation.id,
-                            room: conversation,
-                            name: conversationTitle(conversation),
-                            isBold: unread,
-                            messagePreview: conversation.snippet || undefined,
-                            notification: {
-                                hasAnyNotificationOrActivity: unread,
-                                isUnsentMessage: false,
-                                invited: false,
-                                isMention: false,
-                                isActivityNotification: false,
-                                isNotification: unread,
-                                hasUnreadCount: unread,
-                                count: conversation.unread_count,
-                                muted: false,
-                            },
-                            showMoreOptionsMenu: false,
-                            showNotificationMenu: false,
-                            isFavourite: false,
-                            isLowPriority: false,
-                            canInvite: false,
-                            canCopyRoomLink: false,
-                            canMarkAsRead: unread,
-                            canMarkAsUnread: false,
-                            roomNotifState: RoomNotifState.AllMessages,
-                        },
-                        {
-                            onOpenRoom: () => void client.selectConversation(conversation.id),
-                            onMarkAsRead: () => client.markConversationRead(conversation.id),
-                            onMarkAsUnread: () => undefined,
-                            onToggleFavorite: () => undefined,
-                            onToggleLowPriority: () => undefined,
-                            onInvite: () => undefined,
-                            onCopyRoomLink: () => undefined,
-                            onLeaveRoom: () => undefined,
-                            onSetRoomNotifState: () => undefined,
-                        },
-                    ),
-                ] as const;
-            }),
-        );
-
-        return staticViewModel(
-            {
-                isLoadingRooms: false,
-                isRoomListEmpty: roomIds.length === 0,
-                filterIds: [],
-                activeFilterId: undefined,
-                roomListState: {
-                    activeRoomIndex: activeRoomIndex === -1 ? undefined : activeRoomIndex,
-                    spaceId: "home",
-                    filterKeys: query ? [query] : undefined,
-                },
-                roomIds,
-                emptyStateDescription: "Your agent conversations will appear here.",
-                canCreateRoom: false,
-            },
-            {
-                onToggleFilter: () => undefined,
-                createChatRoom: () => setComposeHint(true),
-                createRoom: () => undefined,
-                getRoomItemViewModel: (roomId: string) => itemViewModels.get(roomId),
-                updateVisibleRooms: () => undefined,
-            },
-        );
-    }, [client, conversations, query, state.selectedConversationId]);
-
     return (
         <div
             className={`mx_LeftPanel_outerWrapper ${state.selectedConversationId ? "mj_Sidebar_mobileHidden" : ""}`}
@@ -443,14 +263,38 @@ function ConversationList({
                     <div className="mx_LeftPanel mx_LeftPanel_newRoomList">
                         <div className="mx_LeftPanel_roomListContainer">
                             <nav className="mx_RoomListPanel" aria-label="Room list">
-                                <RoomListHeaderView vm={headerVm} />
-                                <Flex
-                                    data-testid="room-list-search"
-                                    className="mx_RoomListSearch"
-                                    role="search"
-                                    gap="var(--cpd-space-2x)"
-                                    align="center"
+                                <header
+                                    className="mj_RoomListHeader"
+                                    aria-label="Room options"
+                                    data-testid="room-list-header"
                                 >
+                                    <h1 title="Home">Home</h1>
+                                    <div className="mj_RoomListHeaderActions">
+                                        <button
+                                            className="mj_IconButton"
+                                            type="button"
+                                            aria-label="Settings"
+                                            onClick={() => {
+                                                setComposeHint(false);
+                                                setAccountOpen((open) => !open);
+                                            }}
+                                        >
+                                            <SettingsIcon />
+                                        </button>
+                                        <button
+                                            className="mj_IconButton"
+                                            type="button"
+                                            aria-label="New conversation"
+                                            onClick={() => {
+                                                setAccountOpen(false);
+                                                setComposeHint((open) => !open);
+                                            }}
+                                        >
+                                            <ComposeIcon />
+                                        </button>
+                                    </div>
+                                </header>
+                                <div data-testid="room-list-search" className="mx_RoomListSearch" role="search">
                                     <label
                                         className="mx_RoomListSearch_inputWrapper mx_no_textinput"
                                         htmlFor="room-list-search-input"
@@ -467,8 +311,62 @@ function ConversationList({
                                             autoComplete="off"
                                         />
                                     </label>
-                                </Flex>
-                                <RoomListView vm={roomListVm} renderAvatar={() => null} />
+                                </div>
+                                <div
+                                    className="mj_RoomList"
+                                    data-testid="room-list"
+                                    role="listbox"
+                                    aria-label="Conversations"
+                                >
+                                    {conversations.length ? (
+                                        conversations.map((conversation, index) => {
+                                            const selected = state.selectedConversationId === conversation.id;
+                                            const unread = conversation.unread_count > 0;
+                                            const name = conversationTitle(conversation);
+                                            return (
+                                                <button
+                                                    className={`mj_RoomListItem${selected ? " mj_RoomListItem_selected" : ""}`}
+                                                    type="button"
+                                                    role="option"
+                                                    aria-posinset={index + 1}
+                                                    aria-setsize={conversations.length}
+                                                    aria-selected={selected}
+                                                    aria-label={`Open room ${name}`}
+                                                    key={conversation.id}
+                                                    onClick={() => void client.selectConversation(conversation.id)}
+                                                >
+                                                    <span
+                                                        className={`mj_RoomListText${unread ? " mj_RoomListText_unread" : ""}`}
+                                                    >
+                                                        <span
+                                                            className="mj_RoomListName"
+                                                            title={name}
+                                                            data-testid="room-name"
+                                                        >
+                                                            {name}
+                                                        </span>
+                                                        <span
+                                                            className="mj_RoomListPreview"
+                                                            title={conversation.snippet}
+                                                        >
+                                                            {conversation.snippet}
+                                                        </span>
+                                                    </span>
+                                                    {unread && (
+                                                        <span
+                                                            className="mj_UnreadBadge"
+                                                            aria-label={`${conversation.unread_count} unread`}
+                                                        >
+                                                            {conversation.unread_count}
+                                                        </span>
+                                                    )}
+                                                </button>
+                                            );
+                                        })
+                                    ) : (
+                                        <p className="mj_RoomListEmpty">Your agent conversations will appear here.</p>
+                                    )}
+                                </div>
                             </nav>
                         </div>
                     </div>
@@ -563,17 +461,9 @@ function ChatHeader({ client, state }: { client: MatronJournalClient; state: Cli
                 )}
             </div>
             <div className="mj_HeaderCluster mj_HeaderTitleCluster">
-                <Text
-                    as="div"
-                    size="lg"
-                    weight="semibold"
-                    dir="auto"
-                    role="heading"
-                    aria-level={1}
-                    className="mx_RoomHeader_heading"
-                >
+                <div dir="auto" role="heading" aria-level={1} className="mx_RoomHeader_heading">
                     <span className="mx_RoomHeader_truncated mx_lineClamp">{title}</span>
-                </Text>
+                </div>
                 {status?.email && (
                     <span className="mj_HeaderEmail" title={status.email}>
                         {status.email}
@@ -870,16 +760,6 @@ function EventRow({
                     <span className="mx_DisambiguatedProfile_displayName">{displaySender(event.sender)}</span>
                 </span>
             )}
-            <div className="mx_EventTile_avatar" aria-hidden="true">
-                <Avatar
-                    id={event.sender}
-                    name={displaySender(event.sender)}
-                    type="round"
-                    size="32px"
-                    className="mx_BaseAvatar"
-                    role="presentation"
-                />
-            </div>
             <div className="mx_EventTile_line">
                 <a href={`#event-${event.seq}`} onClick={(clickEvent) => clickEvent.preventDefault()}>
                     <time className="mx_MessageTimestamp" dateTime={new Date(event.ts).toISOString()}>
@@ -1168,40 +1048,36 @@ function SignedInApp({ client, state }: { client: MatronJournalClient; state: Cl
     const leftPanel = useLeftPanelResize();
 
     return (
-        <I18nContext.Provider value={JOURNAL_I18N}>
-            <div className="mx_MatrixChat_wrapper">
-                <div className="mx_MatrixChat">
-                    <ConversationList client={client} state={state} width={leftPanel.width} />
-                    <div
-                        className="mx_ResizeHandle mx_ResizeHandle--horizontal"
-                        data-id="lp-resizer"
-                        onPointerDown={leftPanel.onPointerDown}
-                    >
-                        <div />
-                    </div>
-                    <div
-                        className={`mx_RoomView_wrapper ${state.selectedConversationId ? "" : "mj_Chat_mobileHidden"}`}
-                    >
-                        {state.selectedConversationId ? (
-                            <div className="mx_RoomView">
-                                <div className="mx_RoomView_body mx_MainSplit_timeline" data-layout="bubble">
-                                    <ChatHeader client={client} state={state} />
-                                    <Timeline client={client} state={state} />
-                                    <Composer client={client} state={state} />
-                                </div>
+        <div className="mx_MatrixChat_wrapper">
+            <div className="mx_MatrixChat">
+                <ConversationList client={client} state={state} width={leftPanel.width} />
+                <div
+                    className="mx_ResizeHandle mx_ResizeHandle--horizontal"
+                    data-id="lp-resizer"
+                    onPointerDown={leftPanel.onPointerDown}
+                >
+                    <div />
+                </div>
+                <div className={`mx_RoomView_wrapper ${state.selectedConversationId ? "" : "mj_Chat_mobileHidden"}`}>
+                    {state.selectedConversationId ? (
+                        <div className="mx_RoomView">
+                            <div className="mx_RoomView_body mx_MainSplit_timeline" data-layout="bubble">
+                                <ChatHeader client={client} state={state} />
+                                <Timeline client={client} state={state} />
+                                <Composer client={client} state={state} />
                             </div>
-                        ) : (
-                            <main className="mx_HomePage mx_HomePage_default">
-                                <div className="mx_HomePage_default_wrapper">
-                                    <img src={matronLogo} alt={state.config.brand || "Matron"} />
-                                    <h1>Welcome to {state.config.brand || "Matron"}</h1>
-                                </div>
-                            </main>
-                        )}
-                    </div>
+                        </div>
+                    ) : (
+                        <main className="mx_HomePage mx_HomePage_default">
+                            <div className="mx_HomePage_default_wrapper">
+                                <img src={matronLogo} alt={state.config.brand || "Matron"} />
+                                <h1>Welcome to {state.config.brand || "Matron"}</h1>
+                            </div>
+                        </main>
+                    )}
                 </div>
             </div>
-        </I18nContext.Provider>
+        </div>
     );
 }
 

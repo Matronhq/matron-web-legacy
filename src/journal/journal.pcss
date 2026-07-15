@@ -1,7 +1,7 @@
 /*
 Copyright 2026 Matron Contributors.
 
-SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only OR LicenseRef-Element-Commercial
+SPDX-License-Identifier: AGPL-3.0-only OR GPL-3.0-only
 Please see LICENSE files in the repository root for full details.
 */
 
@@ -378,6 +378,16 @@ textarea {
 
 .mj_ToolCard summary::-webkit-details-marker {
     display: none;
+}
+
+.mj_ToolCard summary code {
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    background: var(--cpd-color-bg-subtle-secondary);
+    padding: 3px 4px;
+    font-family: "Fira Code", monospace;
+    font-size: 100%;
+    line-height: 22px;
 }
 
 .mj_ToolCard summary span:last-child,

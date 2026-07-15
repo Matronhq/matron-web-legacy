@@ -1,1 +1,5 @@
-module.exports = require("eslint-plugin-matrix-org/.prettierrc.js");
+module.exports = {
+    printWidth: 120,
+    tabWidth: 4,
+    trailingComma: "all",
+};

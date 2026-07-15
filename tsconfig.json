@@ -1,34 +1,17 @@
 {
     "compilerOptions": {
         "allowImportingTsExtensions": true,
-        "experimentalDecorators": false,
-        "emitDecoratorMetadata": false,
-        "resolveJsonModule": true,
         "esModuleInterop": true,
-        "useDefineForClassFields": true,
+        "jsx": "react-jsx",
+        "lib": ["es2022", "dom", "dom.iterable"],
         "module": "preserve",
         "moduleResolution": "bundler",
-        "target": "es2022",
+        "noEmit": true,
         "noUnusedLocals": true,
-        "sourceMap": false,
-        "outDir": "./lib",
-        "declaration": true,
-        "jsx": "react",
-        "lib": ["es2022", "es2024.promise", "dom", "dom.iterable"],
+        "resolveJsonModule": true,
         "strict": true,
-        "paths": {
-            "jest-matrix-react": ["./test/test-utils/jest-matrix-react"],
-            "rollup/parseAst": ["./node_modules/rollup/dist/parseAst"]
-        }
+        "target": "es2022",
+        "types": ["jest", "node"]
     },
-    "include": [
-        "./node_modules/matrix-js-sdk/src/@types/*.d.ts",
-        "./src/**/*.ts",
-        "./src/**/*.tsx",
-        "./test/**/*.ts",
-        "./test/**/*.tsx",
-        "./scripts/*.ts",
-        "./@types/*.d.ts",
-        "./webpack.config.ts"
-    ]
+    "include": ["src/journal/**/*.ts", "src/journal/**/*.tsx", "test/unit-tests/journal/**/*.ts"]
 }

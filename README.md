@@ -1,17 +1,17 @@
 # Matron Web
 
-The browser client for Matron, a chat system for talking to Claude Code agents. It speaks the lightweight [matron-journal](https://github.com/Matronhq/matron-journal) protocol directly—there is no Matrix client or homeserver in the shipped application.
+Matron Web is the browser client for Matron, a chat system for talking to agents. It speaks the lightweight [matron-journal](https://github.com/Matronhq/matron-journal) protocol directly; the application has no Matrix client or homeserver dependency.
 
-This repository began as an Element Web fork. The old Element source remains in the tree to preserve fork history and make the UI migration auditable, but webpack ships only the journal-native client under `src/journal/`.
+The current source tree is the focused Matron client. This repository retains older Element Web history so the migration remains auditable; see [ORIGIN.md](ORIGIN.md) for provenance.
 
 ## Architecture
 
-- `POST /login`, `GET /snapshot`, conversation pagination, and authenticated media over HTTP.
-- One resumable `/ws` connection for ordered journal frames and ephemeral streaming.
-- IndexedDB stores the cursor, conversation summaries, lazy-loaded events, and an idempotent send outbox.
-- The same bundle is packaged by [Matron Desktop](https://github.com/Matronhq/matron-desktop).
+- HTTP login, snapshots, conversation pagination, and authenticated media.
+- One resumable WebSocket connection for ordered journal frames and ephemeral streams.
+- IndexedDB storage for cursors, conversation summaries, lazy-loaded events, and the idempotent send outbox.
+- A single responsive React interface shared with [Matron Desktop](https://github.com/Matronhq/matron-desktop).
 
-The event renderer supports text, prompts and permission requests, prompt replies, tool output (including live byte-offset streams and the 24-hour cache TTL), diffs, files, images, activity, and session status. Unknown event types get a JSON fallback.
+The renderer supports text, prompts and permission requests, prompt replies, tool output, diffs, files, images, activity, and session status. Unknown event types receive a JSON fallback.
 
 ## Development
 
@@ -20,33 +20,22 @@ Requires Node 22.18+ and the pnpm version pinned in `package.json`.
 ```bash
 corepack enable
 pnpm install
-
-# matron-journal defaults to http://127.0.0.1:9810
 pnpm start
 ```
 
-The dev server runs at `http://localhost:8080` and proxies `/journal` to the local journal service. Override its target when needed:
+The development server runs at `http://127.0.0.1:8080` and proxies `/journal` to `http://127.0.0.1:9810`. Set `MATRON_JOURNAL_URL` or `MATRON_WEB_PORT` to override either value.
+
+Run all checks with:
 
 ```bash
-MATRON_JOURNAL_URL=https://chat.example.com pnpm start
-```
-
-Run the focused client checks:
-
-```bash
-pnpm exec jest --runInBand test/unit-tests/journal
-pnpm exec nx build --skip-nx-cache
-```
-
-## Production deployment
-
-Build into `webapp/`:
-
-```bash
+pnpm lint
+pnpm test
 pnpm build
 ```
 
-The recommended browser deployment keeps journal requests same-origin. Put the static app at your public origin, proxy `/journal/` to matron-journal, and use:
+## Deployment
+
+`pnpm build` writes a static application to `webapp/`. A browser deployment should normally proxy `/journal/` to matron-journal on the same origin and configure:
 
 ```json
 {
@@ -55,22 +44,8 @@ The recommended browser deployment keeps journal requests same-origin. Put the s
 }
 ```
 
-Example nginx location (alongside the static webapp):
-
-```nginx
-location /journal/ {
-    proxy_pass http://127.0.0.1:9810/;
-    proxy_http_version 1.1;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-    proxy_set_header Host $host;
-}
-```
-
-matron-journal does not currently emit browser CORS headers. An absolute `journal_server_url` therefore requires a trusted proxy which adds suitable CORS headers; the same-origin layout above needs none.
-
-See [docs/config.md](docs/config.md) for the small runtime configuration surface.
+See [docs/config.md](docs/config.md) for the complete runtime configuration surface.
 
 ## License
 
-Multi-licensed under AGPL-3.0-only / GPL-3.0-only, at your option. See [LICENSE-AGPL-3.0](LICENSE-AGPL-3.0) and [LICENSE-GPL-3.0](LICENSE-GPL-3.0).
+Licensed under AGPL-3.0-only or GPL-3.0-only, at your option. See [LICENSE-AGPL-3.0](LICENSE-AGPL-3.0) and [LICENSE-GPL-3.0](LICENSE-GPL-3.0).
