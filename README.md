@@ -1,6 +1,8 @@
-# Matron Web
+> **This repository is retained as a historical audit trail and is not maintained.** It is the pre-migration Element Web fork. The current browser client is **[matron-web](https://github.com/Matronhq/matron-web)**, which speaks the matron-journal protocol directly and has no Matrix dependency.
 
-A web-based Matrix client. Runs in any modern browser, powers [Matron Desktop](https://github.com/matronhq/matron-desktop), and can be self-hosted.
+# Matron Web (legacy)
+
+A web-based Matrix client. Runs in any modern browser and can be self-hosted; it powered [Matron Desktop (legacy)](https://github.com/Matronhq/matron-desktop-legacy).
 
 Forked from [Element Web](https://github.com/element-hq/element-web). Built on the [Matrix JS SDK](https://github.com/matrix-org/matrix-js-sdk).
 
@@ -9,8 +11,8 @@ Forked from [Element Web](https://github.com/element-hq/element-web). Built on t
 | Project                                                      | Description                       |
 | ------------------------------------------------------------ | --------------------------------- |
 | [Matron Desktop](https://github.com/matronhq/matron-desktop) | Desktop client                    |
-| **Matron Web**                                               | Web client (this repo)            |
-| [Matron iOS](https://github.com/matronhq/matron-ios)         | iOS client                        |
+| matron-web-legacy                                            | This repo — retired               |
+| [matron-apple](https://github.com/Matronhq/matron-apple)     | iOS client                        |
 | [Matron Server](https://github.com/matronhq/matron-server)   | Matrix homeserver                 |
 | [Dev Boxer](https://github.com/matronhq/dev-boxer)           | One-command dev environment setup |
 
@@ -18,7 +20,7 @@ Forked from [Element Web](https://github.com/element-hq/element-web). Built on t
 
 Matron Web supports the last two major versions of Chrome, Firefox, Edge, and Safari.
 
-## Getting started
+## Historical build instructions (no longer supported)
 
 ### Self-hosting
 
@@ -58,7 +60,7 @@ pnpm install
 pnpm start  # starts dev server at http://localhost:8080
 ```
 
-## Configuration
+### Configuration
 
 Copy `config.sample.json` to `config.json` and edit. Key options:
 
